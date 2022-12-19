@@ -1,28 +1,40 @@
 /*
 Code to make everything wiggle and animate on hover:
 */
-.wiggle {
-    animation: wiggle 1s ease-in-out infinite;
+body {
+    background-color: #000000;
+}
+
+#test {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+#test:hover {
+    animation: wiggle 1s;
+    animation-iteration-count: infinite;
 }
 
 @keyframes wiggle {
     0% {
-        transform: rotate(0deg);
+        transform: translate(-50%, -50%) rotate(0deg);
     }
 
     25% {
-        transform: rotate(5deg);
+        transform: translate(-50%, -50%) rotate(5deg);
     }
 
     50% {
-        transform: rotate(0deg);
+        transform: translate(-50%, -50%) rotate(0deg);
     }
 
     75% {
-        transform: rotate(-5deg);
+        transform: translate(-50%, -50%) rotate(-5deg);
     }
 
     100% {
-        transform: rotate(0deg);
+        transform: translate(-50%, -50%) rotate(0deg);
     }
 }
