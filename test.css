@@ -4,3 +4,25 @@ Code to make everything wiggle and animate on hover:
 .wiggle {
     animation: wiggle 1s ease-in-out infinite;
 }
+
+@keyframes wiggle {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    25% {
+        transform: rotate(5deg);
+    }
+
+    50% {
+        transform: rotate(0deg);
+    }
+
+    75% {
+        transform: rotate(-5deg);
+    }
+
+    100% {
+        transform: rotate(0deg);
+    }
+}
