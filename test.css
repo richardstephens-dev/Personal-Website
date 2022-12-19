@@ -1,0 +1,6 @@
+/*
+Code to make everything wiggle and animate on hover:
+*/
+.wiggle {
+    animation: wiggle 1s ease-in-out infinite;
+}
