@@ -11,23 +11,36 @@
 
 <body>
     <!-- Make a nice navbar using tailwindcss flex class-->
-    <nav class="flex justify-between items-center h-16 bg-white text-black relative shadow-sm font-mono"
-        role="navigation">
-        <a href="#" class="pl-8">Logo</a>
-        <div class="px-4 cursor-pointer md:hidden">
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16">
-                </path>
-            </svg>
-        </div>
-        <div class="pr-8 md:block hidden">
-            <a href="#" class="p-4">Home</a>
-            <a href="#" class="p-4">About</a>
-            <a href="#" class="p-4">Contact</a>
-            <a href="#" class="p-4">Login</a>
-        </div>
+    <nav class="relative container mx-auto p-6">
+        <!--Flex container-->
+        <div class="flex items-center justify-between">
+            <!--Logo-->
+            <div class="flex pt-2">
+                <a href="#" class="flex items-center">
+                    <img src="./assets/images/logo.png" alt="logo" class="h-8 w-8 mr-2" />
+                    <span class="font-semibold text-xl tracking-tight">Tailwind</span>
+                </a>
+            </div>
+            <!--Menu Items: flex space-x-6 -->
+            <div class="hidden md:flex space-x-20 bg-light-purple">
+                <a href="#" class="font-semibold text-dark-blue hover:text-lighter-blue-2">Home</a>
+                <a href="#" class="font-semibold text-dark-blue hover:text-lighter-blue-2">About</a>
+                <a href="#" class="font-semibold text-dark-blue hover:text-lighter-blue-2">Contact</a>
+            </div>
+            <!--a tag button with p-3 px-6 pt-2 and white text with dark green background-->
+            <div class="hidden md:flex">
+                <a href="#" class="hidden md:block rounded-lg bg-dark-green text-white font-semibold py-2 px-6">lol
+                    stuff</a>
+            </div>
     </nav>
+    <!-- Canvas -->
+    <div class="flex items-center justify-between mx-auto">
+        <canvas id="canvas" class="object-scale-down bg-white block">
+
+        </canvas>
+    </div>
+    <!-- Scripts -->
+    <script src="./assets/js/paint.js"></script>
 </body>
 
 </html>
