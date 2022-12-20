@@ -1,6 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ["*.html",],
+  content: ["*.html", "./assets/js/*.js",],
   theme: {
     screens: {
       sm: "480px",
@@ -9,24 +9,32 @@ module.exports = {
       xl: "1440px",
     },
     extend: {
-      /* https://lospec.com/palette-list/shido-cyberneon */
+      /* https://lospec.com/palette-list/pollen8 
+      #fcb08c
+#ef9d7f
+#d6938a
+#b48d92
+#a597a1
+#8fa0bf
+#9aabc9
+#a5b7d4*/
       colors: {
-        "dark-blue": "#00033c",
-        "dark-green": "#005260",
-        "light-green": "#009d4a",
-        "lighter-green": "#0aff52",
-        "dark-blue-2": "#003884",
-        "light-blue": "#008ac5",
-        "lighter-blue": "#00f7ff",
-        "light-purple": "#ff5cff",
-        "dark-purple": "#ac29ce",
-        "dark-purple-2": "#600088",
-        "light-purple-2": "#b10585",
-        "light-red": "#ff004e",
-        "dark-blue-3": "#2a2e79",
-        "light-blue-2": "#4e6ea8",
-        "lighter-blue-2": "#add4fa",
-        "white": "#ffffff",
+        "pollen-rust": "#73464c",
+        "pollen-pink": "#ab5675",
+        "pollen-red": "#ee6a7c",
+        "pollen-peach": "#ffa7a5",
+        "pollen-yellow": "#ffe07e",
+        "pollen-cream": "#ffe7d6",
+        "pollen-green": "#72dcbb",
+        "pollen-blue": "#34acba",
+        "cloudy-0": "#fcb08c",
+        "cloudy-1": "#ef9d7f",
+        "cloudy-2": "#d6938a",
+        "cloudy-3": "#b48d92",
+        "cloudy-4": "#a597a1",
+        "cloudy-5": "#8fa0bf",
+        "cloudy-6": "#9aabc9",
+        "cloudy-7": "#a5b7d4",
       },
     },
     plugins: [],

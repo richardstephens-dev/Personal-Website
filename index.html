@@ -6,41 +6,18 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="./assets/css/styles.css" />
-    <title>Document</title>
+    <title>Richard Stephens</title>
 </head>
 
-<body>
-    <!-- Make a nice navbar using tailwindcss flex class-->
-    <nav class="relative container mx-auto p-6">
-        <!--Flex container-->
-        <div class="flex items-center justify-between">
-            <!--Logo-->
-            <div class="flex pt-2">
-                <a href="#" class="flex items-center">
-                    <img src="./assets/images/logo.png" alt="logo" class="h-8 w-8 mr-2" />
-                    <span class="font-semibold text-xl tracking-tight">Tailwind</span>
-                </a>
-            </div>
-            <!--Menu Items: flex space-x-6 -->
-            <div class="hidden md:flex space-x-20 bg-light-purple">
-                <a href="#" class="font-semibold text-dark-blue hover:text-lighter-blue-2">Home</a>
-                <a href="#" class="font-semibold text-dark-blue hover:text-lighter-blue-2">About</a>
-                <a href="#" class="font-semibold text-dark-blue hover:text-lighter-blue-2">Contact</a>
-            </div>
-            <!--a tag button with p-3 px-6 pt-2 and white text with dark green background-->
-            <div class="hidden md:flex">
-                <a href="#" class="hidden md:block rounded-lg bg-dark-green text-white font-semibold py-2 px-6">lol
-                    stuff</a>
-            </div>
-    </nav>
-    <!-- Canvas -->
-    <div class="flex items-center justify-between mx-auto">
-        <canvas id="canvas" class="object-scale-down bg-white block">
-
-        </canvas>
+<body class="bg-gradient-to-b from-cloudy-4 to-cloudy-3">
+    <div>
+        <!-- Element with rain -->
+        <div class="rain front-row"></div>
+        <div class="rain back-row"></div>
     </div>
     <!-- Scripts -->
-    <script src="./assets/js/paint.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="./assets/js/rain.js"></script>
 </body>
 
 </html>
