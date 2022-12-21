@@ -38,12 +38,12 @@ class RainDrop extends Particle {
     constructor(x, y) {
         super(x, y);
         this.deltaX = -0.1 + Math.random() * 0.2;
-        this.weight = 9 + Math.random() * 1;
+        this.weight = 14 + Math.random() * 1;
         this.size = 5 + Math.random() * 10;
         // Give it a linear gradient style between gothic-bit-waterloo and gothic-bit-cadet-blue
         // These two colors are in tailwind.config.js in theme extend colors.
         // They have been converted from hex to rgb here:
-        this.style = ctx.createLinearGradient(0, 0, 70, 2);
+        this.style = ctx.createLinearGradient(0, 0, 70, 1);
         this.style.addColorStop(0, "rgba(83, 83, 115, 0)");
         this.style.addColorStop(0, "rgba(83, 83, 115, 0.5)");
         this.style.addColorStop(1, "rgba(166, 166, 191, 1)");
@@ -85,7 +85,7 @@ class RainDrop extends Particle {
         // rotate so that the rectangle is pointing the direction it is 
         // moving based on its deltaX and weight
         ctx.rotate(Math.atan2(this.weight, this.deltaX));
-        ctx.fillRect(0, 0, 70, 2);
+        ctx.fillRect(0, 0, 70, 1);
         ctx.restore();
     }
 }
