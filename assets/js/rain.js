@@ -77,13 +77,13 @@ class RainDrop extends Particle {
     }
 
     draw() {
-        // draw a rectangle of 120x15px at the position of the drop
-        // and at the angle of the wind
+        // Check if the drop is within the window inner height
+        if (this.y > window.pageYOffset + window.innerHeight) {
+            return;
+        }
         ctx.fillStyle = this.style;
         ctx.save();
         ctx.translate(this.x, this.y);
-        // rotate so that the rectangle is pointing the direction it is 
-        // moving based on its deltaX and weight
         ctx.rotate(Math.atan2(this.weight, this.deltaX));
         ctx.fillRect(0, 0, 70, 1);
         ctx.restore();
@@ -111,7 +111,7 @@ class RainEffect {
 
     init() {
         // create 100 rain drops
-        for (let i = 0; i < 100; i++) {
+        for (let i = 0; i < 300; i++) {
             const x = Math.random() * canvas.width;
             const y = Math.random() * canvas.height;
             this.rainDrops.push(new RainDrop(x, y));
