@@ -2,7 +2,7 @@
 const canvas = document.getElementById('rain');
 const ctx = canvas.getContext('2d');
 canvas.width = window.innerWidth;
-canvas.height = 2 * window.innerHeight;
+canvas.height = 4 * window.innerHeight;
 let particlesArray = [];
 
 class Particle {
