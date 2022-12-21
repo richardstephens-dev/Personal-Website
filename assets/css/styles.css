@@ -513,6 +513,10 @@ video {
   --tw-backdrop-sepia:  ;
 }
 
+.visible {
+  visibility: visible;
+}
+
 .absolute {
   position: absolute;
 }
@@ -535,11 +539,6 @@ video {
 
 .rounded-full {
   border-radius: 9999px;
-}
-
-.bg-gothic-bit-tuna {
-  --tw-bg-opacity: 1;
-  background-color: rgb(51 51 70 / var(--tw-bg-opacity));
 }
 
 .bg-gothic-bit-athens-gray {
@@ -584,19 +583,14 @@ video {
   font-weight: 700;
 }
 
-.text-white {
+.text-gothic-bit-athens-gray {
   --tw-text-opacity: 1;
-  color: rgb(255 255 255 / var(--tw-text-opacity));
+  color: rgb(230 230 236 / var(--tw-text-opacity));
 }
 
 .text-gothic-bit-steel-gray {
   --tw-text-opacity: 1;
   color: rgb(26 26 36 / var(--tw-text-opacity));
-}
-
-.text-gothic-bit-athens-gray {
-  --tw-text-opacity: 1;
-  color: rgb(230 230 236 / var(--tw-text-opacity));
 }
 
 .bg-canvas::before {

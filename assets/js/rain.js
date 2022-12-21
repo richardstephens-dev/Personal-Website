@@ -2,7 +2,7 @@
 const canvas = document.getElementById('rain');
 const ctx = canvas.getContext('2d');
 canvas.width = window.innerWidth;
-canvas.height = 4 * window.innerHeight;
+canvas.height = window.innerHeight;
 let particlesArray = [];
 
 class Particle {
@@ -36,19 +36,17 @@ class Particle {
 
 class RainDrop extends Particle {
     constructor(x, y) {
+        // initialize some variables
         super(x, y);
         this.deltaX = -0.1 + Math.random() * 0.2;
         this.weight = 14 + Math.random() * 1;
         this.size = 5 + Math.random() * 10;
-        // Give it a linear gradient style between gothic-bit-waterloo and gothic-bit-cadet-blue
-        // These two colors are in tailwind.config.js in theme extend colors.
-        // They have been converted from hex to rgb here:
+
+        // set the style to a rainy gradient
         this.style = ctx.createLinearGradient(0, 0, 70, 1);
         this.style.addColorStop(0, "rgba(83, 83, 115, 0)");
         this.style.addColorStop(0, "rgba(83, 83, 115, 0.5)");
         this.style.addColorStop(1, "rgba(166, 166, 191, 1)");
-        // set style opacity to a random value between 0.5 and 0.9
-        //this.style.opacity = 0.5 + Math.random() * 0.4;
     }
 
     update(windSpeed) {
@@ -77,10 +75,12 @@ class RainDrop extends Particle {
     }
 
     draw() {
-        // Check if the drop is within the window inner height
+        // Don't render drops outside the visible area
         if (this.y > window.pageYOffset + window.innerHeight) {
             return;
         }
+
+        // Apply style and tilt the drop to the wind direction
         ctx.fillStyle = this.style;
         ctx.save();
         ctx.translate(this.x, this.y);
@@ -96,7 +96,7 @@ class Wind {
     }
 
     update() {
-        // Make the windspeed follow a slow sine wave between -5 and 5
+        // Make the windspeed follow a slow sine wave
         this.windSpeed = Math.sin(Date.now() / 10000) * 5;
     }
 }
@@ -110,16 +110,44 @@ class RainEffect {
     }
 
     init() {
-        // create 100 rain drops
-        for (let i = 0; i < 300; i++) {
+        this.addDrops(100);
+    }
+
+    addDrops(count) {
+        for (let i = 0; i < count; i++) {
             const x = Math.random() * canvas.width;
-            const y = Math.random() * canvas.height;
+            const y = Math.random() * canvas.height - canvas.height;
             this.rainDrops.push(new RainDrop(x, y));
         }
     }
 
     update() {
         this.wind.update();
+        // Slowly vary the number of target drops
+        let targetDropCount = Math.abs(Math.floor(Math.sin(Date.now() / 10000) * 100)) + 50;
+
+        // log the target and actual drop count
+        console.log(targetDropCount, this.rainDrops.length);
+
+        // If there are not enough drops, create some
+        if (this.rainDrops.length < targetDropCount) {
+            this.addDrops(targetDropCount - this.rainDrops.length)
+        }
+
+        // If there are too many drops, remove any that are at the bottom of the screen
+        else if (this.rainDrops.length > targetDropCount) {
+            // use foreach
+            this.rainDrops.forEach((rainDrop, index) => {
+                if (rainDrop.y >= canvas.height - (5 * (Math.abs(this.wind.windSpeed) + 1))) {
+                    this.rainDrops.splice(index, 1);
+                }
+            });
+            /*for (let i = this.rainDrops.length - 1; i >= 0; i--) {
+                if (this.rainDrops[i].y >= canvas.height - 5) {
+                    this.rainDrops.splice(i, 1);
+                }
+            }*/
+        }
         this.rainDrops.forEach((rainDrop) => rainDrop.update(this.wind.windSpeed));
     }
 
