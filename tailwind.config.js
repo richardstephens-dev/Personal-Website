@@ -19,39 +19,6 @@ module.exports = {
         "gothic-bit-ghost": "#c1c1d2",
         "gothic-bit-athens-gray": "#e6e6ec",
       },
-      animation: {
-        "rain-drop": "rain-drop 5s linear infinite",
-        "rain-tail": "rain-tail 5s linear infinite",
-      },
-      keyframes: {
-        "rain-drop": {
-          "0%": {
-            transform: "translateY(0vh) translateX(0vw) rotate(-10deg)",
-          },
-
-          "75%": {
-            transform: "translateY(90vh) translateX(10vw) rotate(-10deg)",
-          },
-
-          "100%": {
-            transform: "translateY(90vh) translateX(10vw) rotate(-10deg)",
-          },
-        },
-        "rain-tail": {
-          "0%": {
-            opacity: 1,
-          },
-          "65%": {
-            opacity: 1,
-          },
-          "75%": {
-            opacity: 0,
-          },
-          "100%": {
-            opacity: 0,
-          },
-        }
-      },
       plugins: [],
     },
   }

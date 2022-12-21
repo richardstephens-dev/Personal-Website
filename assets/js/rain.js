@@ -1,5 +1,5 @@
 // File to rewrite rain.js in the style of paint.js
-const canvas = document.getElementById('rain-test');
+const canvas = document.getElementById('rain');
 const ctx = canvas.getContext('2d');
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
