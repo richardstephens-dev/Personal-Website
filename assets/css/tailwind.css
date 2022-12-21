@@ -9,10 +9,6 @@
     padding: 0;
 }
 
-canvas {
-    filter: blur(1px) contrast(1.5);
-}
-
 html {
     height: 100%;
 }
@@ -37,47 +33,16 @@ html {
     bottom: 100%;
     width: 15px;
     height: 120px;
-    pointer-events: none;
-    animation: drop 0.5s linear infinite;
-    transform: rotate(-10deg);
-}
-
-@keyframes drop {
-    0% {
-        transform: translateY(0vh) translateX(0vw);
-    }
-
-    75% {
-        transform: translateY(90vh) translateX(10vw);
-    }
-
-    100% {
-        transform: translateY(90vh) translateX(10vw);
-    }
 }
 
 .stem {
     width: 1px;
     height: 60%;
-    margin-left: 7px;
-    animation: stem 0.5s linear infinite;
-    transform: rotate(-10deg);
 }
 
-@keyframes stem {
-    0% {
-        opacity: 1;
-    }
-
-    65% {
-        opacity: 1;
-    }
-
-    75% {
-        opacity: 0;
-    }
-
-    100% {
-        opacity: 0;
-    }
+.rain-test {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 100%;
 }

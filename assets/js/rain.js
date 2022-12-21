@@ -1,41 +1,143 @@
-var makeItRain = function () {
-    //clear out everything
-    $('.rain').empty();
+// File to rewrite rain.js in the style of paint.js
+const canvas = document.getElementById('rain-test');
+const ctx = canvas.getContext('2d');
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+let particlesArray = [];
 
-    var increment = 0;
-    var drops = "";
-    var backDrops = "";
-
-    while (increment < 100) {
-        //couple random numbers to use for various randomizations
-        //random number between 98 and 1
-        var randoHundo = (Math.floor(Math.random() * (98 - 1 + 1) + 1));
-        //random number between 5 and 2
-        var randoFiver = (Math.floor(Math.random() * (5 - 2 + 1) + 2));
-        //increment
-        increment += randoFiver;
-        //add in a new raindrop with various randomizations to certain CSS properties
-        //drops += '<div class="drop absolute top-0 bg-gradient-to-b from-cloudy-6 to-cloudy-7 rounded-full mix-blend-multiply filter blur-3xl" style="left: ' + increment + '%; bottom: ' + (randoFiver + randoFiver - 1 + 100) + '%; animation-delay: 0.' + randoHundo + 's; animation-duration: 0.5' + randoHundo + 's;"><div class="stem" style="animation-delay: 0.' + randoHundo + 's; animation-duration: 0.5' + randoHundo + 's;"></div></div>';
-        drops += '<div class="drop rounded-full top-0" style="left: ' + increment
-            + '%; bottom: ' + (randoFiver + randoFiver - 1 + 100)
-            + '%; animation-delay: 0.' + randoHundo
-            + 's; animation-duration: 0.5' + randoHundo
-            + 's;"><div class="stem bg-gradient-to-b from-cloudy-6 to-cloudy-7" style="animation-delay: 0.' + randoHundo
-            + 's; animation-duration: 0.5' + randoHundo
-            + 's;"></div></div>';
-        backDrops += '<div class="drop rounded-full top-0" style="left: ' + increment
-            + '%; bottom: ' + (randoFiver + randoFiver - 1 + 100)
-            + '%; animation-delay: 0.' + randoHundo
-            + 's; animation-duration: 0.5' + randoHundo
-            + 's;"><div class="stem bg-gradient-to-b from-cloudy-6 to-cloudy-7" style="animation-delay: 0.' + randoHundo
-            + 's; animation-duration: 0.5' + randoHundo
-            + 's;"></div></div>';
+class Particle {
+    constructor(x, y) {
+        this.x = x;
+        this.y = y;
+        this.weight = 2;
+        this.size = 100;
+        this.deltaX = 0;
+        this.style = "red";
     }
 
-    $('.rain.front-row').append(drops);
-    $('.rain.back-row').append(backDrops);
+    update() {
+        this.x += this.deltaX;
+        this.y += this.weight;
 
-    console.log(drops)
+        // If it reaches the bottom of the canvas, reset it to the top
+        if (this.y > canvas.height) {
+            this.y = 0;
+            this.x = Math.random() * canvas.width;
+        }
+    }
+
+    draw() {
+        ctx.fillStyle = this.style;
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fill();
+    }
 }
 
-makeItRain();
+class RainDrop extends Particle {
+    constructor(x, y) {
+        super(x, y);
+        this.deltaX = -0.1 + Math.random() * 0.2;
+        this.weight = 9 + Math.random() * 1;
+        this.size = 5 + Math.random() * 10;
+        // Give it a linear gradient style between gothic-bit-waterloo and gothic-bit-cadet-blue
+        // These two colors are in tailwind.config.js in theme extend colors.
+        // They have been converted from hex to rgb here:
+        this.style = ctx.createLinearGradient(0, 0, 70, 2);
+        this.style.addColorStop(0, "rgba(83, 83, 115, 0)");
+        this.style.addColorStop(0, "rgba(83, 83, 115, 0.5)");
+        this.style.addColorStop(1, "rgba(166, 166, 191, 1)");
+        // set style opacity to a random value between 0.5 and 0.9
+        //this.style.opacity = 0.5 + Math.random() * 0.4;
+    }
+
+    update(windSpeed) {
+        this.deltaX = windSpeed;
+        this.x += this.deltaX;
+        this.y += this.weight;
+
+        // If the drop hasn't reached an edge, pass
+        if (this.x < canvas.width && this.y < canvas.height) {
+            return;
+        }
+
+        // if y is greater than the canvas height, reset it to the top
+        if (this.x < 0) {
+            this.x = canvas.width;
+            this.y = Math.random() * canvas.height;
+        }
+        else if (this.x > canvas.width) {
+            this.x = 0;
+            this.y = Math.random() * canvas.height;
+        }
+        else if (this.y > canvas.height) {
+            this.y = -70;
+            this.x = Math.random() * canvas.width;
+        }
+    }
+
+    draw() {
+        // draw a rectangle of 120x15px at the position of the drop
+        // and at the angle of the wind
+        ctx.fillStyle = this.style;
+        ctx.save();
+        ctx.translate(this.x, this.y);
+        // rotate so that the rectangle is pointing the direction it is 
+        // moving based on its deltaX and weight
+        ctx.rotate(Math.atan2(this.weight, this.deltaX));
+        ctx.fillRect(0, 0, 70, 2);
+        ctx.restore();
+    }
+}
+
+class Wind {
+    constructor() {
+        this.windSpeed = 0;
+    }
+
+    update() {
+        // Make the windspeed follow a slow sine wave between -5 and 5
+        this.windSpeed = Math.sin(Date.now() / 10000) * 5;
+    }
+}
+
+class RainEffect {
+    constructor(width, height) {
+        this.width = width;
+        this.height = height;
+        this.rainDrops = [];
+        this.wind = new Wind();
+    }
+
+    init() {
+        // create 100 rain drops
+        for (let i = 0; i < 100; i++) {
+            const x = Math.random() * canvas.width;
+            const y = Math.random() * canvas.height;
+            this.rainDrops.push(new RainDrop(x, y));
+        }
+    }
+
+    update() {
+        this.wind.update();
+        this.rainDrops.forEach((rainDrop) => rainDrop.update(this.wind.windSpeed));
+    }
+
+    draw() {
+        this.rainDrops.forEach((rainDrop) => rainDrop.draw());
+    }
+}
+
+// Initialize animation managers:
+const rain = new RainEffect(canvas.width, canvas.height);
+rain.init();
+
+// Animation loop:
+function animate() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    rain.update();
+    rain.draw();
+    requestAnimationFrame(animate);
+}
+
+animate();

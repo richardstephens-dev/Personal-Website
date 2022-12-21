@@ -9,34 +9,50 @@ module.exports = {
       xl: "1440px",
     },
     extend: {
-      /* https://lospec.com/palette-list/pollen8 
-      #fcb08c
-#ef9d7f
-#d6938a
-#b48d92
-#a597a1
-#8fa0bf
-#9aabc9
-#a5b7d4*/
       colors: {
-        "pollen-rust": "#73464c",
-        "pollen-pink": "#ab5675",
-        "pollen-red": "#ee6a7c",
-        "pollen-peach": "#ffa7a5",
-        "pollen-yellow": "#ffe07e",
-        "pollen-cream": "#ffe7d6",
-        "pollen-green": "#72dcbb",
-        "pollen-blue": "#34acba",
-        "cloudy-0": "#fcb08c",
-        "cloudy-1": "#ef9d7f",
-        "cloudy-2": "#d6938a",
-        "cloudy-3": "#b48d92",
-        "cloudy-4": "#a597a1",
-        "cloudy-5": "#8fa0bf",
-        "cloudy-6": "#9aabc9",
-        "cloudy-7": "#a5b7d4",
+        "gothic-bit-woodsmoke": "#0e0e12",
+        "gothic-bit-steel-gray": "#1a1a24",
+        "gothic-bit-tuna": "#333346",
+        "gothic-bit-comet": "#535373",
+        "gothic-bit-waterloo": "#8080a4",
+        "gothic-bit-cadet-blue": "#a6a6bf",
+        "gothic-bit-ghost": "#c1c1d2",
+        "gothic-bit-athens-gray": "#e6e6ec",
       },
+      animation: {
+        "rain-drop": "rain-drop 5s linear infinite",
+        "rain-tail": "rain-tail 5s linear infinite",
+      },
+      keyframes: {
+        "rain-drop": {
+          "0%": {
+            transform: "translateY(0vh) translateX(0vw) rotate(-10deg)",
+          },
+
+          "75%": {
+            transform: "translateY(90vh) translateX(10vw) rotate(-10deg)",
+          },
+
+          "100%": {
+            transform: "translateY(90vh) translateX(10vw) rotate(-10deg)",
+          },
+        },
+        "rain-tail": {
+          "0%": {
+            opacity: 1,
+          },
+          "65%": {
+            opacity: 1,
+          },
+          "75%": {
+            opacity: 0,
+          },
+          "100%": {
+            opacity: 0,
+          },
+        }
+      },
+      plugins: [],
     },
-    plugins: [],
-  },
+  }
 }
