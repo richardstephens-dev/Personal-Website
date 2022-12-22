@@ -2,7 +2,7 @@
 const canvas = document.getElementById('rain');
 const ctx = canvas.getContext('2d');
 canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
+canvas.height = window.innerHeight - 0.001;
 let particlesArray = [];
 
 class Particle {
@@ -107,9 +107,6 @@ class RainEffect {
         this.height = height;
         this.rainDrops = [];
         this.wind = new Wind();
-    }
-
-    init() {
         this.addDrops(100);
     }
 
@@ -125,9 +122,6 @@ class RainEffect {
         this.wind.update();
         // Slowly vary the number of target drops
         let targetDropCount = Math.abs(Math.floor(Math.sin(Date.now() / 10000) * 100)) + 50;
-
-        // log the target and actual drop count
-        console.log(targetDropCount, this.rainDrops.length);
 
         // If there are not enough drops, create some
         if (this.rainDrops.length < targetDropCount) {
@@ -158,14 +152,12 @@ class RainEffect {
 
 // Initialize animation managers:
 const rain = new RainEffect(canvas.width, canvas.height);
-rain.init();
 
 // Animation loop:
-function animate() {
+function animateRain(callback) {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     rain.update();
     rain.draw();
-    requestAnimationFrame(animate);
+    requestAnimationFrame(animateRain);
+    callback();
 }
-
-animate();

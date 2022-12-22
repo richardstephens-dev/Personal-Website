@@ -2,6 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
+
+/* Makes canvas able to be a background */
 .bg-canvas::before {
     content: '';
     position: absolute;
@@ -10,4 +12,29 @@
     bottom: 0;
     left: 0;
     z-index: -1;
+}
+
+/* Formatting for terminal text */
+.terminal-text {
+    /*The font is the same as a ubuntu mono terminal*/
+    font-family: 'Ubuntu Mono';
+    font-size: 1.2rem;
+    color: #c1c1d2;
+    line-height: 1.5;
+}
+
+
+/* Blinker for terminal text */
+.blinker {
+    margin-bottom: -2px;
+    height: 15px;
+    margin-left: -1px;
+    border-left: 10px solid #c1c1d2;
+    animation: blinker 0.9s steps(2, start) infinite;
+}
+
+@keyframes blinker {
+    to {
+        visibility: hidden;
+    }
 }

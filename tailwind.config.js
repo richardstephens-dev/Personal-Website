@@ -19,6 +19,9 @@ module.exports = {
         "gothic-bit-ghost": "#c1c1d2",
         "gothic-bit-athens-gray": "#e6e6ec",
       },
+      fontFamily: {
+        "ubuntu": ["Ubuntu Mono", "monospace"],
+      },
       plugins: [],
     },
   }
