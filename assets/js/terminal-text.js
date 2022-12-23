@@ -4,10 +4,9 @@ var data = [
         startText: "Oh hey. A black screen. That's no fun.<br/>" +
             "Let's change things up.<br/>" +
             "How about we <b>make it rain?</b><br/>" +
-            "...<br/>"
-    },
-    {
-        rainDisappointment: "I'm not sure if you can tell, but it's raining.<br/>"
+            "...<br/>" + "Now <b>that's</b> a bit cozier.<br/>" +
+            "Try clicking to add some lightning.<br/>" +
+            "Or just sit back and enjoy the show.<br/>"
     },
 ];
 
@@ -49,9 +48,10 @@ function typeText(elementId, callback) {
 
     // Set the callback timer to be 60*length of the text
     // plus 440*number of regex matches
-    var callbackTimer = 60 * elementIdContent.length;
+    /* var callbackTimer = 60 * elementIdContent.length;
     var matches = elementIdContent.match(regex);
-    if (matches) callbackTimer += 440 * matches.length;
+    if (matches) callbackTimer += 440 * matches.length;*/
+    var callbackTimer = 9000;
 
     // If the element was the startText, call the callback
     setTimeout(function () {

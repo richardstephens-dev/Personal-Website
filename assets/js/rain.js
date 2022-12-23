@@ -153,6 +153,17 @@ class Lightning {
         console.log(this.blinkCount)
 
         while (this.y < canvas.height) {
+            // If within 100px of the side of the screen, lean the lightning
+            if (this.x < 100) {
+                this.lean = 50;
+            }
+            else if (this.x > canvas.width - 100) {
+                this.lean = -50;
+            }
+            else {
+                this.lean = 0;
+            }
+
             // Add another branch if the lightning hasn't reached the bottom of the screen
             // A branch is an array of startX, startY, endX, endY, width.
             // The startX and startY are the same as the previous branch's endX and endY
