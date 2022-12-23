@@ -45,16 +45,11 @@ function typeText(elementId, callback) {
         setTimeout(type, timeout);
     })();
 
-
-    // Set the callback timer to be 60*length of the text
-    // plus 440*number of regex matches
-    /* var callbackTimer = 60 * elementIdContent.length;
-    var matches = elementIdContent.match(regex);
-    if (matches) callbackTimer += 440 * matches.length;*/
     // If element id is startText, set the callback timer to 9 seconds
-    if (elementId === "startText") callbackTimer = 9000;
+    if (elementId === "startText") callbackTimer = 9100;
+    else callbackTimer = 0;
 
-    // If the element was the startText, call the callback
+    // Callback
     setTimeout(function () {
         callback();
     }, callbackTimer);

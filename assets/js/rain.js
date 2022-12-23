@@ -61,23 +61,12 @@ class RainDrop {
     }
 }
 
-class Wind {
-    constructor() {
-        this.windSpeed = 0;
-    }
-
-    update() {
-        // Make the windspeed follow a slow sine wave
-        this.windSpeed = Math.sin(Date.now() / 10000) * 5;
-    }
-}
-
 class RainEffect {
     constructor(width, height) {
         this.width = width;
         this.height = height;
         this.rainDrops = [];
-        this.wind = new Wind();
+        this.windSpeed = 0;
         this.lightnings = [];
     }
 
@@ -98,7 +87,7 @@ class RainEffect {
 
     update() {
         // Update the wind
-        this.wind.update();
+        this.windSpeed = Math.sin(Date.now() / 10000) * 5;
 
         // Update the lightning
         this.lightnings.forEach((lightning) => lightning.update());
@@ -109,7 +98,6 @@ class RainEffect {
                 this.lightnings.splice(index, 1);
             }
         });
-
 
         // Update the rain
         // Slowly vary the number of target drops
@@ -124,12 +112,12 @@ class RainEffect {
         else if (this.rainDrops.length > targetDropCount) {
             // use foreach
             this.rainDrops.forEach((rainDrop, index) => {
-                if (rainDrop.y >= canvas.height - (5 * (Math.abs(this.wind.windSpeed) + 1))) {
+                if (rainDrop.y >= canvas.height - (5 * (Math.abs(this.windSpeed) + 1))) {
                     this.rainDrops.splice(index, 1);
                 }
             });
         }
-        this.rainDrops.forEach((rainDrop) => rainDrop.update(this.wind.windSpeed));
+        this.rainDrops.forEach((rainDrop) => rainDrop.update(this.windSpeed));
     }
 
     draw() {
