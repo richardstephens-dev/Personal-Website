@@ -529,10 +529,6 @@ video {
   left: 0px;
 }
 
-.hidden {
-  display: none;
-}
-
 .bg-gradient-to-b {
   background-image: linear-gradient(to bottom, var(--tw-gradient-stops));
 }
