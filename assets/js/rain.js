@@ -3,41 +3,12 @@ const canvas = document.getElementById('rain');
 const ctx = canvas.getContext('2d');
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight - 0.001;
-let particlesArray = [];
 
-class Particle {
-    constructor(x, y) {
-        this.x = x;
-        this.y = y;
-        this.weight = 2;
-        this.size = 100;
-        this.deltaX = 0;
-        this.style = "red";
-    }
-
-    update() {
-        this.x += this.deltaX;
-        this.y += this.weight;
-
-        // If it reaches the bottom of the canvas, reset it to the top
-        if (this.y > canvas.height) {
-            this.y = 0;
-            this.x = Math.random() * canvas.width;
-        }
-    }
-
-    draw() {
-        ctx.fillStyle = this.style;
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-        ctx.fill();
-    }
-}
-
-class RainDrop extends Particle {
+class RainDrop {
     constructor(x, y) {
         // initialize some variables
-        super(x, y);
+        this.x = x;
+        this.y = y;
         this.deltaX = -0.1 + Math.random() * 0.2;
         this.weight = 14 + Math.random() * 1;
         this.size = 5 + Math.random() * 10;
@@ -107,7 +78,7 @@ class RainEffect {
         this.height = height;
         this.rainDrops = [];
         this.wind = new Wind();
-        this.addDrops(100);
+        this.lightnings = [];
     }
 
     addDrops(count) {
@@ -118,8 +89,29 @@ class RainEffect {
         }
     }
 
+    addLightning(event) {
+        const lightning = new Lightning(event);
+        lightning.x = event.clientX;
+        this.lightnings.push(lightning);
+    }
+
+
     update() {
+        // Update the wind
         this.wind.update();
+
+        // Update the lightning
+        this.lightnings.forEach((lightning) => lightning.update());
+
+        // Remove any lightning with a blinkCount of more than 100. Use the same method as removing raindrops
+        this.lightnings.forEach((lightning, index) => {
+            if (lightning.blinkCount > 40) {
+                this.lightnings.splice(index, 1);
+            }
+        });
+
+
+        // Update the rain
         // Slowly vary the number of target drops
         let targetDropCount = Math.abs(Math.floor(Math.sin(Date.now() / 10000) * 100)) + 50;
 
@@ -136,28 +128,96 @@ class RainEffect {
                     this.rainDrops.splice(index, 1);
                 }
             });
-            /*for (let i = this.rainDrops.length - 1; i >= 0; i--) {
-                if (this.rainDrops[i].y >= canvas.height - 5) {
-                    this.rainDrops.splice(i, 1);
-                }
-            }*/
         }
         this.rainDrops.forEach((rainDrop) => rainDrop.update(this.wind.windSpeed));
     }
 
     draw() {
         this.rainDrops.forEach((rainDrop) => rainDrop.draw());
+        this.lightnings.forEach((lightning) => lightning.draw());
+    }
+}
+
+class Lightning {
+    constructor(event) {
+        this.y = 0;
+        this.x = event.clientX;
+        this.width = Math.random() * 15 + 5;
+        this.branches = [];
+        this.blinkCount = 0;
+        this.lean = 0;
+    }
+
+    update() {
+        this.blinkCount++;
+        console.log(this.blinkCount)
+
+        while (this.y < canvas.height) {
+            // Add another branch if the lightning hasn't reached the bottom of the screen
+            // A branch is an array of startX, startY, endX, endY, width.
+            // The startX and startY are the same as the previous branch's endX and endY
+            // The endX is random, and the endY is the current lightning's y + random height
+            // The width is the current lightning's width - random width
+            const startX = this.branches.length > 0 ? this.branches[this.branches.length - 1][2] : this.x;
+            const startY = this.branches.length > 0 ? this.branches[this.branches.length - 1][3] : this.y;
+            const width = (this.branches.length > 0 ? this.branches[this.branches.length - 1][4] : this.width) * 0.9;
+            const endX = startX + (Math.random() * 300) - 150 + this.lean;
+            const endY = startY + (Math.random() * 100) + 50;
+            this.branches.push([startX, startY, endX, endY, width]);
+
+            // Update the x, y and width of the lightning to be the
+            // lowest endX, endY and width of the branches
+            this.branches.forEach((branch) => {
+                // check if current branch is the lowest using ?. Set the x and y based on endY
+                this.y = branch[3] > this.y ? branch[3] : this.y;
+                this.x = branch[3] > this.y ? branch[2] : this.x;
+                this.width = branch[4] < this.width ? branch[4] : this.width;
+            });
+        }
+    }
+
+    draw() {
+        // If the blinkCount is between 10-20, return
+        if (this.blinkCount > 10 && this.blinkCount < 20) return;
+
+        // Create a blur canvas to draw the lightning on
+        const blurCanvas = document.createElement("canvas");
+        blurCanvas.width = canvas.width;
+        blurCanvas.height = canvas.height;
+        const blurCtx = blurCanvas.getContext("2d");
+        // apply blur
+        blurCtx.filter = "blur(5px)";
+        // Draw the lightning
+        blurCtx.beginPath();
+        blurCtx.moveTo(this.branches[0][0], this.branches[0][1]);
+        this.branches.forEach((branch) => {
+            blurCtx.lineTo(branch[2], branch[3]);
+        });
+        blurCtx.lineWidth = this.width;
+        blurCtx.strokeStyle = "#e6e6ec";
+        blurCtx.stroke();
+
+        ctx.fillStyle = "#e6e6ec";
+        // Draw each branch as a polygon with 4 points (startX, startY, endX, endY)
+        this.branches.forEach((branch) => {
+            // draw the blur canvas
+            ctx.drawImage(blurCanvas, 0, 0);
+        });
+        ctx.save();
     }
 }
 
 // Initialize animation managers:
 const rain = new RainEffect(canvas.width, canvas.height);
 
-// Animation loop:
-function animateRain(callback) {
+// Functions:
+function animateRain() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     rain.update();
     rain.draw();
     requestAnimationFrame(animateRain);
-    callback();
+}
+
+function animateLightning(event) {
+    rain.addLightning(event);
 }

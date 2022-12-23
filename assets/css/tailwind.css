@@ -3,17 +3,6 @@
 @tailwind utilities;
 
 
-/* Makes canvas able to be a background */
-.bg-canvas::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    z-index: -1;
-}
-
 /* Formatting for terminal text */
 .terminal-text {
     /*The font is the same as a ubuntu mono terminal*/
@@ -22,7 +11,6 @@
     color: #c1c1d2;
     line-height: 1.5;
 }
-
 
 /* Blinker for terminal text */
 .blinker {
