@@ -13,16 +13,18 @@
     <title>Richard Stephens</title>
 </head>
 
-<body class="">
+<body>
     <!-- Element with rain -->
-    <canvas id="rain" class="rain absolute top-0 bg-gradient-to-b from-gothic-bit-steel-gray to-gothic-bit-tuna">
+    <canvas id="rain" class="absolute top-0 w-full h-full rainy-skies">
     </canvas>
-    <div class="absolute top-0 left-0 p-4">
-        <span id="startText" class="terminal-text"></span>
-    </div>
+    <!-- Terminal -->
+    <style id="terminal-style"></style>
+    <pre id="terminal-text"></pre>
+
     <!-- Scripts -->
-    <script src="./assets/js/rain.js"></script>
     <script src="./assets/js/terminal-text.js"></script>
+    <script src="./assets/js/dynamic.js"></script>
+    <script src="./assets/js/app.js"></script>
 </body>
 
 </html>
