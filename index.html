@@ -18,10 +18,16 @@
     <canvas id="rain" class="absolute top-0 w-full h-full rainy-skies">
     </canvas>
     <!-- Terminal -->
-    <style id="terminal-style"></style>
-    <pre id="terminal-text"></pre>
-
+    <div id="terminal" class="terminal">
+        <style id="terminal-style"></style>
+        <div class="terminal-header" id="terminal-header">
+        </div>
+        <div class="terminal-body">
+            <pre id="terminal-body"></pre>
+        </div>
+    </div>
     <!-- Scripts -->
+    <script src="./assets/js/draggable.js"></script>
     <script src="./assets/js/terminal-text.js"></script>
     <script src="./assets/js/dynamic.js"></script>
     <script src="./assets/js/app.js"></script>

@@ -7,15 +7,6 @@
     background-color: white;
 }
 
-/* Formatting for terminal text */
-.terminal-text {
-    /*The font is the same as a ubuntu mono terminal*/
-    font-family: 'Ubuntu Mono';
-    font-size: 1.2rem;
-    color: #c1c1d2;
-    line-height: 1.5;
-}
-
 /* Blinker for terminal text */
 .blinker {
     margin-bottom: -2px;

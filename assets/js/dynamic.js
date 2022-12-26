@@ -1,3 +1,5 @@
+dragElement(document.getElementById("terminal"));
+
 styles = `
 /*
 * Hey. A white background is boring.
@@ -5,41 +7,60 @@ styles = `
 * working environment.
 */
 
-pre {
-    white-space: pre-wrap;
-    position: fixed; width: 48%;
-    top: 30px; bottom: 30px; left: 26%;
-    transition: left 500ms;
-    overflow: auto;
-    background-color: #1e1e1e;
-    color: #d4d4d4;
-    border-left: 15px solid #454545;
-    border-top: 15px solid #454545;
-    overflow: auto;
-    /* change the style of the scrollbar */
+.terminal-header, .terminal-body {
+    transition: all 1s;
+    position: absolute;
+    width: 50%;
+    left: 30px;
 }
+
+.terminal-header {
+    top: 30px;
+    border-top: 31px solid #454545;
+    cursor: move;
+}
+
+.terminal-body {
+    white-space: pre-wrap;
+    top: 60px;
+    bottom: 30px;
+    overflow: auto;
+    background-color: rgba(30, 30, 30, 0.9);
+    color: #d4d4d4;
+    border-left: 15px solid #383b3d;
+    overflow: auto;
+    font-family: 'Ubuntu Mono';
+    font-size: 1.2rem;
+    color: #c1c1d2;
+    line-height: 1.5;
+}
+
+/*
+* Let's make sure we have enough space to work with.
+*/
 
 /*
 * I like VSCode's dark theme.
 * Let's use that.
 */
-pre::-webkit-scrollbar {
+
+.terminal-body::-webkit-scrollbar {
     width: 15px; /* set the width of the scrollbar */
-    background-color: #1e1e1e;
+    background-color: rgba(30, 30, 30, 0.95);
 }
 
-pre::-webkit-scrollbar-thumb {
+.terminal-body::-webkit-scrollbar-thumb {
     background-color: #a6a6a6;
     width: 15px;
     border-radius: 0px; /* set the border radius of the thumb */
     opacity: 0.1;
 }
 
-pre::-webkit-scrollbar-thumb:hover {
+.terminal-body::-webkit-scrollbar-thumb:hover {
     background-color: #bbbbbb;
 }
 
-pre::-webkit-scrollbar-thumb:active {
+.terminal-body::-webkit-scrollbar-thumb:active {
     opacity: 0.9;
 }
 
@@ -98,8 +119,8 @@ function writeStyleChar(which, textId, styleId) {
 
 function writeStyles(message, index, interval, textId, styleId) {
     if (index < message.length) {
-        var pre = document.getElementById(textId);
-        pre.scrollTop = pre.scrollHeight;
+        var element = document.getElementById(textId).parentNode;
+        element.scrollTop = element.scrollHeight;
         writeStyleChar(message[index++], textId, styleId);
         if (message.substring(index, index + 1).match(/\s/) && message.substring(index - 1, index).match(/\./)) {
             interval = 100; // Pause after each sentence.
@@ -114,6 +135,6 @@ function writeStyles(message, index, interval, textId, styleId) {
     }
 }
 
-let textId = 'terminal-text';
+let textId = 'terminal-body';
 let styleId = 'terminal-style';
 writeStyles(styles, 0, 20, textId, styleId);
