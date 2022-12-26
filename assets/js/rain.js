@@ -141,7 +141,7 @@ class Lightning {
     constructor(event) {
         this.y = 0;
         this.x = event.clientX;
-        this.width = Math.random() * 15 + 5;
+        this.width = Math.random() * 5;
         this.branches = [];
         this.blinkCount = 0;
         this.lean = 0;
@@ -171,8 +171,8 @@ class Lightning {
             const startX = this.branches.length > 0 ? this.branches[this.branches.length - 1][2] : this.x;
             const startY = this.branches.length > 0 ? this.branches[this.branches.length - 1][3] : this.y;
             const width = (this.branches.length > 0 ? this.branches[this.branches.length - 1][4] : this.width) * 0.9;
-            const endX = startX + (Math.random() * 300) - 150 + this.lean;
-            const endY = startY + (Math.random() * 100) + 50;
+            const endX = startX + (Math.random() * 100) - 50 + this.lean;
+            const endY = startY + (Math.random() * 25) + 25;
             this.branches.push([startX, startY, endX, endY, width]);
 
             // Update the x, y and width of the lightning to be the
@@ -196,7 +196,7 @@ class Lightning {
         blurCanvas.height = canvas.height;
         const blurCtx = blurCanvas.getContext("2d");
         // apply blur
-        blurCtx.filter = "blur(5px)";
+        blurCtx.filter = "blur(2px)";
         // Draw the lightning
         blurCtx.beginPath();
         blurCtx.moveTo(this.branches[0][0], this.branches[0][1]);
