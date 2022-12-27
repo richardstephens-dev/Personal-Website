@@ -56,7 +56,7 @@ document.getElementById("down-button").addEventListener("click", function () {
     document.getElementById("css-terminal").removeEventListener("click", arguments.callee);
 });
 
-document.getElementById("css-button").addEventListener("click", function () {
+document.getElementById("css-terminal").addEventListener("click", function () {
     if (dialog3Complete) {
         return;
     }
