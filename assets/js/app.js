@@ -2,7 +2,7 @@ var dialog1Complete = false;
 var dialog2Complete = false;
 var dialog3Complete = false;
 window.addEventListener("load", function () {
-    writeStyles(dialog1, 0, 20, 'css-terminal-body', 'terminal-style');
+    writeStyles(dialog1, 0, 35, 'css-terminal-body', 'terminal-style');
     document.getElementById("down-button").style.visibility = "hidden";
 });
 
@@ -83,9 +83,8 @@ window.addEventListener("resize", function () {
 
 dialog1 = `
 /*
-* Hey, you found my personal website.
+* Hey, you found my website.
 * It's a bit empty, isn't it?
-* How embarrassing.
 * We can change that.
 * Let's start with a clean
 * work area.
@@ -319,11 +318,11 @@ function writeStyles(message, index, interval, textId, styleId) {
         }
 
         if (message.substring(index, index + 1).match(/\s/) && message.substring(index - 1, index).match(/[.!?]$/)) {
-            interval = 8.00; // Pause after each sentence.
+            interval = 800; // Pause after each sentence.
         } else if (comment == true) {
-            interval = 3.5; // Slow down comment typing.
+            interval = 35; // Slow down comment typing.
         } else {
-            interval = 1.5; // Otherwise go fast so no one loses attention span.
+            interval = 15; // Otherwise go fast so no one loses attention span.
         }
         // If the last character was a newline, add everything between the last two newlines to the style:
         if (message.substring(index - 1, index).match(/\n/)) {
