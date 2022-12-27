@@ -1,84 +1,88 @@
 var dialog1Complete = false;
 var dialog2Complete = false;
 var dialog3Complete = false;
+// Start the animation when the window loads.
 window.addEventListener("load", function () {
     writeStyles(dialog1, 0, 35, 'css-terminal-body', 'terminal-style');
-    document.getElementById("down-button").style.visibility = "hidden";
 });
-
-document.getElementById("down-button").addEventListener("click", function () {
-    console.log("clicked down button")
-    document.getElementById("css-terminal").style.top = "70%";
-    document.getElementById("css-terminal").style.transform = "translateY(-70%)";
-    document.getElementById("down-button").removeEventListener("click", arguments.callee);
-    document.getElementById("down-button").addEventListener("click", function () {
-        console.log("Clicked down button again")
-        document.getElementById("css-terminal").style.top = "0";
-        document.getElementById("css-terminal").style.transform = "translateY(0)";
-        document.getElementById("down-button").style.visibility = "hidden";
-    });
-});
-
-document.getElementById("down-button").addEventListener("click", function () {
-
-    // Dialog checks.
-    if (dialog2Complete) {
-        return;
-    }
-
-    // Make down button visible.
-    document.getElementById("down-button").style.visibility = "visible";
-
-    if (!dialog1Complete) {
-        return;
-    }
-
-    // Check if the user has moved the terminal to the bottom of the screen.
-    if (document.getElementById("css-terminal").getBoundingClientRect().top < window.innerHeight * 0.1) {
-        return;
-    }
-    writeStyles(dialog2, 0, 20, 'css-terminal-body', 'button-style', dialog2);
-    // Add the text to the button-body
-    document.getElementById("button-body").innerHTML = "Make it Rain!";
-    // get button element
-    const button = document.getElementById('rain-button');
-    button.addEventListener('click', () => {
-        // If the button is clicked, animate rain.
-        animateRain();
-        window.addEventListener("click", function (event) {
-            event.stopImmediatePropagation();
-            if (dialog2Complete) { animateLightning(event); }
-        });
-        // Remove the button.
-        button.remove();
-    });
-    // Remove the eventlistener after the function is called once.
-    document.getElementById("css-terminal").removeEventListener("click", arguments.callee);
-});
-
-document.getElementById("css-terminal").addEventListener("click", function () {
-    if (dialog3Complete) {
-        return;
-    }
-    if (!dialog2Complete) {
-        return;
-    }
-    if (!dialog1Complete) {
-        return;
-    }
-
-    if (document.getElementById("css-terminal").getBoundingClientRect().top > window.innerHeight * 0.1) {
-        return;
-    }
-    console.log("ALL CONDITIONS ARE GO. I REPEAT, ALL CONDITIONS ARE GO.");
-    writeStyles(dialog3, 0, 20, 'css-terminal-body', 'button-style', dialog3);
-    // Remove the eventlistener after the function is called once.
-    document.getElementById("css-terminal").removeEventListener("click", arguments.callee);
-});
-
 // Reset the canvas when the window is resized.
 window.addEventListener("resize", function () {
     resetCanvas();
+});
+
+// Use a MutationObserver to detect when the dialog1 is complete by
+// comparing the innerHTML of the terminal-body to the dialog1 string.
+var dialog1Observer = new MutationObserver(function (mutations) {
+    // Check if the dialog1 is complete.
+    lengthDifference = document.getElementById("css-terminal-body").innerHTML.length - (dialog1 + "<span class='blinker'></span>").length;
+    if (lengthDifference != 0) {
+        return;
+    };
+    // if we are on mobile:
+    if (window.innerWidth <= 600) {
+        // Make clicking the down button move the terminal to the bottom of the screen.
+        document.getElementById("down-button").addEventListener("click", function () {
+            document.getElementById("css-terminal").style.top = "10%";
+            // Move the svg.
+            document.getElementById("down-button").style.top = "10%";
+            // Flip the svg.
+            document.getElementById("down-button").style.transform = "rotate(180deg)";
+            // On hover, the up button should still point up and stay in the same place.
+            document.getElementById("down-button").addEventListener("mouseover", function () {
+                document.getElementById("down-button").style.top = "0";
+                document.getElementById("down-button").style.height = "30px";
+            });
+            // Make clicking the up button move the terminal back to the top of the screen.
+            document.getElementById("down-button").addEventListener("click", function () {
+                document.getElementById("css-terminal").style.top = "0";
+                document.getElementById("css-terminal").style.height = "50%";
+            });
+        });
+    }
+
+    // if we are on desktop:
+    // When the user hovers over the terminal, change style to cursor: move.
+    document.getElementById("css-terminal").addEventListener("mouseover", function () {
+        document.getElementById("css-terminal").style.cursor = "move";
+    });
+    // Add event listener to make the terminal draggable.
+    document.getElementById("css-terminal").style.transition = "none";
+    document.getElementById("css-terminal").style.animation = "none";
+    document.getElementById("css-terminal").addEventListener("mousedown", function (e) {
+        dragElement(document.getElementById("css-terminal"), e);
+    });
+
+
+    document.getElementById("css-terminal").addEventListener("mouseup", function () {
+        if (document.getElementById("css-terminal").getBoundingClientRect().top < window.innerHeight * 0.1) {
+            return;
+        }
+        // If dialog2 is not complete, start it.
+        if (dialog2Complete) {
+            return;
+        }
+        // Begin dialog 2.
+        writeStyles(dialog2, 0, 35, 'css-terminal-body', 'terminal-style');
+        // Add the text "Make it Rain!" to the rain button.
+        document.getElementById("rain-button").innerHTML = "Make it Rain!";
+        // add an event listener to the rain button to animate the rain.
+        document.getElementById("rain-button").addEventListener("click", function () {
+            animateRain();
+            document.getElementById("rain-button").removeEventListener("click", arguments.callee);
+        });
+        // add an event listener to the window to animate lightning on click.
+        window.addEventListener("click", function (event) {
+            animateLightning(event);
+        });
+        dialog1Observer.disconnect();
+        document.getElementById("css-terminal").removeEventListener("mouseup", arguments.callee);
+    });
+});
+dialog1Observer.observe(document.getElementById("css-terminal-body"), {
+    childList: true,
+    characterData: true,
+    attributes: true,
+    attributeFilter: ['style: top'],
 });
 
 dialog1 = `
@@ -137,6 +141,37 @@ pre {
         height: 50%;
         left: 0;
         top: 0;
+    }
+
+    .down-button {
+        z-index: 2;
+        display: inline-block;
+        position: absolute;
+        border: none;
+        background-color: rgba(0,0,0,0);
+        left: 50%;
+        bottom: 10%;
+    }
+    
+    .down-button:hover {
+        cursor: pointer;
+        -webkit-animation: pulse 1s infinite;
+    }
+
+    .down-button[style*="top: 10%"] {
+        -webkit-transform: rotate(180deg);
+    }
+    
+    @-webkit-keyframes pulse {
+        0% {
+            -webkit-transform: scale(1);
+        }
+        50% {
+            -webkit-transform: scale(1.5);
+        }
+        100% {
+            -webkit-transform: scale(1);
+        }
     }
 }
 
@@ -212,33 +247,6 @@ pre {
         var(--tw-gradient-stops));
 }
 
-.down-button {
-    position: absolute;
-    border: none;
-    background-color: rgba(0,0,0,0);
-    display: block;
-    z-index: 2;
-    left: 50%;
-    bottom: 10%;
-}
-
-.down-button:hover {
-    cursor: pointer;
-    /* Make the button scale up and down using webkit. */
-    -webkit-animation: pulse 1s infinite;
-}
-
-@-webkit-keyframes pulse {
-    0% {
-        -webkit-transform: scale(1);
-    }
-    50% {
-        -webkit-transform: scale(1.5);
-    }
-    100% {
-        -webkit-transform: scale(1);
-    }
-
 /*
 * We'll animate some raindrops now with JavaScript.
 * I'll let you in on a secret.
@@ -262,7 +270,7 @@ dialog2 = `
 * for the final bit.
 */
 
-.button {
+.rain-button {
     z-index: 2; display: flex; position: absolute;
     left: 25px; top: 25px;
     background-color: #454545;
@@ -318,11 +326,11 @@ function writeStyles(message, index, interval, textId, styleId) {
         }
 
         if (message.substring(index, index + 1).match(/\s/) && message.substring(index - 1, index).match(/[.!?]$/)) {
-            interval = 800; // Pause after each sentence.
+            interval = 8.00; // Pause after each sentence.
         } else if (comment == true) {
-            interval = 35; // Slow down comment typing.
+            interval = 3.5; // Slow down comment typing.
         } else {
-            interval = 15; // Otherwise go fast so no one loses attention span.
+            interval = 1.5; // Otherwise go fast so no one loses attention span.
         }
         // If the last character was a newline, add everything between the last two newlines to the style:
         if (message.substring(index - 1, index).match(/\n/)) {
