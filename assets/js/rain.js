@@ -1,13 +1,12 @@
-// event listener to every click on the page
-window.addEventListener("click", function (event) {
-    animateLightning(event);
-});
-
-// File to rewrite rain.js in the style of paint.js
 const canvas = document.getElementById('rain');
 const ctx = canvas.getContext('2d');
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight - 0.001;
+
+function resetCanvas() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight - 0.001;
+}
 
 class RainDrop {
     constructor(x, y) {
@@ -143,8 +142,6 @@ class Lightning {
 
     update() {
         this.blinkCount++;
-        console.log(this.blinkCount)
-
         while (this.y < canvas.height) {
             // If within 100px of the side of the screen, lean the lightning
             if (this.x < 100) {
@@ -225,5 +222,3 @@ function animateRain() {
 function animateLightning(event) {
     rain.addLightning(event);
 }
-
-animateRain();

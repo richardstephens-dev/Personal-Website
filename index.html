@@ -14,22 +14,30 @@
 </head>
 
 <body>
-    <!-- Element with rain -->
-    <canvas id="rain" class="absolute top-0 w-full h-full rainy-skies">
-    </canvas>
-    <!-- Terminal -->
-    <div id="terminal" class="terminal">
+    <!-- CSS Terminal -->
+    <div id="css-terminal" class="terminal">
         <style id="terminal-style"></style>
-        <div class="terminal-header" id="terminal-header">
-        </div>
-        <div class="terminal-body">
-            <pre id="terminal-body"></pre>
+        <div id="css-terminal-body-div" class="terminal-body">
+            <pre id="css-terminal-body"></pre>
         </div>
     </div>
+    <!-- Button to make it rain -->
+    <button id="rain-button" class="button">
+        <style id="button-style">
+            .button {
+                display: none;
+            }
+        </style>
+        <div id="button-body-div" class="button-body">
+            <pre id="button-body"></pre>
+        </div>
+    </button>
+    <!-- Element with rain -->
+    <canvas id="rain" class="rainy-skies">
+    </canvas>
     <!-- Scripts -->
+    <script src="./assets/js/rain.js"></script>
     <script src="./assets/js/draggable.js"></script>
-    <script src="./assets/js/terminal-text.js"></script>
-    <script src="./assets/js/dynamic.js"></script>
     <script src="./assets/js/app.js"></script>
 </body>
 
