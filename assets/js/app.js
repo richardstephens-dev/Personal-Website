@@ -3,20 +3,40 @@ var dialog2Complete = false;
 var dialog3Complete = false;
 window.addEventListener("load", function () {
     writeStyles(dialog1, 0, 20, 'css-terminal-body', 'terminal-style');
+    document.getElementById("down-button").style.visibility = "hidden";
 });
 
-document.getElementById("css-terminal").addEventListener("click", function () {
-    dragElement(document.getElementById("css-terminal"));
+document.getElementById("down-button").addEventListener("click", function () {
+    console.log("clicked down button")
+    document.getElementById("css-terminal").style.top = "70%";
+    document.getElementById("css-terminal").style.transform = "translateY(-70%)";
+    document.getElementById("down-button").removeEventListener("click", arguments.callee);
+    document.getElementById("down-button").addEventListener("click", function () {
+        console.log("Clicked down button again")
+        document.getElementById("css-terminal").style.top = "0";
+        document.getElementById("css-terminal").style.transform = "translateY(0)";
+        document.getElementById("down-button").style.visibility = "hidden";
+    });
+});
+
+document.getElementById("down-button").addEventListener("click", function () {
+
+    // Dialog checks.
     if (dialog2Complete) {
         return;
     }
+
+    // Make down button visible.
+    document.getElementById("down-button").style.visibility = "visible";
+
     if (!dialog1Complete) {
         return;
     }
+
+    // Check if the user has moved the terminal to the bottom of the screen.
     if (document.getElementById("css-terminal").getBoundingClientRect().top < window.innerHeight * 0.1) {
         return;
     }
-    console.log("ALL CONDITIONS ARE GO. I REPEAT, ALL CONDITIONS ARE GO.");
     writeStyles(dialog2, 0, 20, 'css-terminal-body', 'button-style', dialog2);
     // Add the text to the button-body
     document.getElementById("button-body").innerHTML = "Make it Rain!";
@@ -25,13 +45,18 @@ document.getElementById("css-terminal").addEventListener("click", function () {
     button.addEventListener('click', () => {
         // If the button is clicked, animate rain.
         animateRain();
+        window.addEventListener("click", function (event) {
+            event.stopImmediatePropagation();
+            if (dialog2Complete) { animateLightning(event); }
+        });
         // Remove the button.
         button.remove();
     });
+    // Remove the eventlistener after the function is called once.
+    document.getElementById("css-terminal").removeEventListener("click", arguments.callee);
 });
 
-document.getElementById("css-terminal").addEventListener("click", function () {
-    dragElement(document.getElementById("css-terminal"));
+document.getElementById("css-button").addEventListener("click", function () {
     if (dialog3Complete) {
         return;
     }
@@ -41,18 +66,17 @@ document.getElementById("css-terminal").addEventListener("click", function () {
     if (!dialog1Complete) {
         return;
     }
+
     if (document.getElementById("css-terminal").getBoundingClientRect().top > window.innerHeight * 0.1) {
         return;
     }
-    console.log("ALL CONDITIONS ARE GO ROUND 2. I REPEAT, ALL CONDITIONS ARE GO.");
+    console.log("ALL CONDITIONS ARE GO. I REPEAT, ALL CONDITIONS ARE GO.");
     writeStyles(dialog3, 0, 20, 'css-terminal-body', 'button-style', dialog3);
+    // Remove the eventlistener after the function is called once.
+    document.getElementById("css-terminal").removeEventListener("click", arguments.callee);
 });
 
-// event listener to every click on the page
-window.addEventListener("click", function (event) {
-    if (dialog2Complete) { animateLightning(event); }
-});
-
+// Reset the canvas when the window is resized.
 window.addEventListener("resize", function () {
     resetCanvas();
 });
@@ -67,6 +91,10 @@ dialog1 = `
 * work area.
 */
 
+* {
+    transition: all 1s;
+}
+
 pre {
     white-space: pre-wrap;
 }
@@ -80,7 +108,6 @@ pre {
     border-top: 30px solid #454545;
     z-index: 1;
     background-color: rgba(0,0,0,0);
-    cursor: move;
 }
 
 .terminal-body {
@@ -94,6 +121,24 @@ pre {
     background-color: rgba(30, 30, 30, 0.9);
     line-height: 1.5;
     user-select: none;
+}
+
+/*
+* Can't forget the mobile users.
+*/
+
+@media screen and (max-width: 600px) {
+    * {
+        font-size: 0.75rem;
+    }
+
+    .terminal {
+        display: inline-block;
+        width: 100%;
+        height: 50%;
+        left: 0;
+        top: 0;
+    }
 }
 
 /*
@@ -154,8 +199,8 @@ pre {
 */
 
 .rainy-skies {
-    z-index: 0;
     position: absolute;
+    z-index: 0;
     top: 0;
     left: 0;
     width: 100%;
@@ -168,6 +213,33 @@ pre {
         var(--tw-gradient-stops));
 }
 
+.down-button {
+    position: absolute;
+    border: none;
+    background-color: rgba(0,0,0,0);
+    display: block;
+    z-index: 2;
+    left: 50%;
+    bottom: 10%;
+}
+
+.down-button:hover {
+    cursor: pointer;
+    /* Make the button scale up and down using webkit. */
+    -webkit-animation: pulse 1s infinite;
+}
+
+@-webkit-keyframes pulse {
+    0% {
+        -webkit-transform: scale(1);
+    }
+    50% {
+        -webkit-transform: scale(1.5);
+    }
+    100% {
+        -webkit-transform: scale(1);
+    }
+
 /*
 * We'll animate some raindrops now with JavaScript.
 * I'll let you in on a secret.
@@ -176,6 +248,7 @@ pre {
 * top so we can make a button for you to push.
 * Can you do me a favour and drag this
 * element down so it's out of the way?
+* (mobile users, just click the button)
 * I can wait.
 */
 `
@@ -246,11 +319,11 @@ function writeStyles(message, index, interval, textId, styleId) {
         }
 
         if (message.substring(index, index + 1).match(/\s/) && message.substring(index - 1, index).match(/[.!?]$/)) {
-            interval = 800; // Pause after each sentence.
+            interval = 8.00; // Pause after each sentence.
         } else if (comment == true) {
-            interval = 35; // Slow down comment typing.
+            interval = 3.5; // Slow down comment typing.
         } else {
-            interval = 15; // Otherwise go fast so no one loses attention span.
+            interval = 1.5; // Otherwise go fast so no one loses attention span.
         }
         // If the last character was a newline, add everything between the last two newlines to the style:
         if (message.substring(index - 1, index).match(/\n/)) {
