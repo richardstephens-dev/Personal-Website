@@ -95,6 +95,25 @@ pre {
 }
 
 /*
+* Can't forget the background!
+*/
+
+.background {
+    position: absolute;
+    z-index: 0;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    --tw-gradient-from: #1a1a24;
+    --tw-gradient-to: #333346;
+    --tw-gradient-stops: var(--tw-gradient-from),
+        var(--tw-gradient-to);
+    background-image: linear-gradient(to bottom,
+        var(--tw-gradient-stops));
+}
+
+/*
 * OK, let's add a CLI style blinker.
 */
 
@@ -140,32 +159,12 @@ pre {
 /*
 * Ah. Now that's more like it.
 * Hmm. What next?
-* I live in London, UK.
-* It's rainy here.
-* Let's make it rain here too.
-*/
-
-.rainy-skies {
-    position: absolute;
-    z-index: 0;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    --tw-gradient-from: #1a1a24;
-    --tw-gradient-to: #333346;
-    --tw-gradient-stops: var(--tw-gradient-from),
-        var(--tw-gradient-to);
-    background-image: linear-gradient(to bottom,
-        var(--tw-gradient-stops));
-}
-
-/*
-* That's a good sky, but we need rain.
-* I'll tell you a secret.
-* The JavaScript for the rain is ready.
-* Let's make a button so you can trigger the script.
-* We'll just need a bit of space at the top.
+* Let's do what any good
+* developer wants use
+* their skills to do:
+* Make it rain!
+* We'll just need a bit of
+* space at the top.
 * Can you do me a favour and
 * move this element down?
 * I can wait.
@@ -194,9 +193,13 @@ dialog2 = `
 
 dialog3 = `
 /*
-* That's a bit cozier, isn't it?
+* Well... that's not what I had
+* in mind when I said "make it rain".
+* But hey, it's a bit cozier, isn't it?
+* And puns are fun.
 * OK, last thing.
-* This is a project portfolio website.
+* This is a project portfolio
+* website after all.
 * Let's add some projects.
 */
 
