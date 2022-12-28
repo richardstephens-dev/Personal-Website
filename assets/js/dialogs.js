@@ -1,6 +1,7 @@
 dialog1 = `
 /*
 * Hey, you found my website.
+* I made this to store some of my projects.
 * It's a bit empty, isn't it?
 * We can change that.
 * Let's start with a clean
@@ -63,6 +64,12 @@ pre {
         bottom: 10%;
     }
 
+    /*
+    * This button doesn't do
+    * anything yet, but it will
+    * soon. Prep work. :)
+    */
+
     .down-button, .up-button {
         position: absolute;
         border: none;
@@ -88,8 +95,7 @@ pre {
 }
 
 /*
-* Something you should know.
-* I love a good CLI blinker.
+* OK, let's add a CLI style blinker.
 */
 
 .blinker {
@@ -107,7 +113,7 @@ pre {
 }
 
 /*
-* OK, let's finish up the visuals.
+* And fix this ugly scrollbar!
 */
 
 .terminal-body::-webkit-scrollbar {
@@ -132,15 +138,10 @@ pre {
 }
 
 /*
-* And of course we need syntax highlighting.
-*/
-
-/* TODO: Add syntax highlighting */
-
-/*
 * Ah. Now that's more like it.
 * Hmm. What next?
-* Where I'm at, it's always raining.
+* I live in London, UK.
+* It's rainy here.
 * Let's make it rain here too.
 */
 
@@ -160,15 +161,17 @@ pre {
 }
 
 /*
-* We'll animate some raindrops now with JavaScript.
-* I'll let you in on a secret.
-* The code is already written.
-* We'll just need a bit of space at the
-* top so we can make a button for you to push.
-* Can you do me a favour and drag this
-* element down so it's out of the way?
-* (mobile users, just click the button)
+* That's a good sky, but we need rain.
+* I'll tell you a secret.
+* The JavaScript for the rain is ready.
+* Let's make a button so you can trigger the script.
+* We'll just need a bit of space at the top.
+* Can you do me a favour and
+* move this element down?
 * I can wait.
+* ...
+* (mobile users, remember what I said?
+* The button does something now.)
 */`
 
 dialog2 = `
@@ -230,4 +233,11 @@ dialog4 = `
 /*
 * And enjoy another mildly
 * egotistical personal portfolio website.
-*/`
+*/
+
+/*
+* Richard Stephens
+* richard.stephens.15@ucl.ac.uk
+* +44 0 7704 930 825
+*/
+`
