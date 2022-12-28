@@ -132,7 +132,7 @@ pre {
 }
 
 /*
-* And fix this ugly scrollbar!
+* And swap out the scrollbar!
 */
 
 .terminal-body::-webkit-scrollbar {
@@ -236,11 +236,14 @@ dialog4 = `
 /*
 * And enjoy another mildly
 * egotistical personal portfolio website.
-*/
-
-/*
+*
+* I'm still learning, and this website
+* was my way to teach myself bit of JavaScript.
+* If you find any bugs or have
+* any feedback, please let me know.
+*
+* Contact:
 * Richard Stephens
 * richard.stephens.15@ucl.ac.uk
 * +44 0 7704 930 825
-*/
-`
+*/`
