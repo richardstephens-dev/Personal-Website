@@ -187,6 +187,15 @@ dialog2 = `
     user-select: none; cursor: pointer;
     border: 0px;
 }
+`
+
+dialog3 = `
+/*
+* That's a bit cozier, isn't it?
+* OK, last thing.
+* This is a project portfolio website.
+* Let's add some projects.
+*/
 
 @media screen and (max-width: 600px) {
     .up-button {
@@ -197,14 +206,8 @@ dialog2 = `
         top: 10%;
     }
 }
-`
 
-dialog3 = `
 /*
-* That's a bit cozier, isn't it?
-* OK, last thing.
-* This is a project portfolio website.
-* Let's add some projects.
 * Move the element back up
 * To make space below.
 */

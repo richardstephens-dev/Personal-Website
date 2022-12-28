@@ -38,7 +38,7 @@ function dialog1Callback() {
     // For mobile:
     // Make clicking the down button move the terminal to the bottom of the screen.
     document.getElementById("down-button").addEventListener("click", function () {
-        console.log("clicked");
+        document.getElementById("css-terminal").style.transition = "all 1s";
         document.getElementById("css-terminal").style.top = "40%";
         document.getElementById("down-button").removeEventListener("click", arguments.callee);
         writeStyles(dialog2, 0, 35, 'css-terminal-body', 'style');
@@ -53,9 +53,8 @@ function dialog1Callback() {
         document.getElementById("css-terminal").style.cursor = "move";
     });
     // Add event listener to make the terminal draggable.
-    document.getElementById("css-terminal").style.transition = "none";
-    document.getElementById("css-terminal").style.animation = "none";
     document.getElementById("css-terminal").addEventListener("mousedown", function (e) {
+        document.getElementById("css-terminal").style.transition = "none";
         dragElement(document.getElementById("css-terminal"), e);
     });
 
@@ -102,7 +101,10 @@ function dialog3Callback() {
 
     // Make clicking the up button move the terminal back to the top of the screen.
     document.getElementById("up-button").addEventListener("click", function () {
+        document.getElementById("css-terminal").style.transition = "all 1s";
         document.getElementById("css-terminal").style.top = "0%";
+        writeStyles(dialog4, 0, 35, 'css-terminal-body', 'style');
+        dialog3Observer.disconnect();
         document.getElementById("up-button").removeEventListener("click", arguments.callee);
         document.getElementById("up-button").remove();
     });
