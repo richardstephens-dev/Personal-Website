@@ -12,15 +12,9 @@ dialog1 = `
     transition: all 1s;
 }
 
-pre {
-    white-space: pre-wrap;
-}
-
 .terminal {
     width: 50%;
-    height: 50%;
-    left: 7%;
-    top: 7%;
+    height: 40%;
     position: absolute;
     border-top: 30px solid #454545;
     z-index: 2;
@@ -28,6 +22,7 @@ pre {
 }
 
 .terminal-body {
+    white-space: pre-wrap;
     overflow: auto;
     width: 100%;
     height: 100%;
@@ -230,14 +225,25 @@ dialog4 = `
 * settle in with a cup of warm tea...
 */
 
+// set variable width equal to the width of the window inner width
+:root {
+    --spriteSize: calc(256px);
+}
+
+@media screen and (max-width: 600px) {
+    :root {
+        --spriteSize: 128px;
+    }
+}
+
 .tea {
     display: block;
     position: absolute;
     z-index: 1;
     left: calc(33% - 128px);
     top: 50%;
-    width: 256px;
-    height: 256px;
+    width: var(--spriteSize);
+    height: var(--spriteSize);
     background-image: url('assets/images/tea.svg');
     background-position: 0 0;
     background-size: cover;
@@ -256,31 +262,31 @@ dialog4 = `
 
 @keyframes tea {
     0% {
-        background-position: 0px 0px;
+        background-position: 0 0;
     }
 
     17% {
-        background-position: 256px 0px;
+        background-position: var(--spriteSize 0);
     }
 
     34% {
-        background-position: 512px 0px;
+        background-position: calc(2 * var(--spriteSize)) 0;
     }
 
     51% {
-        background-position: 768px 0px;
+        background-position: calc(3 * var(--spriteSize)) 0;
     }
 
     68% {
-        background-position: 1024px 0px;
+        background-position: calc(4 * var(--spriteSize)) 0;
     }
 
     85% {
-        background-position: 1280px 0px;
+        background-position: calc(5 * var(--spriteSize)) 0;
     }
 
     100% {
-        background-position: 1536px 0px;
+        background-position: calc(6 * var(--spriteSize)) 0;
     }
 }
 
