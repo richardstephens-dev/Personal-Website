@@ -23,7 +23,7 @@ pre {
     top: 7%;
     position: absolute;
     border-top: 30px solid #454545;
-    z-index: 1;
+    z-index: 2;
     background-color: rgba(0,0,0,0);
 }
 
@@ -41,7 +41,7 @@ pre {
 }
 
 /*
-* Can't forget the mobile users.
+* And just in case you're on mobile...
 */
 
 @media screen and (max-width: 600px) {
@@ -52,45 +52,9 @@ pre {
     .terminal {
         display: inline-block;
         width: 100%;
-        height: 50%;
         left: 0;
+        right: 0;
         top: 0;
-    }
-
-    .down-button {
-        display: inline-block;
-        z-index: 2;
-        left: 50%;
-        bottom: 10%;
-    }
-
-    /*
-    * This button doesn't do
-    * anything yet, but it will
-    * soon. Prep work. :)
-    */
-
-    .down-button, .up-button {
-        position: absolute;
-        border: none;
-        background-color: rgba(0,0,0,0);
-    }
-    
-    .down-button:hover, .up-button:hover {
-        cursor: pointer;
-        animation: pulse 1s infinite;
-    }
-    
-    @keyframes pulse {
-        0% {
-            transform: scale(1);
-        }
-        50% {
-            transform: scale(1.5);
-        }
-        100% {
-            transform: scale(1);
-        }
     }
 }
 
@@ -157,6 +121,45 @@ pre {
 }
 
 /*
+* Desktop users can drag the terminal element.
+* For everyone else, let's add some buttons.
+*/
+
+@media screen and (max-width: 600px) {
+    .down-button {
+        display: inline-block;
+        z-index: 1;
+        bottom: 10%;
+    }
+
+    .down-button, .up-button {
+        position: absolute;
+        width: 30px;
+        height: 30px;
+        left: calc(50% - 15px);
+        border: none;
+        background-color: rgba(0,0,0,0);
+    }
+
+    .down-button:hover, .up-button:hover {
+        cursor: pointer;
+        animation: pulse 1s infinite;
+    }
+
+    @keyframes pulse {
+        0% {
+            transform: scale(1);
+        }
+        50% {
+            transform: scale(1.5);
+        }
+        100% {
+            transform: scale(1);
+        }
+    }
+}
+
+/*
 * Ah. Now that's more like it.
 * Hmm. What next?
 * Let's do what any good
@@ -168,27 +171,30 @@ pre {
 * Can you do me a favour and
 * move this element down?
 * I can wait.
-* ...
-* (mobile users, remember what I said?
-* The button does something now.)
 */`
 
 dialog2 = `
 /*
 * Thanks for that.
 * We have a bit of breathing room now.
-* Let's make it rain!
 */
 
 .rain-button {
-    z-index: 2; display: block; position: absolute;
-    left: 25px; top: 25px;
+    z-index: 1; display: block; position: absolute;
+    width: 150px;
+    height: auto;
+    left: calc(50% - 75px);
+    top: 5%;
     background-color: #454545;
     font-family: 'Ubuntu Mono'; font-size: 1.2rem;
     color: #c1c1d2; line-height: 1.5;
     user-select: none; cursor: pointer;
     border: 0px;
 }
+
+/*
+* Let's make it rain!
+*/
 `
 
 dialog3 = `
@@ -207,8 +213,7 @@ dialog3 = `
     .up-button {
         display: block;
         position: absolute;
-        z-index: 3;
-        left: 50%;
+        z-index: 1;
         top: 10%;
     }
 }
@@ -225,20 +230,92 @@ dialog4 = `
 * settle in with a cup of warm tea...
 */
 
-/* Add Tea */
+.tea {
+    display: block;
+    position: absolute;
+    z-index: 1;
+    left: calc(33% - 128px);
+    top: 50%;
+    width: 256px;
+    height: 256px;
+    background-image: url('assets/images/tea.svg');
+    background-position: 0 0;
+    background-size: cover;
+    animation: tea 1.5s steps(1) infinite;
+}
+
+@media screen and (max-width: 600px) {
+    .tea {
+        left: calc(50% - 128px);
+    }
+
+    .background {
+        height: 150%;
+    }
+}
+
+@keyframes tea {
+    0% {
+        background-position: 0px 0px;
+    }
+
+    17% {
+        background-position: 256px 0px;
+    }
+
+    34% {
+        background-position: 512px 0px;
+    }
+
+    51% {
+        background-position: 768px 0px;
+    }
+
+    68% {
+        background-position: 1024px 0px;
+    }
+
+    85% {
+        background-position: 1280px 0px;
+    }
+
+    100% {
+        background-position: 1536px 0px;
+    }
+}
 
 /*
 * And of course a good book...
 */
 
-/* Add Book */
+.book {
+    display: block;
+    position: absolute;
+    z-index: 1;
+    right: calc(33% - 128px);
+    top: 50%;
+    width: 256px;
+    height: 256px;
+    background-image: url('assets/images/book.svg');
+    background-position: 0 0;
+    background-size: cover;
+    animation: tea 1.5s steps(1) infinite;
+}
+
+@media screen and (max-width: 600px) {
+    .book {
+        left: calc(50% - 128px);
+        top: 100%;
+    }
+}
 
 /*
 * And enjoy another mildly
 * egotistical personal portfolio website.
 *
 * I'm still learning, and this website
-* was my way to teach myself bit of JavaScript.
+* was my way to teach myself bit of
+* CSS, JavaScript, and html.
 * If you find any bugs or have
 * any feedback, please let me know.
 *

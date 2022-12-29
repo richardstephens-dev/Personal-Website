@@ -1,10 +1,11 @@
 const canvas = document.getElementById('rain');
 const ctx = canvas.getContext('2d');
 canvas.width = window.innerWidth;
-canvas.height = window.innerHeight - 0.001;
-
-function resetCanvas() {
-    canvas.width = window.innerWidth;
+// Check if mobile:
+if (window.innerWidth < 600) {
+    canvas.height = window.innerHeight * 1.5 - 0.001;
+}
+else {
     canvas.height = window.innerHeight - 0.001;
 }
 
@@ -88,7 +89,6 @@ class RainEffect {
         this.lightnings.push(lightning);
     }
 
-
     update() {
         // Update the wind
         this.windSpeed = Math.sin(Date.now() / 10000) * 5;
@@ -137,39 +137,23 @@ class Lightning {
         this.width = Math.random() * 5;
         this.branches = [];
         this.blinkCount = 0;
-        this.lean = 0;
     }
 
     update() {
         this.blinkCount++;
         while (this.y < canvas.height) {
-            // If within 100px of the side of the screen, lean the lightning
-            if (this.x < 100) {
-                this.lean = 50;
-            }
-            else if (this.x > canvas.width - 100) {
-                this.lean = -50;
-            }
-            else {
-                this.lean = 0;
-            }
 
-            // Add another branch if the lightning hasn't reached the bottom of the screen
-            // A branch is an array of startX, startY, endX, endY, width.
-            // The startX and startY are the same as the previous branch's endX and endY
-            // The endX is random, and the endY is the current lightning's y + random height
-            // The width is the current lightning's width - random width
+            // Keep adding branches until the lightning is off the screen
             const startX = this.branches.length > 0 ? this.branches[this.branches.length - 1][2] : this.x;
             const startY = this.branches.length > 0 ? this.branches[this.branches.length - 1][3] : this.y;
             const width = (this.branches.length > 0 ? this.branches[this.branches.length - 1][4] : this.width) * 0.9;
-            const endX = startX + (Math.random() * 100) - 50 + this.lean;
+            const endX = startX + (Math.random() * 100) - 50;
             const endY = startY + (Math.random() * 25) + 25;
             this.branches.push([startX, startY, endX, endY, width]);
 
             // Update the x, y and width of the lightning to be the
             // lowest endX, endY and width of the branches
             this.branches.forEach((branch) => {
-                // check if current branch is the lowest using ?. Set the x and y based on endY
                 this.y = branch[3] > this.y ? branch[3] : this.y;
                 this.x = branch[3] > this.y ? branch[2] : this.x;
                 this.width = branch[4] < this.width ? branch[4] : this.width;
@@ -211,8 +195,30 @@ class Lightning {
 // Initialize animation managers:
 const rain = new RainEffect(canvas.width, canvas.height);
 
+function updateCanvasSize() {
+    canvas.width = window.innerWidth;
+
+
+    // Height resize logic:
+    const mobile = window.innerWidth < 600;
+    if (mobile && canvas.height === window.innerHeight * 1.5 - 0.001) {
+        return;
+    }
+
+    if (!mobile && canvas.height === window.innerHeight - 0.001) {
+        return;
+    }
+
+    if (mobile) {
+        canvas.height = window.innerHeight * 1.5 - 0.001;
+        return;
+    }
+    canvas.height = window.innerHeight - 0.001;
+}
+
 // Functions:
 function animateRain() {
+    updateCanvasSize();
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     rain.update();
     rain.draw();

@@ -3,9 +3,19 @@
 window.addEventListener("load", function () {
     writeStyles(dialog1, 0, 35, 'css-terminal-body', 'style');
 });
-// Reset the canvas when the window is resized.
+
+// Event listener to update canvas size on window resize.
 window.addEventListener("resize", function () {
-    resetCanvas();
+    updateCanvasSize();
+    // if mobile, remove draggable listener from terminal
+    if (window.innerWidth <= 600) {
+        document.getElementById("css-terminal").removeEventListener("mousedown", dragMouseDown);
+        document.getElementById("css-terminal").style.cursor = "default";
+    }
+    if (window.innerWidth > 600) {
+        document.getElementById("css-terminal").addEventListener("mousedown", dragMouseDown);
+        document.getElementById("css-terminal").style.cursor = "move";
+    }
 });
 
 // Dialog Completion Flags
@@ -67,6 +77,7 @@ function dialog1Callback() {
         writeStyles(dialog2, 0, 35, 'css-terminal-body', 'style');
         dialog1Observer.disconnect();
         document.getElementById("css-terminal").removeEventListener("mouseup", arguments.callee);
+        document.getElementById("down-button").remove();
     });
 }
 
@@ -117,6 +128,7 @@ function dialog3Callback() {
         writeStyles(dialog4, 0, 35, 'css-terminal-body', 'style');
         dialog3Observer.disconnect();
         document.getElementById("css-terminal").removeEventListener("mouseup", arguments.callee);
+        document.getElementById("up-button").remove();
     });
 }
 
@@ -141,11 +153,11 @@ function writeStyles(message, index, speed, textId, styleId) {
 
         // Control the speed. Low value = fast.
         if (message.substring(index, index + 1).match(/\s/) && message.substring(index - 1, index).match(/[.!?]$/)) {
-            speed = 800; // Pause after each sentence.
+            speed = .800; // Pause after each sentence.
         } else if (comment == true) {
-            speed = 35; // Slow down comment typing.
+            speed = .35; // Slow down comment typing.
         } else {
-            speed = 15; // Otherwise go fast so no one loses attention span.
+            speed = .15; // Otherwise go fast so no one loses attention span.
         }
 
 
