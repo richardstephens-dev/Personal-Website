@@ -352,7 +352,7 @@ document.getElementById("down-button").addEventListener("click", function () {
     // CSS.
     const terminalElement = document.getElementById("css-terminal");
     terminalElement.style.transition = "all 1s";
-    terminalElement.style.top = "50%";
+    terminalElement.style.top = "55%";
 
     // Cleanup & state change.
     const btnElement = document.getElementById("down-button");
@@ -404,10 +404,6 @@ terminalMachine.onEnter('2', () => {
 
 // add an event listener to the window to animate lightning on click.
 window.addEventListener("click", function (event) {
-    // Confirm we are done writing the dialog.
-    if (document.getElementById("css-terminal-body").innerHTML.length - (dialog1 + dialog2 + "<span class='blinker'></span>").length != 0) {
-        return;
-    };
     // Don't allow lightning unless we're in dialog 2 or higher.
     if (terminalMachine.currentState === '1') {
         return;

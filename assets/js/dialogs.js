@@ -332,6 +332,8 @@ dialog4 = `
 .book:hover {
     cursor: pointer;
     animation: book 0.5s steps(1);
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
 }
 
 @keyframes book {
