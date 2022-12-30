@@ -268,24 +268,28 @@ dialog4 = `
         background-position: 0;
     }
 
-    20% {
-        background-position: -var(--teaSize 0);
+    17% {
+        background-position: var(--teaSize 0);
     }
 
-    40% {
-        background-position: -calc(2 * var(--teaSize)) 0;
+    33% {
+        background-position: calc(2 * var(--teaSize)) 0;
     }
 
-    60% {
-        background-position: -calc(3 * var(--teaSize)) 0;
+    50% {
+        background-position: calc(3 * var(--teaSize)) 0;
     }
 
-    80% {
-        background-position: -calc(4 * var(--teaSize)) 0;
+    67% {
+        background-position: calc(4 * var(--teaSize)) 0;
+    }
+
+    83% {
+        background-position: calc(5 * var(--teaSize)) 0;
     }
 
     100% {
-        background-position: -calc(5 * var(--teaSize)) 0;
+        background-position: calc(6 * var(--teaSize)) 0;
     }
 }
 
@@ -332,25 +336,25 @@ dialog4 = `
 
 @keyframes book {
     0% {
-        background-position: 0;
+        background-position: 0 0;
     }
     17% {
-        background-position: -var(--bookWidth) 0;
+        background-position: calc(42 * var(--bookWidth)) 0;
     }
     33% {
-        background-position: -calc(2 * var(--bookWidth)) 0;
+        background-position: calc(41 * var(--bookWidth)) 0;
     }
     50% {
-        background-position: -calc(3 * var(--bookWidth)) 0;
+        background-position: calc(40 * var(--bookWidth)) 0;
     }
     67% {
-        background-position: -calc(4 * var(--bookWidth)) 0;
+        background-position: calc(39 * var(--bookWidth)) 0;
     }
     83% {
-        background-position: -calc(5 * var(--bookWidth)) 0;
+        background-position: calc(38 * var(--bookWidth)) 0;
     }
     100% {
-        background-position: -calc(6 * var(--bookWidth)) 0;
+        background-position: calc(37 * var(--bookWidth)) 0;
     }
 }
 
