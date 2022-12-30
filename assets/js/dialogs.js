@@ -8,6 +8,10 @@ dialog1 = `
 * work area.
 */
 
+pre {
+    white-space: pre-wrap;
+}
+
 * {
     transition: all 1s;
 }
@@ -22,7 +26,6 @@ dialog1 = `
 }
 
 .terminal-body {
-    white-space: pre-wrap;
     overflow: auto;
     width: 100%;
     height: 100%;
@@ -40,16 +43,16 @@ dialog1 = `
 */
 
 @media screen and (max-width: 600px) {
-    * {
-        font-size: 0.75rem;
-    }
-
     .terminal {
-        display: inline-block;
         width: 100%;
+        display: inline-block;
         left: 0;
         right: 0;
         top: 0;
+    }
+
+    * {
+        font-size: 0.75rem;
     }
 }
 
@@ -225,14 +228,13 @@ dialog4 = `
 * settle in with a cup of warm tea...
 */
 
-// set variable width equal to the width of the window inner width
 :root {
-    --spriteSize: calc(256px);
+    --teaSize: 256px;
 }
 
 @media screen and (max-width: 600px) {
     :root {
-        --spriteSize: 128px;
+        --teaSize: 128px;
     }
 }
 
@@ -240,10 +242,10 @@ dialog4 = `
     display: block;
     position: absolute;
     z-index: 1;
-    left: calc(33% - 128px);
+    left: calc(33% - var(--teaSize));
     top: 50%;
-    width: var(--spriteSize);
-    height: var(--spriteSize);
+    width: var(--teaSize);
+    height: var(--teaSize);
     background-image: url('assets/images/tea.svg');
     background-position: 0 0;
     background-size: cover;
@@ -252,7 +254,8 @@ dialog4 = `
 
 @media screen and (max-width: 600px) {
     .tea {
-        left: calc(50% - 128px);
+        left: calc(50% - var(--teaSize) / 2);
+        top: calc(40% + 110% / 3 - var(--teaSize) / 2);
     }
 
     .background {
@@ -262,31 +265,27 @@ dialog4 = `
 
 @keyframes tea {
     0% {
-        background-position: 0 0;
+        background-position: 0;
     }
 
-    17% {
-        background-position: var(--spriteSize 0);
+    20% {
+        background-position: -var(--teaSize 0);
     }
 
-    34% {
-        background-position: calc(2 * var(--spriteSize)) 0;
+    40% {
+        background-position: -calc(2 * var(--teaSize)) 0;
     }
 
-    51% {
-        background-position: calc(3 * var(--spriteSize)) 0;
+    60% {
+        background-position: -calc(3 * var(--teaSize)) 0;
     }
 
-    68% {
-        background-position: calc(4 * var(--spriteSize)) 0;
-    }
-
-    85% {
-        background-position: calc(5 * var(--spriteSize)) 0;
+    80% {
+        background-position: -calc(4 * var(--teaSize)) 0;
     }
 
     100% {
-        background-position: calc(6 * var(--spriteSize)) 0;
+        background-position: -calc(5 * var(--teaSize)) 0;
     }
 }
 
@@ -294,24 +293,64 @@ dialog4 = `
 * And of course a good book...
 */
 
+:root {
+    --bookWidth: 205px;
+    --bookHeight: 256px;
+}
+
+@media screen and (max-width: 600px) {
+    :root {
+        --bookWidth: 102px;
+        --bookHeight: 128px;
+    }
+}
+
 .book {
     display: block;
     position: absolute;
     z-index: 1;
-    right: calc(33% - 128px);
+    right: calc(33% - var(--bookWidth));
     top: 50%;
-    width: 256px;
-    height: 256px;
+    width: var(--bookWidth);
+    height: var(--bookHeight);
     background-image: url('assets/images/book.svg');
     background-position: 0 0;
     background-size: cover;
-    animation: tea 1.5s steps(1) infinite;
 }
 
 @media screen and (max-width: 600px) {
     .book {
-        left: calc(50% - 128px);
-        top: 100%;
+        left: calc(50% - var(--bookWidth) / 2);
+        top: calc(40% + 110% * 2 / 3 - var(--bookHeight) / 2);
+    }
+}
+
+.book:hover {
+    cursor: pointer;
+    animation: book 0.5s steps(1);
+}
+
+@keyframes book {
+    0% {
+        background-position: 0;
+    }
+    17% {
+        background-position: -var(--bookWidth) 0;
+    }
+    33% {
+        background-position: -calc(2 * var(--bookWidth)) 0;
+    }
+    50% {
+        background-position: -calc(3 * var(--bookWidth)) 0;
+    }
+    67% {
+        background-position: -calc(4 * var(--bookWidth)) 0;
+    }
+    83% {
+        background-position: -calc(5 * var(--bookWidth)) 0;
+    }
+    100% {
+        background-position: -calc(6 * var(--bookWidth)) 0;
     }
 }
 
