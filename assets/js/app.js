@@ -24,8 +24,7 @@ window.addEventListener("mousedown", function () {
     if (window.innerWidth <= 600) {
         terminalElement.style.cursor = "default";
         return;
-    }
-    else {
+    } else {
         dragElement(terminalElement);
     }
 });
@@ -43,8 +42,12 @@ window.addEventListener("resize", function () {
 function dragElement(elmnt) {
     elmnt.style.cursor = "move";
     elmnt.style.transition = "none";
-    var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+    var pos1 = 0,
+        pos2 = 0,
+        pos3 = 0,
+        pos4 = 0;
     elmnt.onmousedown = dragMouseDown;
+
     function dragMouseDown(e) {
         e = e || window.event;
         e.preventDefault();
@@ -83,8 +86,7 @@ canvas.width = window.innerWidth;
 // Check if mobile:
 if (window.innerWidth < 600) {
     canvas.height = window.innerHeight * 1.5 - 0.001;
-}
-else {
+} else {
     canvas.height = window.innerHeight - 0.001;
 }
 
@@ -118,12 +120,10 @@ class RainDrop {
         if (this.x < 0) {
             this.x = canvas.width;
             this.y = Math.random() * canvas.height;
-        }
-        else if (this.x > canvas.width) {
+        } else if (this.x > canvas.width) {
             this.x = 0;
             this.y = Math.random() * canvas.height;
-        }
-        else if (this.y > canvas.height) {
+        } else if (this.y > canvas.height) {
             this.y = -70;
             this.x = Math.random() * canvas.width;
         }
@@ -173,8 +173,7 @@ class RainEffect {
         // Update area size by canvas. Adjust for mobile.
         if (window.innerWidth < 600) {
             canvas.height = window.innerHeight * 1.5 - 0.001;
-        }
-        else {
+        } else {
             canvas.height = window.innerHeight - 0.001;
         }
         this.height = canvas.height;
@@ -473,13 +472,13 @@ observer.observe(document.getElementById("css-terminal-body"), {
 // --------------------------------------------BOOK--------------------------------------------
 
 /*
-* Book States:
-* idle: show closed book with title.
-* toc: triggers after clicking on cover or "back" button on any page, show open book turned to table of contents.
-* python: triggers after clicking on "Python" chapter, show open book turned to python chapter.
-* webdev: triggers after clicking on "Web Development" chapter, show open book turned to webdev chapter.
-* assembly: triggers after clicking on "NES 6502 Assembly" chapter, show open book turned to assembly chapter.
-*/
+ * Book States:
+ * idle: show closed book with title.
+ * toc: triggers after clicking on cover or "back" button on any page, show open book turned to table of contents.
+ * python: triggers after clicking on "Python" chapter, show open book turned to python chapter.
+ * webdev: triggers after clicking on "Web Development" chapter, show open book turned to webdev chapter.
+ * assembly: triggers after clicking on "NES 6502 Assembly" chapter, show open book turned to assembly chapter.
+ */
 
 // Click listener for book-back button.
 document.getElementById("book-back-button").addEventListener("click", function () {
@@ -786,6 +785,7 @@ document.getElementById("assembly-button").addEventListener("click", () => {
 
 // --------------------------------------------TERMINAL WRITING--------------------------------------------
 let comment = false;
+
 function writeStyles(message, index, speed, textId, styleId) {
     if (skipped) {
         document.getElementById(styleId).innerHTML = dialog1 + dialog2 + dialog3 + dialog4 + bookDialog;
