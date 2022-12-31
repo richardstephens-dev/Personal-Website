@@ -842,11 +842,11 @@ function writeStyles(message, index, speed, textId, styleId) {
 
         // Control the speed. Low value = fast.
         if (message.substring(index, index + 1).match(/\s/) && message.substring(index - 1, index).match(/[.!?]$/)) {
-            speed = .800; // Pause after each sentence.
+            speed = 800; // Pause after each sentence.
         } else if (comment == true) {
-            speed = .35; // Slow down comment typing.
+            speed = 35; // Slow down comment typing.
         } else {
-            speed = .15; // Otherwise go fast so no one loses attention span.
+            speed = 10; // Otherwise go fast so no one loses attention span.
         }
 
 
