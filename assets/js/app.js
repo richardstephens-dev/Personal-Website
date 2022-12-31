@@ -18,9 +18,31 @@ document.getElementById("skip-button").addEventListener("click", function () {
     animateRain();
 });
 
+window.addEventListener("mousedown", function () {
+    // if mobile, remove draggable listener from terminal
+    const terminalElement = document.getElementById("css-terminal");
+    if (window.innerWidth <= 600) {
+        terminalElement.style.cursor = "default";
+        return;
+    }
+    else {
+        dragElement(terminalElement);
+    }
+});
+
+window.addEventListener("resize", function () {
+    if (window.innerWidth > 600) {
+        return;
+    }
+    const terminalElement = document.getElementById("css-terminal");
+    terminalElement.style.left = 0;
+    terminalElement.style.top = 0;
+});
 
 // --------------------------------------------DRAGGING ELEMENTS--------------------------------------------
 function dragElement(elmnt) {
+    elmnt.style.cursor = "move";
+    elmnt.style.transition = "none";
     var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
     elmnt.onmousedown = dragMouseDown;
     function dragMouseDown(e) {
@@ -55,30 +77,6 @@ function dragElement(elmnt) {
 }
 
 // --------------------------------------------RAIN CANVAS LOGIC--------------------------------------------
-window.addEventListener("resize", function () {
-    updateCanvasSize();
-    // if mobile, remove draggable listener from terminal
-    const terminalElement = document.getElementById("css-terminal");
-    if (window.innerWidth <= 600) {
-        terminalElement.removeEventListener("mousedown", function (event) {
-            // Drag CSS and logic.
-            terminalElement.style.cursor = "move";
-            terminalElement.style.transition = "none";
-            dragElement(terminalElement, event);
-        });
-        terminalElement.style.cursor = "default";
-    }
-    if (window.innerWidth > 600) {
-        terminalElement.addEventListener("mousedown", function (event) {
-            // Drag CSS and logic.
-            terminalElement.style.cursor = "move";
-            terminalElement.style.transition = "none";
-            dragElement(terminalElement, event);
-        });
-        terminalElement.style.cursor = "move";
-    }
-});
-
 const canvas = document.getElementById('rain');
 const ctx = canvas.getContext('2d');
 canvas.width = window.innerWidth;
@@ -154,6 +152,7 @@ class RainEffect {
         this.rainDrops = [];
         this.windSpeed = 0;
         this.lightnings = [];
+        this.addDrops(100);
     }
 
     addDrops(count) {
@@ -171,9 +170,17 @@ class RainEffect {
     }
 
     update() {
-        // Update the height/width of the rainy area
+        // Update area size by canvas. Adjust for mobile.
+        if (window.innerWidth < 600) {
+            canvas.height = window.innerHeight * 1.5 - 0.001;
+        }
+        else {
+            canvas.height = window.innerHeight - 0.001;
+        }
         this.height = canvas.height;
+        canvas.width = window.innerWidth;
         this.width = canvas.width;
+
 
         // Update the wind
         this.windSpeed = Math.sin(Date.now() / 10000) * 5;
@@ -189,23 +196,6 @@ class RainEffect {
         });
 
         // Update the rain
-        // Slowly vary the number of target drops
-        let targetDropCount = Math.abs(Math.floor(Math.sin(Date.now() / 10000) * 50)) + 50;
-
-        // If there are not enough drops, create some
-        if (this.rainDrops.length < targetDropCount) {
-            this.addDrops(targetDropCount - this.rainDrops.length)
-        }
-
-        // If there are too many drops, remove any that are at the bottom of the screen
-        else if (this.rainDrops.length > targetDropCount) {
-            // use foreach
-            this.rainDrops.forEach((rainDrop, index) => {
-                if (rainDrop.y >= canvas.height - (5 * (Math.abs(this.windSpeed) + 1))) {
-                    this.rainDrops.splice(index, 1);
-                }
-            });
-        }
         this.rainDrops.forEach((rainDrop) => rainDrop.update(this.windSpeed));
     }
 
@@ -268,37 +258,13 @@ class Lightning {
         blurCtx.stroke();
 
         ctx.fillStyle = "#e6e6ec";
-        // Draw each branch as a polygon with 4 points (startX, startY, endX, endY)
-        this.branches.forEach((branch) => {
-            // draw the blur canvas
-            ctx.drawImage(blurCanvas, 0, 0);
-        });
+        ctx.drawImage(blurCanvas, 0, 0);
         ctx.save();
     }
 }
 
 // Initialize animation managers:
 const rain = new RainEffect(canvas.width, canvas.height);
-
-function updateCanvasSize() {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight * 1.5 - 0.001;
-
-    // Height resize logic:
-    const mobile = window.innerWidth < 600;
-    if (mobile && canvas.height === window.innerHeight * 1.5 - 0.001) {
-        return;
-    }
-
-    if (!mobile && canvas.height === window.innerHeight - 0.001) {
-        return;
-    }
-
-    if (mobile) {
-        canvas.height = window.innerHeight * 1.5 - 0.001;
-        return;
-    }
-}
 
 // Functions:
 function animateRain() {
@@ -365,19 +331,6 @@ document.getElementById("down-button").addEventListener("click", function () {
     btnElement.remove();
     terminalElement.removeEventListener("mouseup", arguments.callee);
     terminalMachine.transition('2');
-});
-
-// Drag event listener for desktop. Pairs with next event listener to trigger next stage.
-document.getElementById("css-terminal").addEventListener("mousedown", function (event) {
-    // Confirm we are done writing the dialog.
-    if (document.getElementById("css-terminal-body").innerHTML.length - (dialog1 + "<span class='blinker'></span>").length != 0) {
-        return;
-    };
-    const terminalElement = document.getElementById("css-terminal");
-    // Drag CSS and logic.
-    terminalElement.style.cursor = "move";
-    terminalElement.style.transition = "none";
-    dragElement(terminalElement, event);
 });
 
 // Check position event listener to trigger next stage.
