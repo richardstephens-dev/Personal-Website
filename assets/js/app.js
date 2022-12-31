@@ -462,6 +462,7 @@ var observer = new MutationObserver(function () {
     // Cleanup & state change.
     terminalMachine.transition('5');
     bookMachine.transition('idle');
+    document.getElementById("skip-button").remove();
 });
 
 observer.observe(document.getElementById("css-terminal-body"), {
@@ -595,11 +596,6 @@ bookMachine.onEnter('toc', () => {
     // Show the book back button.
     document.getElementById("book-back-button").style.display = "block";
 
-    // Show the toc buttons using forEach.
-    tocButtons.forEach(button => {
-        document.getElementById(button).style.display = "block";
-    });
-
     // remove all animations with foreach
     bookAnimations.forEach(animation => {
         document.getElementById("book").classList.remove(animation);
@@ -631,8 +627,16 @@ bookMachine.onEnter('toc', () => {
         document.getElementById("book").classList.remove(state);
     });
 
-    // Add idle state.
+    // Add state.
     document.getElementById("book").classList.add("toc");
+
+    // Set 1s timeout
+    setTimeout(() => {
+        // Show the toc buttons using forEach.
+        tocButtons.forEach(button => {
+            document.getElementById(button).style.display = "block";
+        });
+    }, 1000);
 });
 
 // On transition to python, webdev, or assembly:
@@ -665,9 +669,6 @@ bookMachine.onEnter('python', () => {
         document.getElementById(page).style.display = "none";
     });
 
-    // Show the python page.
-    document.getElementById("python-page").style.display = "block";
-
     // Remove all book states.
     bookStates.forEach(state => {
         document.getElementById("book").classList.remove(state);
@@ -675,6 +676,11 @@ bookMachine.onEnter('python', () => {
 
     // Add state.
     document.getElementById("book").classList.add("page");
+
+    // Set 1s timeout
+    setTimeout(() => {
+        document.getElementById("python-page").style.display = "block";
+    }, 1000);
 });
 
 // On transition to python, webdev, or assembly:
@@ -707,9 +713,6 @@ bookMachine.onEnter('webdev', () => {
         document.getElementById(page).style.display = "none";
     });
 
-    // Show the python page.
-    document.getElementById("webdev-page").style.display = "block";
-
     // Remove all book states.
     bookStates.forEach(state => {
         document.getElementById("book").classList.remove(state);
@@ -717,6 +720,11 @@ bookMachine.onEnter('webdev', () => {
 
     // Add state.
     document.getElementById("book").classList.add("page");
+
+    // Set 1s timeout
+    setTimeout(() => {
+        document.getElementById("webdev-page").style.display = "block";
+    }, 1000);
 });
 
 // On transition to python, webdev, or assembly:
@@ -749,9 +757,6 @@ bookMachine.onEnter('assembly', () => {
         document.getElementById(page).style.display = "none";
     });
 
-    // Show the python page.
-    document.getElementById("assembly-page").style.display = "block";
-
     // Remove all book states.
     bookStates.forEach(state => {
         document.getElementById("book").classList.remove(state);
@@ -759,6 +764,11 @@ bookMachine.onEnter('assembly', () => {
 
     // Add state.
     document.getElementById("book").classList.add("page");
+
+    // Set 1s timeout
+    setTimeout(() => {
+        document.getElementById("assembly-page").style.display = "block";
+    }, 1000);
 });
 
 // Listeners for TOC buttons.
@@ -1165,9 +1175,9 @@ bookDialog = `
     position: absolute;
     z-index: 1;
     width: 45%;
-    height: 60%;
+    height: 70%;
     background-color: transparent;
-    top: 35%;
+    top: 30%;
     left: 53%;
 }
 
@@ -1191,11 +1201,6 @@ bookDialog = `
     right: 0;
 }
 
-#toc {
-    right: 33%;
-    top: 20%;
-}
-
 #python-button,
 #webdev-button,
 #assembly-button,
@@ -1203,7 +1208,8 @@ bookDialog = `
 #webdev-page,
 #assembly-page,
 #toc {
-    width: auto;
+    position: inline-block;
+    width: 100%;
     height: auto;
     display: none;
     z-index: 3;
@@ -1211,47 +1217,22 @@ bookDialog = `
     background-color: transparent;
     border: 0px;
     font-family: 'VT323', 'monospace';
-    font-size: 1rem;
-}
-
-#python-button,
-#webdev-button,
-#assembly-button,
-{
-    left: 50%;
-    position: absolute;
-    width: auto;
-    height: calc(var(--bookHeight) / 4);
+    font-size: 0.75rem;
+    transition: display 0.5s ease-in-out;
 }
 
 #python-button:hover, #webdev-button:hover, #assembly-button:hover {
     cursor: pointer;
 }
 
-#python-button {
-    top: 30%;
-}
-
-#webdev-button {
-    top: 60%;
-}
-
-#assembly-button {
-    top: 90%;
-}
-
-.idle-to-toc {
+.idle-to-toc, .toc-to-idle {
     cursor: pointer;
-    animation: idle-toc 1s steps(1);
+    animation: idle-toc 0.5s steps(1);
     animation-iteration-count: 1;
     animation-fill-mode: forwards;
 }
 
 .toc-to-idle {
-    cursor: pointer;
-    animation: idle-toc 1s steps(1);
-    animation-iteration-count: 1;
-    animation-fill-mode: forwards;
     animation-direction: reverse;
 }
 
@@ -1285,7 +1266,7 @@ bookDialog = `
     }
 }
 
-.toc-to-page {
+.toc-to-page, .page-to-toc {
     cursor: pointer;
     animation: toc-page 1s steps(1);
     animation-iteration-count: 1;
@@ -1293,10 +1274,6 @@ bookDialog = `
 }
 
 .page-to-toc {
-    cursor: pointer;
-    animation: toc-page 1s steps(1);
-    animation-iteration-count: 1;
-    animation-fill-mode: forwards;
     animation-direction: reverse;
 }
 
@@ -1369,7 +1346,6 @@ bookDialog = `
 }
 
 @media screen and (max-width: 600px) {
-
     .idle,
     .toc,
     .page {
