@@ -10,22 +10,12 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Ubuntu+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap"
         rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
     <title>Richard Stephens</title>
 </head>
 
 <body>
     <style id="style">
-        .rain-button {
-            display: none;
-        }
-
-        .down-button {
-            display: none;
-        }
-
-        .up-button {
-            display: none;
-        }
     </style>
     <!-- CSS Terminal -->
     <div id="css-terminal" class="terminal">
@@ -58,7 +48,18 @@
         </div>
     </button>
     <!-- Book -->
-    <div id="book" class="book">
+    <div id="book" class="book idle">
+        <button id="book-back-button"></button>
+        <button id="book-forward-button"></button>
+        <div id="book-content">
+            <pre id="toc">Table of Contents</pre>
+            <button id="python-button">Python</button>
+            <button id="webdev-button">Web Development</button>
+            <button id="assembly-button">NES 6502 Assembly</button>
+            <pre id="python-page">Python: TODO: Integrate with github.</pre>
+            <pre id="webdev-page">Web Development: What you see is what you get.</pre>
+            <pre id="assembly-page">NES 6502 Assembly: TODO: Integrate with github.</pre>
+        </div>
     </div>
     <!-- Tea -->
     <div id="tea" class="tea">
@@ -66,6 +67,10 @@
     <!-- Background with rain -->
     <canvas id="rain" class="background">
     </canvas>
+    <!-- TODO: Skip Animation Button -->
+    <button id="skip-button">
+        <pre>Skip Animation</pre>
+    </button>
     <!-- Scripts -->
     <script src="./assets/js/app.js"></script>
     <script src="./assets/js/dialogs.js"></script>

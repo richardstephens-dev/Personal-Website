@@ -1,10 +1,23 @@
-
 // --------------------------------------------START IT ALL OFF--------------------------------------------
 window.addEventListener("load", function () {
     terminalMachine.transition('1');
-    canvasMachine.transition('inactive');
-    bookMachine.transition('idle');
+    document.getElementById("style").innerHTML = initStyles;
 });
+
+let skipped = false;
+// event listener for skipping the terminal animation
+document.getElementById("skip-button").addEventListener("click", function () {
+    skipped = true;
+    terminalMachine.transition('4');
+    document.getElementById("style").innerHTML = initStyles + dialog1 + dialog2 + dialog3 + dialog4 + bookDialog;
+    document.getElementById("css-terminal-body").innerHTML = dialog1 + dialog2 + dialog3 + dialog4;
+    document.getElementById("down-button").style.display = "none";
+    document.getElementById("up-button").style.display = "none";
+    document.getElementById("rain-button").style.display = "none";
+    document.getElementById("skip-button").style.display = "none";
+    animateRain();
+});
+
 
 // --------------------------------------------DRAGGING ELEMENTS--------------------------------------------
 function dragElement(elmnt) {
@@ -177,7 +190,7 @@ class RainEffect {
 
         // Update the rain
         // Slowly vary the number of target drops
-        let targetDropCount = Math.abs(Math.floor(Math.sin(Date.now() / 10000) * 100)) + 50;
+        let targetDropCount = Math.abs(Math.floor(Math.sin(Date.now() / 10000) * 50)) + 50;
 
         // If there are not enough drops, create some
         if (this.rainDrops.length < targetDropCount) {
@@ -269,6 +282,7 @@ const rain = new RainEffect(canvas.width, canvas.height);
 
 function updateCanvasSize() {
     canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight * 1.5 - 0.001;
 
     // Height resize logic:
     const mobile = window.innerWidth < 600;
@@ -284,12 +298,10 @@ function updateCanvasSize() {
         canvas.height = window.innerHeight * 1.5 - 0.001;
         return;
     }
-    canvas.height = window.innerHeight - 0.001;
 }
 
 // Functions:
 function animateRain() {
-    updateCanvasSize();
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     rain.update();
     rain.draw();
@@ -304,11 +316,13 @@ function animateLightning(event) {
 // StateMachine helper class.
 class StateMachine {
     constructor(initialState) {
+        this.previousState = null;
         this.currentState = initialState;
         this.handlers = {};
     }
 
     transition(newState, payload) {
+        this.previousState = this.currentState;
         this.currentState = newState;
         if (this.handlers[newState]) {
             this.handlers[newState](payload);
@@ -324,14 +338,6 @@ class StateMachine {
 const terminalMachine = new StateMachine('1');
 const canvasMachine = new StateMachine('inactive');
 const bookMachine = new StateMachine('idle');
-
-/*
-* Terminal States:
-* 1: on load, show dialog 1
-* 2: triggers after first interaction, show dialog 2
-* 3: triggers after second interaction, show dialog 3
-* 4: triggers after third interaction, show dialog 4
-*/
 
 // --------------------------------------------DIALOG 1 EVENTS--------------------------------------------
 terminalMachine.onEnter('1', () => {
@@ -356,7 +362,6 @@ document.getElementById("down-button").addEventListener("click", function () {
 
     // Cleanup & state change.
     const btnElement = document.getElementById("down-button");
-    btnElement.removeEventListener("click", arguments.callee);
     btnElement.remove();
     terminalElement.removeEventListener("mouseup", arguments.callee);
     terminalMachine.transition('2');
@@ -487,13 +492,31 @@ terminalMachine.onEnter('4', () => {
     writeStyles(dialog4, 0, 35, 'css-terminal-body', 'style');
 });
 
-// --------------------------------------------STATE 5 EVENTS--------------------------------------------
+// Mutation observer compare the length of the inner html of css terminal body 
+// to the length of dialog 1-4 + blinker element to determine if the dialog is done writing.
+var observer = new MutationObserver(function () {
+    // If dialog1 is not complete, return.
+    if (terminalMachine.currentState != '4') {
+        return;
+    }
+    // Compare length of inner html to length of dialog + blinker element.
+    if (document.getElementById("css-terminal-body").innerHTML.length - (dialog1 + dialog2 + dialog3 + dialog4 + "<span class='blinker'></span>").length != 0) {
+        return;
+    }
+    // Add bookDialog to style element.
+    document.getElementById("style").innerHTML += bookDialog;
 
-/*
-* Canvas States:
-* inactive: on load, do nothing.
-* active: triggers after first interaction, animate rain.
-*/
+    // Cleanup & state change.
+    terminalMachine.transition('5');
+    bookMachine.transition('idle');
+});
+
+observer.observe(document.getElementById("css-terminal-body"), {
+    childList: true,
+    characterData: true,
+});
+
+// --------------------------------------------BOOK--------------------------------------------
 
 /*
 * Book States:
@@ -504,9 +527,307 @@ terminalMachine.onEnter('4', () => {
 * assembly: triggers after clicking on "NES 6502 Assembly" chapter, show open book turned to assembly chapter.
 */
 
+// Click listener for book-back button.
+document.getElementById("book-back-button").addEventListener("click", function () {
+    current = bookMachine.currentState;
+
+    // If book is in toc, transition to idle.
+    if (current === 'toc') {
+        bookMachine.transition('idle');
+        return;
+    }
+
+    // Otherwise, transition to toc.
+    bookMachine.transition('toc');
+    return;
+});
+
+// Click listener for book-forward button.
+document.getElementById("book-forward-button").addEventListener("click", function () {
+    // If book is idle, transition to toc.
+    current = bookMachine.currentState;
+    if (current === 'idle') {
+        bookMachine.transition('toc');
+        return;
+    }
+
+    // If book is in toc, transition to python.
+    if (current === 'toc') {
+        bookMachine.transition('python');
+        return;
+    }
+
+    // If book is in python, transition to webdev.
+    if (current === 'python') {
+        bookMachine.transition('webdev');
+        return;
+    }
+
+    // If book is in webdev, transition to assembly.
+    if (current === 'webdev') {
+        bookMachine.transition('assembly');
+        return;
+    }
+});
+
+// Array for book animations.
+const bookAnimations = [
+    "idle-to-toc",
+    "toc-to-idle",
+    "toc-to-page",
+    "page-to-toc",
+];
+
+const bookStates = [
+    "idle",
+    "toc",
+    "page",
+];
+
+const tocButtons = [
+    "python-button",
+    "webdev-button",
+    "assembly-button",
+    "toc"
+];
+
+const bookPages = [
+    "python-page",
+    "webdev-page",
+    "assembly-page",
+];
+
+// On transition to idle:
+bookMachine.onEnter('idle', () => {
+    // Hide the toc buttons using foreach.
+    tocButtons.forEach(button => {
+        document.getElementById(button).style.display = "none";
+    });
+
+    // Show the book back and book forward buttons.
+    document.getElementById("book-back-button").style.display = "none";
+    document.getElementById("book-forward-button").style.display = "block";
+
+    // remove all animations with foreach
+    bookAnimations.forEach(animation => {
+        document.getElementById("book").classList.remove(animation);
+    });
+
+    // Add toc to idle animation if previous state was toc.
+    if (bookMachine.previousState === 'toc') {
+        document.getElementById("book").classList.add("toc-to-idle");
+        setTimeout(() => {
+            document.getElementById("book").classList.remove("toc-to-idle");
+        }, 1000);
+    }
+
+    // Hide all book pages.
+    bookPages.forEach(page => {
+        document.getElementById(page).style.display = "none";
+    });
+
+    // Remove all book states.
+    bookStates.forEach(state => {
+        document.getElementById("book").classList.remove(state);
+    });
+
+    // Add idle state.
+    document.getElementById("book").classList.add("idle");
+});
+
+// On transition to toc:
+bookMachine.onEnter('toc', () => {
+    // Hide the book forward button.
+    document.getElementById("book-forward-button").style.display = "none";
+    // Show the book back button.
+    document.getElementById("book-back-button").style.display = "block";
+
+    // Show the toc buttons using forEach.
+    tocButtons.forEach(button => {
+        document.getElementById(button).style.display = "block";
+    });
+
+    // remove all animations with foreach
+    bookAnimations.forEach(animation => {
+        document.getElementById("book").classList.remove(animation);
+    });
+
+    // Add idle to toc animation if previous state was idle.
+    if (bookMachine.previousState === 'idle') {
+        document.getElementById("book").classList.add("idle-to-toc");
+        setTimeout(() => {
+            document.getElementById("book").classList.remove("idle-to-toc");
+        }, 1000);
+    }
+
+    // Add page to toc animation if previous state was python, webdev, or assembly.
+    if (bookMachine.previousState === 'python' || bookMachine.previousState === 'webdev' || bookMachine.previousState === 'assembly') {
+        document.getElementById("book").classList.add("page-to-toc");
+        setTimeout(() => {
+            document.getElementById("book").classList.remove("page-to-toc");
+        }, 1000);
+    }
+
+    // Hide all book pages.
+    bookPages.forEach(page => {
+        document.getElementById(page).style.display = "none";
+    });
+
+    // Remove all book states.
+    bookStates.forEach(state => {
+        document.getElementById("book").classList.remove(state);
+    });
+
+    // Add idle state.
+    document.getElementById("book").classList.add("toc");
+});
+
+// On transition to python, webdev, or assembly:
+bookMachine.onEnter('python', () => {
+    // Show the book back button.
+    document.getElementById("book-back-button").style.display = "block";
+    // Hide the book forward button.
+    document.getElementById("book-forward-button").style.display = "none";
+
+    // Hide the toc buttons using forEach.
+    tocButtons.forEach(button => {
+        document.getElementById(button).style.display = "none";
+    });
+
+    // remove all animations with foreach
+    bookAnimations.forEach(animation => {
+        document.getElementById("book").classList.remove(animation);
+    });
+
+    // Add toc to page animation if previous state was toc.
+    if (bookMachine.previousState === 'toc') {
+        document.getElementById("book").classList.add("toc-to-page");
+        setTimeout(() => {
+            document.getElementById("book").classList.remove("toc-to-page");
+        }, 1000);
+    }
+
+    // Hide all book pages.
+    bookPages.forEach(page => {
+        document.getElementById(page).style.display = "none";
+    });
+
+    // Show the python page.
+    document.getElementById("python-page").style.display = "block";
+
+    // Remove all book states.
+    bookStates.forEach(state => {
+        document.getElementById("book").classList.remove(state);
+    });
+
+    // Add state.
+    document.getElementById("book").classList.add("page");
+});
+
+// On transition to python, webdev, or assembly:
+bookMachine.onEnter('webdev', () => {
+    // Show the book back button.
+    document.getElementById("book-back-button").style.display = "block";
+    // Hide the book forward button.
+    document.getElementById("book-forward-button").style.display = "none";
+
+    // Hide the toc buttons using forEach.
+    tocButtons.forEach(button => {
+        document.getElementById(button).style.display = "none";
+    });
+
+    // remove all animations with foreach
+    bookAnimations.forEach(animation => {
+        document.getElementById("book").classList.remove(animation);
+    });
+
+    // Add toc to page animation if previous state was toc.
+    if (bookMachine.previousState === 'toc') {
+        document.getElementById("book").classList.add("toc-to-page");
+        setTimeout(() => {
+            document.getElementById("book").classList.remove("toc-to-page");
+        }, 1000);
+    }
+
+    // Hide all book pages.
+    bookPages.forEach(page => {
+        document.getElementById(page).style.display = "none";
+    });
+
+    // Show the python page.
+    document.getElementById("webdev-page").style.display = "block";
+
+    // Remove all book states.
+    bookStates.forEach(state => {
+        document.getElementById("book").classList.remove(state);
+    });
+
+    // Add state.
+    document.getElementById("book").classList.add("page");
+});
+
+// On transition to python, webdev, or assembly:
+bookMachine.onEnter('assembly', () => {
+    // Show the book back button.
+    document.getElementById("book-back-button").style.display = "block";
+    // Hide the book forward button.
+    document.getElementById("book-forward-button").style.display = "none";
+
+    // Hide the toc buttons using forEach.
+    tocButtons.forEach(button => {
+        document.getElementById(button).style.display = "none";
+    });
+
+    // remove all animations with foreach
+    bookAnimations.forEach(animation => {
+        document.getElementById("book").classList.remove(animation);
+    });
+
+    // Add toc to page animation if previous state was toc.
+    if (bookMachine.previousState === 'toc') {
+        document.getElementById("book").classList.add("toc-to-page");
+        setTimeout(() => {
+            document.getElementById("book").classList.remove("toc-to-page");
+        }, 1000);
+    }
+
+    // Hide all book pages.
+    bookPages.forEach(page => {
+        document.getElementById(page).style.display = "none";
+    });
+
+    // Show the python page.
+    document.getElementById("assembly-page").style.display = "block";
+
+    // Remove all book states.
+    bookStates.forEach(state => {
+        document.getElementById("book").classList.remove(state);
+    });
+
+    // Add state.
+    document.getElementById("book").classList.add("page");
+});
+
+// Listeners for TOC buttons.
+document.getElementById("python-button").addEventListener("click", () => {
+    bookMachine.transition('python');
+});
+
+document.getElementById("webdev-button").addEventListener("click", () => {
+    bookMachine.transition('webdev');
+});
+
+document.getElementById("assembly-button").addEventListener("click", () => {
+    bookMachine.transition('assembly');
+});
+
 // --------------------------------------------TERMINAL WRITING--------------------------------------------
 let comment = false;
 function writeStyles(message, index, speed, textId, styleId) {
+    if (skipped) {
+        document.getElementById(styleId).innerHTML = dialog1 + dialog2 + dialog3 + dialog4 + bookDialog;
+        return;
+    }
     if (index < message.length) {
         var element = document.getElementById(textId).parentNode;
         element.scrollTop = element.scrollHeight;

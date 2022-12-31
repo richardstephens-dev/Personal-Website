@@ -14,6 +14,8 @@ pre {
 
 * {
     transition: all 1s;
+    font-family: 'Ubuntu Mono';
+    font-size: 1.2rem;
 }
 
 .terminal {
@@ -30,8 +32,6 @@ pre {
     width: 100%;
     height: 100%;
     margin-top: -1px;
-    font-family: 'Ubuntu Mono';
-    font-size: 1.2rem;
     color: #c1c1d2;
     background-color: rgba(30, 30, 30, 0.9);
     line-height: 1.5;
@@ -67,12 +67,7 @@ pre {
     left: 0;
     width: 100%;
     height: 100%;
-    --tw-gradient-from: #1a1a24;
-    --tw-gradient-to: #333346;
-    --tw-gradient-stops: var(--tw-gradient-from),
-        var(--tw-gradient-to);
-    background-image: linear-gradient(to bottom,
-        var(--tw-gradient-stops));
+    background-image: linear-gradient(to bottom, #1a1a24, #333346);
 }
 
 /*
@@ -114,7 +109,7 @@ pre {
     opacity: 0.9;
 }
 
-.terminal-body::-webkit-scrollbar-thumb:active {
+.terminal-body::-webkit-scrollbar-thumb {
     opacity: 0.9;
 }
 
@@ -179,12 +174,11 @@ dialog2 = `
 
 .rain-button {
     z-index: 1; display: block; position: absolute;
-    width: 150px;
+    width: 200px;
     height: auto;
     left: calc(50% - 75px);
     top: 5%;
     background-color: #454545;
-    font-family: 'Ubuntu Mono'; font-size: 1.2rem;
     color: #c1c1d2; line-height: 1.5;
     user-select: none; cursor: pointer;
     border: 0px;
@@ -232,18 +226,12 @@ dialog4 = `
     --teaSize: 256px;
 }
 
-@media screen and (max-width: 600px) {
-    :root {
-        --teaSize: 128px;
-    }
-}
-
 .tea {
     display: block;
     position: absolute;
     z-index: 1;
     left: calc(33% - var(--teaSize));
-    top: 50%;
+    top: 45%;
     width: var(--teaSize);
     height: var(--teaSize);
     background-image: url('assets/images/tea.svg');
@@ -267,27 +255,21 @@ dialog4 = `
     0% {
         background-position: 0;
     }
-
     17% {
         background-position: var(--teaSize 0);
     }
-
     33% {
         background-position: calc(2 * var(--teaSize)) 0;
     }
-
     50% {
         background-position: calc(3 * var(--teaSize)) 0;
     }
-
     67% {
         background-position: calc(4 * var(--teaSize)) 0;
     }
-
     83% {
         background-position: calc(5 * var(--teaSize)) 0;
     }
-
     100% {
         background-position: calc(6 * var(--teaSize)) 0;
     }
@@ -297,24 +279,19 @@ dialog4 = `
 * And of course a good book...
 */
 
+
 :root {
-    --bookWidth: 205px;
+    --bookWidth: calc(256px * 0.8);
     --bookHeight: 256px;
 }
 
-@media screen and (max-width: 600px) {
-    :root {
-        --bookWidth: 102px;
-        --bookHeight: 128px;
-    }
-}
 
 .book {
     display: block;
     position: absolute;
     z-index: 1;
     right: calc(33% - var(--bookWidth));
-    top: 50%;
+    top: 45%;
     width: var(--bookWidth);
     height: var(--bookHeight);
     background-image: url('assets/images/book.svg');
@@ -329,39 +306,16 @@ dialog4 = `
     }
 }
 
-.book:hover {
-    cursor: pointer;
-    animation: book 0.5s steps(1);
-    animation-iteration-count: 1;
-    animation-fill-mode: forwards;
-}
-
-@keyframes book {
-    0% {
-        background-position: 0 0;
-    }
-    17% {
-        background-position: calc(42 * var(--bookWidth)) 0;
-    }
-    33% {
-        background-position: calc(41 * var(--bookWidth)) 0;
-    }
-    50% {
-        background-position: calc(40 * var(--bookWidth)) 0;
-    }
-    67% {
-        background-position: calc(39 * var(--bookWidth)) 0;
-    }
-    83% {
-        background-position: calc(38 * var(--bookWidth)) 0;
-    }
-    100% {
-        background-position: calc(37 * var(--bookWidth)) 0;
-    }
-}
+/*
+* You thought I'd show you the book animation.
+* Honestly, it was a pain.
+* It's hidden away.
+* If you want to find it, you know where to look.
+*/
 
 /*
-* And enjoy another mildly
+* So there you have it!
+* Enjoy yet another mildly
 * egotistical personal portfolio website.
 *
 * I'm still learning, and this website
@@ -374,4 +328,271 @@ dialog4 = `
 * Richard Stephens
 * richard.stephens.15@ucl.ac.uk
 * +44 0 7704 930 825
-*/`
+*/
+`
+
+
+bookDialog = `
+#book-content {
+    position: absolute;
+    z-index: 1;
+    width: 45%;
+    height: 60%;
+    background-color: transparent;
+    top: 35%;
+    left: 53%;
+}
+
+#book-back-button,
+#book-forward-button {
+    position: absolute;
+    z-index: 2;
+    width: calc(var(--bookWidth) / 2);
+    height: 75%;
+    background-color: transparent;
+    border: 0px;
+    cursor: pointer;
+    top: 25%;
+}
+
+#book-back-button {
+    left: 0;
+}
+
+#book-forward-button {
+    right: 0;
+}
+
+#toc {
+    right: 33%;
+    top: 20%;
+}
+
+#python-button,
+#webdev-button,
+#assembly-button,
+#python-page,
+#webdev-page,
+#assembly-page,
+#toc {
+    width: auto;
+    height: auto;
+    display: none;
+    z-index: 3;
+    color: #454545;
+    background-color: transparent;
+    border: 0px;
+    font-family: 'VT323', 'monospace';
+    font-size: 1rem;
+}
+
+#python-button,
+#webdev-button,
+#assembly-button,
+{
+    left: 50%;
+    position: absolute;
+    width: auto;
+    height: calc(var(--bookHeight) / 4);
+}
+
+#python-button:hover, #webdev-button:hover, #assembly-button:hover {
+    cursor: pointer;
+}
+
+#python-button {
+    top: 30%;
+}
+
+#webdev-button {
+    top: 60%;
+}
+
+#assembly-button {
+    top: 90%;
+}
+
+.idle-to-toc {
+    cursor: pointer;
+    animation: idle-toc 1s steps(1);
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+}
+
+.toc-to-idle {
+    cursor: pointer;
+    animation: idle-toc 1s steps(1);
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+    animation-direction: reverse;
+}
+
+@keyframes idle-toc {
+    0% {
+        background-position: 0 0;
+    }
+
+    17% {
+        background-position: calc(42 * var(--bookWidth)) 0;
+    }
+
+    33% {
+        background-position: calc(41 * var(--bookWidth)) 0;
+    }
+
+    50% {
+        background-position: calc(40 * var(--bookWidth)) 0;
+    }
+
+    67% {
+        background-position: calc(39 * var(--bookWidth)) 0;
+    }
+
+    83% {
+        background-position: calc(38 * var(--bookWidth)) 0;
+    }
+
+    100% {
+        background-position: calc(37 * var(--bookWidth)) 0;
+    }
+}
+
+.toc-to-page {
+    cursor: pointer;
+    animation: toc-page 1s steps(1);
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+}
+
+.page-to-toc {
+    cursor: pointer;
+    animation: toc-page 1s steps(1);
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+    animation-direction: reverse;
+}
+
+@keyframes toc-page {
+    0% {
+        background-position: calc(37 * var(--bookWidth)) 0;
+    }
+
+    8% {
+        background-position: calc(36 * var(--bookWidth)) 0;
+    }
+
+    17% {
+        background-position: calc(35 * var(--bookWidth)) 0;
+    }
+
+    25% {
+        background-position: calc(34 * var(--bookWidth)) 0;
+    }
+
+    33% {
+        background-position: calc(33 * var(--bookWidth)) 0;
+    }
+
+    42% {
+        background-position: calc(32 * var(--bookWidth)) 0;
+    }
+
+    50% {
+        background-position: calc(31 * var(--bookWidth)) 0;
+    }
+
+    58% {
+        background-position: calc(30 * var(--bookWidth)) 0;
+    }
+
+    67% {
+        background-position: calc(29 * var(--bookWidth)) 0;
+    }
+
+    75% {
+        background-position: calc(28 * var(--bookWidth)) 0;
+    }
+
+    83% {
+        background-position: calc(27 * var(--bookWidth)) 0;
+    }
+
+    92% {
+        background-position: calc(26 * var(--bookWidth)) 0;
+    }
+
+    100% {
+        background-position: calc(25 * var(--bookWidth)) 0;
+    }
+}
+
+.idle,
+.toc,
+.page {
+    display: block;
+    position: absolute;
+    z-index: 1;
+    right: calc(33% - var(--bookWidth));
+    top: 45%;
+    width: var(--bookWidth);
+    height: var(--bookHeight);
+    background-size: cover;
+    background-image: url('assets/images/book.svg');
+}
+
+@media screen and (max-width: 600px) {
+
+    .idle,
+    .toc,
+    .page {
+        left: calc(50% - var(--bookWidth) / 2);
+        top: calc(40% + 110% * 2 / 3 - var(--bookHeight) / 2);
+    }
+}
+
+.idle {
+    background-position: 0 0;
+}
+
+.toc {
+    background-position: calc(37 * var(--bookWidth)) 0;
+}
+
+.page {
+    background-position: calc(1 * var(--bookWidth)) 0;
+}
+`
+
+initStyles = `
+.rain-button,
+.down-button,
+.up-button,
+.book,
+#book-back-button,
+#book-forward-button,
+#toc,
+#python-button,
+#webdev-button,
+#assembly-button,
+#python-page,
+#webdev-page,
+#assembly-page {
+    display: none;
+}
+
+#skip-button {
+    z-index: 1;
+    display: block;
+    position: absolute;
+    width: 200px;
+    height: auto;
+    right: 5%;
+    bottom: 5%;
+    background-color: #454545;
+    color: #c1c1d2;
+    line-height: 1.5;
+    user-select: none;
+    cursor: pointer;
+    border: 0px;
+}
+`
