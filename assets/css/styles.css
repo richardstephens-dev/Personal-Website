@@ -64,12 +64,12 @@ body {
     width: 11rem;
 }
 
-.tab button:focus {
+.tab button.active {
     font-weight: bold;
 }
 
 .tab button:hover,
-.tab button:focus {
+.tab button.active {
     scale: 110%;
     transform-origin: left;
 }
@@ -92,15 +92,15 @@ body {
     visibility: hidden;
 }
 
-#about-div button {
+button.about {
     top: calc(var(--tab-button-start-height) + 1 * var(--tab-spacing));
 }
 
-#code-div button {
+button.code {
     top: calc(var(--tab-button-start-height) + 2 * var(--tab-spacing));
 }
 
-#contact-div button {
+button.contact {
     top: calc(var(--tab-button-start-height) + 3 * var(--tab-spacing));
 }
 

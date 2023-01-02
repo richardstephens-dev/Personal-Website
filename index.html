@@ -14,18 +14,17 @@
 </head>
 
 <body>
-    <div id="about-div" class="tab">
-        <button onclick="toggleTab('about-pre')">About</button>
-        <pre id="about-pre">
-        </pre>
+    <div class="tab about">
+        <button id="about-button" class="about" onclick="toggleTab('about')">About</button>
+        <pre id="about-pre" class="about"></pre>
     </div>
-    <div id="code-div" class="tab">
-        <button onclick="toggleTab('code-pre')">Code</button>
-        <pre id="code-pre"></pre>
+    <div class="tab code">
+        <button id="code-button" class="code" onclick="toggleTab('code')">Code</button>
+        <pre id="code-pre" class="code"></pre>
     </div>
-    <div id="contact-div" class="tab">
-        <button onclick="toggleTab('contact-pre')">Contact</button>
-        <pre id="contact-pre"></pre>
+    <div class="tab contact">
+        <button id="contact-button" class="contact" onclick="toggleTab('contact')">Contact</button>
+        <pre id="contact-pre" class="contact"></pre>
     </div>
     <!-- Scripts -->
     <script src="./assets/js/index.js"></script>

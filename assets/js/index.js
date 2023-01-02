@@ -1,28 +1,35 @@
 // Show correct tab when a tab is clicked. Tabs are hidden by default.
 
-function toggleTab(id) {
+function toggleTab(tabName) {
+    preId = tabName + "-pre";
+    buttonId = tabName + "-button";
     // Change the active tab.
     document.querySelectorAll("pre").forEach(function (element) {
         element.classList.remove("active");
     });
-    document.getElementById(id).classList.add("active");
+    document.getElementById(preId).classList.add("active");
+
+    document.querySelectorAll("button").forEach(function (element) {
+        element.classList.remove("active");
+    });
+    document.getElementById(buttonId).classList.add("active");
 
     // Reset the text.
-    document.getElementById(id).innerHTML = "";
+    document.getElementById(preId).innerHTML = "";
     clearTimeout(writeStylesTimeout);
 
     // Writestyles the correct text to the p element.
     let text = "";
-    if (id == "about-pre") {
+    if (tabName == "about") {
         text = aboutPre;
     }
-    if (id == "contact-pre") {
+    if (tabName == "contact") {
         text = contactPre;
     }
-    if (id == "code-pre") {
+    if (tabName == "code") {
         text = codePre;
     }
-    writeStyles(text, 0, 0, id);
+    writeStyles(text, 0, 0, preId);
 }
 
 let writeStylesTimeout;
