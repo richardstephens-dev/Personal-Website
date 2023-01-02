@@ -75,7 +75,6 @@ body {
 }
 
 .tab pre {
-    visibility: hidden;
     height: var(--tab-pre-height);
     width: var(--tab-pre-width);
     color: var(--light-color);
@@ -85,8 +84,12 @@ body {
     white-space: pre-wrap;
 }
 
-.tab button:focus~pre {
+.tab pre.active {
     visibility: visible;
+}
+
+.tab pre:not(.active) {
+    visibility: hidden;
 }
 
 #about-div button {

@@ -1,6 +1,12 @@
 // Show correct tab when a tab is clicked. Tabs are hidden by default.
 
 function toggleTab(id) {
+    // Change the active tab.
+    document.querySelectorAll("pre").forEach(function (element) {
+        element.classList.remove("active");
+    });
+    document.getElementById(id).classList.add("active");
+
     // Reset the text.
     document.getElementById(id).innerHTML = "";
     clearTimeout(writeStylesTimeout);
