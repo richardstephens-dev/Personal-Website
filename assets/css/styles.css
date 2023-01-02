@@ -93,7 +93,7 @@ body {
 }
 
 button.about {
-    top: calc(var(--tab-button-start-height) + 1 * var(--tab-spacing));
+    top: calc(50% + var(--tab-button-start-height) + 1 * var(--tab-spacing));
 }
 
 button.code {
