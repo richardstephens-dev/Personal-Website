@@ -56,12 +56,13 @@ body {
     height: var(--tab-button-height);
     left: 0;
     font-size: xx-large;
+    transform-origin: left;
+    border-radius: 0 0.5rem 0.5rem 0;
 }
 
 .tab button:hover {
     cursor: pointer;
-    transform-origin: left;
-    width: 11rem;
+    scale: 110%;
 }
 
 .tab button.active {
@@ -70,16 +71,15 @@ body {
 
 .tab button:hover,
 .tab button.active {
-    scale: 110%;
-    transform-origin: left;
+    width: 11rem;
 }
 
 .tab pre {
+    left: var(--tab-pre-start-left);
+    top: var(--tab-pre-top);
     height: var(--tab-pre-height);
     width: var(--tab-pre-width);
     color: var(--light-color);
-    left: var(--tab-pre-start-left);
-    top: var(--tab-pre-top);
     transition: none;
     white-space: pre-wrap;
 }
