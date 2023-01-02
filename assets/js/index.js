@@ -48,10 +48,9 @@ function writeStyles(message, index, speed, textId) {
     }
 }
 
-const aboutPre = `Hi there. You can find my personal coding projects here. Most are about linguistics or retro games. A heads up for you: none of the code here is perfect. But that's OK, because it's all my own code. I taught myself everything here by trying new things. Sometimes, that means failing. And sometimes, that means letting good enough be good enough.`
+const aboutPre = `Hi there. You can find my personal coding projects here. Most are about linguistics or retro games. A heads up for you: none of the code here is perfect. But that's OK, because it's all my own code. I taught myself everything here by trying new things. Sometimes, that means letting good enough be good enough.`
 const contactPre = `Richard Stephens
 richard.stephens.15@ucl.ac.uk
 +44 0 7704 930 825
-London, UK based
-`
+London, UK based`
 const codePre = `TODO: integrate github repo history.`

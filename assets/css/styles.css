@@ -6,7 +6,7 @@
 :root {
     --dark-color: #222323;
     --light-color: #f0f6f0;
-    --tab-spacing: 6%;
+    --tab-spacing: 2.5rem;
     --tab-button-start-height: calc(50% - 3 * var(--tab-spacing));
     --tab-button-height: auto;
     --tab-pre-start-height: 25%;
@@ -18,7 +18,6 @@
 
 @media screen and (max-width: 600px) {
     :root {
-        --tab-spacing: 6%;
         --tab-button-start-height: calc(85% - 3 * var(--tab-spacing));
         --tab-pre-start-height: 15%;
         --tab-pre-start-left: 10%;
@@ -62,7 +61,7 @@ body {
 .tab button:hover {
     cursor: pointer;
     transform-origin: left;
-    width: 12rem;
+    width: 11rem;
 }
 
 .tab button:focus {
@@ -71,7 +70,7 @@ body {
 
 .tab button:hover,
 .tab button:focus {
-    scale: 117%;
+    scale: 110%;
     transform-origin: left;
 }
 
