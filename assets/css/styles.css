@@ -26,8 +26,9 @@ body {
 
 .sidebar button {
     width: 75%;
-    margin-top: 0.25rem;
-    margin-bottom: 0.25rem;
+    height: 2.5ch;
+    margin-top: 0.25ch;
+    margin-bottom: 0.25ch;
     color: var(--primary-color);
     background-color: var(--secondary-color);
     font-size: xx-large;
@@ -82,8 +83,12 @@ pre {
 
 .hero {
     border: 5px solid var(--secondary-color);
-    display: grid;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     overflow: hidden;
+    grid-column: 2 / -1;
+    grid-row: 2 / -1;
 }
 
 .sidebar {
@@ -91,4 +96,5 @@ pre {
     grid-gap: 0.5rem;
     display: grid;
     grid-column: 1;
+    grid-row: 1;
 }
