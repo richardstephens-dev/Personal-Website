@@ -1,30 +1,12 @@
-/**
-* VARIABLES
-**/
-
-/* dark theme */
-:root {
-    --dark-color: #222323;
-    --light-color: #f0f6f0;
-    --tab-spacing: 2.5rem;
-    --tab-button-start-height: calc(50% - 3 * var(--tab-spacing));
-    --tab-button-height: auto;
-    --tab-pre-start-height: 25%;
-    --tab-pre-start-left: calc(25% + 6rem);
-    --tab-pre-height: calc(3 * (var(--tab-spacing) + var(--tab-button-height)));
-    --tab-pre-width: 50%;
-    --tab-pre-top: calc(var(--tab-button-start-height) + var(--tab-spacing))
+/* Themes */
+html[theme="dark"] {
+    --primary-color: #222323;
+    --secondary-color: #f0f6f0;
 }
 
-@media screen and (max-width: 600px) {
-    :root {
-        --tab-button-start-height: calc(85% - 3 * var(--tab-spacing));
-        --tab-pre-start-height: 15%;
-        --tab-pre-start-left: 10%;
-        --tab-pre-height: calc(3 * (var(--tab-spacing) + var(--tab-button-height)));
-        --tab-pre-width: 80%;
-        --tab-pre-top: 20%;
-    }
+html[theme="light"] {
+    --primary-color: #f0f6f0;
+    --secondary-color: #222323;
 }
 
 * {
@@ -33,81 +15,50 @@
     font-size: 1rem;
     border: none;
     outline: none;
-    margin: 0;
     overflow: hidden;
+    white-space: pre-wrap;
 }
 
 body {
-    background-color: var(--dark-color);
+    margin-left: 0;
+    background-color: var(--primary-color);
 }
 
-/* Desktop */
-.tab * {
-    width: 100%;
-    height: 100%;
-    display: block;
-    position: absolute;
-}
-
-.tab button {
-    color: var(--dark-color);
-    background-color: var(--light-color);
-    width: 10rem;
-    height: var(--tab-button-height);
-    left: 0;
+.sidebar button {
+    width: 75%;
+    margin-top: 0.25rem;
+    margin-bottom: 0.25rem;
+    color: var(--primary-color);
+    background-color: var(--secondary-color);
     font-size: xx-large;
-    transform-origin: left;
     border-radius: 0 0.5rem 0.5rem 0;
 }
 
-.tab button:hover {
+.sidebar button:hover {
     cursor: pointer;
-    scale: 110%;
-}
-
-.tab button.active {
+    transform-origin: left;
+    transform: scale(120%);
     font-weight: bold;
 }
 
-.tab button:hover,
-.tab button.active {
-    width: 11rem;
-}
-
-.tab pre {
-    left: var(--tab-pre-start-left);
-    top: var(--tab-pre-top);
-    height: var(--tab-pre-height);
-    width: var(--tab-pre-width);
-    color: var(--light-color);
+pre {
+    color: var(--secondary-color);
     transition: none;
     white-space: pre-wrap;
 }
 
-.tab pre.active {
+.sidebar pre.active {
     visibility: visible;
 }
 
-.tab pre:not(.active) {
+.sidebar pre:not(.active) {
     visibility: hidden;
-}
-
-button.about {
-    top: calc(var(--tab-button-start-height) + 1 * var(--tab-spacing));
-}
-
-button.code {
-    top: calc(var(--tab-button-start-height) + 2 * var(--tab-spacing));
-}
-
-button.contact {
-    top: calc(var(--tab-button-start-height) + 3 * var(--tab-spacing));
 }
 
 .blinker {
     display: inline-block;
     height: 1rem;
-    border-left: 10px solid var(--light-color);
+    border-left: 10px solid var(--secondary-color);
     animation: blinker 0.9s steps(2, start) infinite;
 }
 
@@ -115,4 +66,29 @@ button.contact {
     to {
         visibility: hidden;
     }
+}
+
+/* GRID */
+.grid {
+    --min: 15ch;
+    --gap: 1rem;
+
+    display: grid;
+    grid-gap: var(--gap);
+    /* min() with 100% prevents overflow
+    in extra narrow spaces */
+    grid-template-columns: minmax(20ch, 20ch) repeat(auto-fit, minmax(min(100%, var(--min)), 1fr));
+}
+
+.hero {
+    border: 5px solid var(--secondary-color);
+    display: grid;
+    overflow: hidden;
+}
+
+.sidebar {
+    /*border: 5px solid var(--secondary-color);*/
+    grid-gap: 0.5rem;
+    display: grid;
+    grid-column: 1;
 }

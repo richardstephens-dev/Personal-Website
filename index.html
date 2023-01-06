@@ -16,20 +16,21 @@
 <body>
     <!-- Main grid layout -->
     <div class="grid">
-
+        <div class="sidebar">
+            <button id="about-button" onclick="toggleHero(this.id)">About</button>
+            <button id="code-button" onclick="toggleHero(this.id)">Code</button>
+            <button id="contact-button" onclick="toggleHero(this.id)">Contact</button>
+        </div>
+        <div class="hero">
+            <pre id="hero-pre"></pre>
+        </div>
     </div>
-    <div class="tab about">
-        <button id="about-button" class="about" onclick="toggleTab('about')">About</button>
-        <pre id="about-pre" class="about"></pre>
+    <!--<div class="tab about">
     </div>
     <div class="tab code">
-        <button id="code-button" class="code" onclick="toggleTab('code')">Code</button>
-        <pre id="code-pre" class="code"></pre>
     </div>
     <div class="tab contact">
-        <button id="contact-button" class="contact" onclick="toggleTab('contact')">Contact</button>
-        <pre id="contact-pre" class="contact"></pre>
-    </div>
+    </div>-->
     <!-- Scripts -->
     <script src="./assets/js/index.js"></script>
 </body>
