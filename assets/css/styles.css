@@ -42,6 +42,11 @@ pre {
     text-justify: inter-word;
 }
 
+img {
+    width: 100%;
+    height: 100%;
+}
+
 button {
     background-color: var(--secondary-color);
     color: var(--primary-color);
@@ -77,11 +82,6 @@ button.active {
     height: 5ch;
     background-color: transparent;
     filter: var(--svg-secondary-filter);
-}
-
-.settingsbar button>* {
-    width: 100%;
-    height: 100%;
 }
 
 /* Blinker */
@@ -132,8 +132,8 @@ button.active {
 }
 
 .settingsbar {
-    padding-top: 2rem;
-    padding-right: 2rem;
+    padding-top: calc(2.25rem + 2.5ch);
+    padding-right: calc(2.25rem + 2.5ch);
     display: flex;
     flex-direction: row-reverse;
     justify-content: flex-start;
