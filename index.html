@@ -10,6 +10,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Ubuntu+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap"
         rel="stylesheet">
+    <link rel="icon" href="./assets/images/favicon.ico" />
     <title>Richard Stephens</title>
 </head>
 
@@ -17,9 +18,15 @@
     <!-- Main grid layout -->
     <div class="grid">
         <div class="sidebar">
-            <button id="about-button" onclick="toggleHero(this.id)">About</button>
-            <button id="code-button" onclick="toggleHero(this.id)">Code</button>
-            <button id="contact-button" onclick="toggleHero(this.id)">Contact</button>
+            <button id="about-button" onclick="toggleHero(this.id)">
+                <div>About</div>
+            </button>
+            <button id="code-button" onclick="toggleHero(this.id)">
+                <div>Code</div>
+            </button>
+            <button id="contact-button" onclick="toggleHero(this.id)">
+                <div>Contact</div>
+            </button>
         </div>
         <div class="hero">
             <pre id="hero-pre"></pre>

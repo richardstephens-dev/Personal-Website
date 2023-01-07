@@ -8,9 +8,9 @@ function toggleHero(id) {
 
     // Reset the text.
     document.getElementById("hero-pre").innerHTML = "";
-    clearTimeout(writeStylesTimeout);
+    clearTimeout(writeBlinkerTextTimeout);
 
-    // Writestyles the correct text to the p element.
+    // writeBlinkerText the correct text to the p element.
     let text = "";
     if (id == "about-button") {
         text = aboutPre;
@@ -21,11 +21,11 @@ function toggleHero(id) {
     if (id == "code-button") {
         text = codePre;
     }
-    writeStyles(text, 0, 0, "hero-pre");
+    writeBlinkerText(text, 0, 0, "hero-pre");
 }
 
-let writeStylesTimeout;
-function writeStyles(message, index, speed, textId) {
+let writeBlinkerTextTimeout;
+function writeBlinkerText(message, index, speed, textId) {
     if (index < message.length) {
         // Control the speed. Low value = fast.
         if (message.substring(index, index + 1).match(/\s/) && message.substring(index - 1, index).match(/[.!?]$/)) {
@@ -47,8 +47,8 @@ function writeStyles(message, index, speed, textId) {
 
 
         // Invoke again.
-        writeStylesTimeout = setTimeout(function () {
-            writeStyles(message, index, speed, textId);
+        writeBlinkerTextTimeout = setTimeout(function () {
+            writeBlinkerText(message, index, speed, textId);
         }, speed);
     }
 }

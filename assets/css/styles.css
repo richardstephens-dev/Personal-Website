@@ -9,31 +9,37 @@ html[theme="light"] {
     --secondary-color: #222323;
 }
 
+/* Global Setup */
+
 * {
     transition: all 0.25s;
     font-family: 'Ubuntu Mono', monospace;
-    font-size: 1rem;
-    border: none;
     outline: none;
-    overflow: hidden;
-    white-space: pre-wrap;
+    border: none;
     margin: 0;
+    padding: 0;
 }
 
 body {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
     background-color: var(--primary-color);
 }
+
+pre {
+    color: var(--secondary-color);
+    transition: none;
+    white-space: pre-wrap;
+    overflow: hidden;
+    font-size: 1rem;
+}
+
+/* Sidebar Buttons */
 
 .sidebar button {
     width: 8ch;
     height: 2.5ch;
+    margin-top: 0.25rem;
+    margin-bottom: 0.25rem;
     color: var(--primary-color);
-    background-color: var(--secondary-color);
     font-size: xx-large;
     border-radius: 0 0.5rem 0.5rem 0;
 }
@@ -41,29 +47,19 @@ body {
 .sidebar button:hover,
 .sidebar button.active {
     cursor: pointer;
-    transform-origin: left;
-    transform: scale(115%);
     font-weight: bold;
 }
 
 .sidebar button:hover {
-    transform: scale(120%);
+    width: 10ch;
 }
 
-pre {
-    color: var(--secondary-color);
-    transition: none;
-    white-space: pre-wrap;
+.sidebar button.active {
+    width: 9ch
 }
 
-.sidebar pre.active {
-    visibility: visible;
-}
 
-.sidebar pre:not(.active) {
-    visibility: hidden;
-}
-
+/* Blinker */
 .blinker {
     display: inline-block;
     height: 1rem;
@@ -78,52 +74,44 @@ pre {
     }
 }
 
-/* GRID */
+/* Grid Layout */
 .grid {
-    position: absolute;
-    top: 0;
-    left: 0;
+    display: grid;
     width: 100vw;
     height: 100vh;
-    --min: 15ch;
-    --gap: 1rem;
-    display: grid;
-    grid-template-columns: minmax(20ch, 20ch) repeat(auto-fit, minmax(min(100%, var(--min)), 1fr));
-    grid-template-rows: repeat(auto-fit, minmax(min(100%, 22ch), 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 10rem), 1fr));
+    grid-template-rows: repeat(auto-fit, minmax(min(100%, 10rem), 1fr));
 }
 
 .sidebar {
-    display: grid;
-    position: sticky;
-    padding-top: 1rem;
-    grid-row: 1 / 1;
+    border: 1px solid red;
+    display: flex;
+    flex-direction: column;
+    align-content: space-between;
+    justify-content: flex-start;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
     grid-column: 1 / 1;
-    z-index: 1;
+    grid-row: 1 / -1;
 }
 
 .hero {
+    border: 1px solid blue;
     display: flex;
     justify-content: center;
     align-items: center;
-    overflow: hidden;
-    grid-row: 1 / -1;
     grid-column: 1 / -1;
-    z-index: 0;
-    padding-right: 30vw;
-    padding-left: 30vw;
+    grid-row: 1 / -1;
 }
 
-/* For small screens */
-@media (max-width: 600px) {
+@media screen and (max-width: 600px) {
     .sidebar {
-        grid-row: -2 / -1;
-        grid-column: 1 / 1;
+        grid-row: -1 / -1;
+        grid-column: 1 / -1;
     }
 
     .hero {
-        padding-left: 10vw;
-        padding-right: 10vw;
-        grid-row: 1 / -2;
+        grid-row: 1 / 1;
         grid-column: 1 / -1;
     }
 }
