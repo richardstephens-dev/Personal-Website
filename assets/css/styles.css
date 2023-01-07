@@ -14,7 +14,6 @@ html[theme="light"] {
 }
 
 /* Global Setup */
-
 * {
     transition: all 0.25s;
     font-family: 'Ubuntu Mono', monospace;
@@ -34,17 +33,18 @@ pre {
     transition: none;
     white-space: pre-wrap;
     overflow: hidden;
+    text-align: justify;
+    text-justify: inter-word;
 }
 
 /* Sidebar Buttons */
-
 .sidebar button {
     width: 8ch;
     height: 2.5ch;
     margin-top: 0.25rem;
     margin-bottom: 0.25rem;
     color: var(--primary-color);
-    font-size: calc(2.5*var(--font-size));
+    font-size: calc(2*var(--font-size));
     border-radius: 0 0.5rem 0.5rem 0;
 }
 
@@ -60,6 +60,13 @@ pre {
 
 .sidebar button.active {
     width: 9ch
+}
+
+/* Settings Bar Buttons */
+.settingsbar button {
+    width: 2.5ch;
+    height: 2.5ch;
+    border: 1px solid var(--secondary-color);
 }
 
 /* Blinker */
@@ -108,21 +115,13 @@ pre {
     margin: 15%;
 }
 
-@media screen and (max-width: 768px) {
-    .sidebar {
-        grid-row: -1 / -1;
-        grid-column: 1 / -1;
-    }
-
-    .hero {
-        grid-row: 1 / 1;
-        grid-column: 1 / -1;
-        margin: 5%;
-    }
-}
-
-@media screen and (min-width: 769px) {
-    .hero {
-        margin-left: calc(15% + 10ch);
-    }
+.settingsbar {
+    border: 1px solid red;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    grid-column: -1 / -1;
+    grid-row: 1 / 1;
+    z-index: 1;
 }
