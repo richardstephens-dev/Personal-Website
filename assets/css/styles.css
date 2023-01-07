@@ -3,14 +3,19 @@
     --font-size: calc(80% + 0.5vmin);
 }
 
-html[theme="dark"] {
+/*SVG Filters made using https://codepen.io/sosuke/pen/Pjoqqp*/
+[theme="dark"] {
     --primary-color: #222323;
     --secondary-color: #f0f6f0;
+    --svg-primary-filter: invert(8%) sepia(7%) saturate(198%) hue-rotate(131deg) brightness(107%) contrast(87%);
+    --svg-secondary-filter: invert(93%) sepia(4%) saturate(378%) hue-rotate(71deg) brightness(107%) contrast(93%);
 }
 
-html[theme="light"] {
+[theme="light"] {
     --primary-color: #f0f6f0;
     --secondary-color: #222323;
+    --svg-primary-filter: invert(93%) sepia(4%) saturate(378%) hue-rotate(71deg) brightness(107%) contrast(93%);
+    --svg-secondary-filter: invert(8%) sepia(7%) saturate(198%) hue-rotate(131deg) brightness(107%) contrast(87%);
 }
 
 /* Global Setup */
@@ -37,21 +42,25 @@ pre {
     text-justify: inter-word;
 }
 
+button {
+    background-color: var(--secondary-color);
+    color: var(--primary-color);
+}
+
+button:hover,
+button.active {
+    cursor: pointer;
+    font-weight: bold;
+}
+
 /* Sidebar Buttons */
 .sidebar button {
     width: 8ch;
     height: 2.5ch;
     margin-top: 0.25rem;
     margin-bottom: 0.25rem;
-    color: var(--primary-color);
     font-size: calc(2*var(--font-size));
     border-radius: 0 0.5rem 0.5rem 0;
-}
-
-.sidebar button:hover,
-.sidebar button.active {
-    cursor: pointer;
-    font-weight: bold;
 }
 
 .sidebar button:hover {
@@ -62,11 +71,17 @@ pre {
     width: 9ch
 }
 
-/* Settings Bar Buttons */
+/* Settingsbar Buttons */
 .settingsbar button {
-    width: 2.5ch;
-    height: 2.5ch;
-    border: 1px solid var(--secondary-color);
+    width: 5ch;
+    height: 5ch;
+    background-color: transparent;
+    filter: var(--svg-secondary-filter);
+}
+
+.settingsbar button>* {
+    width: 100%;
+    height: 100%;
 }
 
 /* Blinker */
@@ -87,6 +102,7 @@ pre {
 /* Grid Layout */
 .grid {
     display: grid;
+    position: fixed;
     width: 100vw;
     height: 100vh;
     grid-template-columns: repeat(auto-fit, minmax(min(100%, 1rem), 1fr));
@@ -116,12 +132,13 @@ pre {
 }
 
 .settingsbar {
-    border: 1px solid red;
+    padding-top: 2rem;
+    padding-right: 2rem;
     display: flex;
-    flex-direction: row;
-    justify-content: flex-end;
+    flex-direction: row-reverse;
+    justify-content: flex-start;
     align-items: center;
-    grid-column: -1 / -1;
+    grid-column: 1 / -1;
     grid-row: 1 / 1;
     z-index: 1;
 }

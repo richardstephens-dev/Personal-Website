@@ -24,6 +24,19 @@ function toggleHero(id) {
     writeBlinkerText(text, 0, 0, "hero-pre");
 }
 
+function toggleTheme() {
+    // Get the current theme from html. check if dark or light
+    let theme = document.documentElement.getAttribute("theme");
+    console.log(theme)
+    if (theme == "dark") {
+        document.documentElement.setAttribute("theme", "light");
+        document.getElementById("theme-button").src = "assets/images/dark.svg";
+        return;
+    }
+    document.documentElement.setAttribute("theme", "dark");
+    document.getElementById("theme-button").src = "assets/images/light.svg";
+}
+
 let writeBlinkerTextTimeout;
 function writeBlinkerText(message, index, speed, textId) {
     if (index < message.length) {
