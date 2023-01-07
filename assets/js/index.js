@@ -27,7 +27,6 @@ function toggleHero(id) {
 function toggleTheme() {
     // Get the current theme from html. check if dark or light
     let theme = document.documentElement.getAttribute("theme");
-    console.log(theme)
     if (theme == "dark") {
         document.documentElement.setAttribute("theme", "light");
         document.getElementById("theme-img").src = "assets/images/dark.svg";
