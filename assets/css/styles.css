@@ -106,7 +106,7 @@ pre {
     grid-column: -1 / -1;
     grid-row: 1 / -1;
     z-index: 0;
-    margin: clamp(15%, 15ch, 25%);
+    margin: clamp(15%, 15ch, 20%);
 }
 
 @media screen and (max-width: 768px) {
