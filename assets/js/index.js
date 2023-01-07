@@ -30,11 +30,11 @@ function toggleTheme() {
     console.log(theme)
     if (theme == "dark") {
         document.documentElement.setAttribute("theme", "light");
-        document.getElementById("theme-button").src = "assets/images/dark.svg";
+        document.getElementById("theme-img").src = "assets/images/dark.svg";
         return;
     }
     document.documentElement.setAttribute("theme", "dark");
-    document.getElementById("theme-button").src = "assets/images/light.svg";
+    document.getElementById("theme-img").src = "assets/images/light.svg";
 }
 
 let writeBlinkerTextTimeout;
