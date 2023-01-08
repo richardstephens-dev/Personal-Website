@@ -72,7 +72,7 @@ function writeBlinkerText(message, index, speed, textId) {
     }
 }
 
-const aboutPre = `Hi there. You can find my personal learning projects here. Most are about linguistics or retro games. A heads up for you: none of the code is perfect. But that's OK, because I learn through experimenting. Experiments only work when you know you can improve. So if you spot a way to improve, please get in touch with me through the Contact tab.`
+const aboutPre = `Hi there. You can find my personal learning projects here. Most are about languages or retro games. A heads up for you: none of the code is perfect. But that's OK, because I learn by experimenting. Experiments only work when you know you can improve. So if you spot a way to improve a project here, please get in touch with me through the Contact tab.`
 const contactPre = `Richard Stephens
 richard.stephens.15@ucl.ac.uk
 +44 0 7704 930 825
