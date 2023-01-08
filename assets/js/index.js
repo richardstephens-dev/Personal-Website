@@ -1,13 +1,7 @@
 // Show correct tab when a tab is clicked. Tabs are hidden by default.
 function toggleHero(id) {
-    document.querySelectorAll("button").forEach(function (element) {
-        element.classList.remove("active");
-    });
-    document.getElementById(id).classList.add("active");
-
-    // Reset the text.
-    document.getElementById("hero-pre").innerHTML = "";
-    clearTimeout(writeBlinkerTextTimeout);
+    // Reset the hero text.
+    resetHero(id);
 
     // writeBlinkerText the correct text to the p element.
     let text = "";
@@ -17,10 +11,20 @@ function toggleHero(id) {
     if (id == "contact-button") {
         text = contactPre;
     }
-    if (id == "code-button") {
-        text = codePre;
-    }
     writeBlinkerText(text, 0, 0, "hero-pre");
+}
+
+function resetHero(id) {
+    // Reset active button
+    document.querySelectorAll("button").forEach(function (element) {
+        element.classList.remove("active");
+    });
+    document.getElementById(id).classList.add("active");
+
+    // Reset the text.
+    document.getElementById("hero-title").innerHTML = "";
+    document.getElementById("hero-pre").innerHTML = "";
+    clearTimeout(writeBlinkerTextTimeout);
 }
 
 function toggleTheme() {

@@ -56,6 +56,8 @@ button {
     transition: width 0.25s ease-in-out;
     background-color: var(--secondary-color);
     color: var(--primary-color);
+    margin-top: 0.25rem;
+    margin-bottom: 0.25rem;
 }
 
 button:hover,
@@ -68,8 +70,6 @@ button.active {
 .sidebar button {
     width: 8ch;
     height: 2.5ch;
-    margin-top: 0.25rem;
-    margin-bottom: 0.25rem;
     font-size: calc(2*var(--font-size));
     border-radius: 0 0.5rem 0.5rem 0;
 }
@@ -138,13 +138,13 @@ button.active {
 }
 
 .settingsbar {
-    padding-top: calc(2.25rem + 2.5ch);
-    padding-right: calc(2.25rem + 2.5ch);
+    padding-top: 2rem;
     display: flex;
-    flex-direction: row-reverse;
+    flex-direction: column;
+    align-content: space-between;
     justify-content: flex-start;
     align-items: center;
-    grid-column: 1 / -1;
-    grid-row: 1 / 1;
+    grid-column: -5 / -5;
+    grid-row: 1 / 5;
     z-index: 1;
 }

@@ -16,13 +16,12 @@
 
 <body>
     <!-- Main grid layout -->
-    <div class="theme-fill"></div>
     <div class="grid">
         <div class="sidebar">
             <button id="about-button" onclick="toggleHero(this.id)">
                 <div>About</div>
             </button>
-            <button id="code-button" onclick="toggleHero(this.id)">
+            <button id="code-button" onclick="resetHero(this.id)">
                 <div>Code</div>
             </button>
             <button id="contact-button" onclick="toggleHero(this.id)">
@@ -30,12 +29,16 @@
             </button>
         </div>
         <div class="hero">
+            <h1 id="hero-title"></h1>
             <pre id="hero-pre"></pre>
         </div>
         <div class="settingsbar">
-            <button id="theme-button" type="checkbox" onclick="toggleTheme()">
+            <button id="theme-button" onclick="toggleTheme()">
                 <img id="theme-img" src="assets/images/light.svg" />
             </button>
+            <a href="https://github.com/elencus?tab=repositories"><button id="theme-button">
+                    <img id="github-img" src="assets/images/github.svg" />
+                </button></a>
         </div>
     </div>
     <!--<div class="tab about">
