@@ -1,9 +1,15 @@
-// Show correct tab when a tab is clicked. Tabs are hidden by default.
+// Toggle the text in the hero section by what button is clicked.
 function toggleHero(id) {
     // Reset the hero text.
     resetHero(id);
 
-    // writeBlinkerText the correct text to the p element.
+    // Handle code section separately.
+    if (id == "code-button") {
+        toggleCode();
+        return;
+    }
+
+    // Write the correct text to the hero.
     let text = "";
     if (id == "about-button") {
         text = aboutPre;
@@ -14,10 +20,7 @@ function toggleHero(id) {
     writeBlinkerText(text, 0, 0, "hero-pre");
 }
 
-function toggleCode() {
-
-}
-
+// Reset the hero section.
 function resetHero(id) {
     // Reset active button
     document.querySelectorAll("button").forEach(function (element) {
@@ -29,6 +32,12 @@ function resetHero(id) {
     document.getElementById("hero-title").innerHTML = "";
     document.getElementById("hero-pre").innerHTML = "";
     clearTimeout(writeBlinkerTextTimeout);
+}
+
+// Toggle the code section.
+const Octokit = require("@octokit/rest");
+const octokit = new Octokit();
+function toggleCode() {
 }
 
 function toggleTheme() {
