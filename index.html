@@ -16,6 +16,7 @@
 
 <body>
     <!-- Main grid layout -->
+    <div class="theme-fill"></div>
     <div class="grid">
         <div class="sidebar">
             <button id="about-button" onclick="toggleHero(this.id)">
@@ -32,7 +33,7 @@
             <pre id="hero-pre"></pre>
         </div>
         <div class="settingsbar">
-            <button id="theme-button" onclick="toggleTheme()">
+            <button id="theme-button" type="checkbox" onclick="toggleTheme()">
                 <img id="theme-img" src="assets/images/light.svg" />
             </button>
         </div>

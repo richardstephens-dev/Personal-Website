@@ -1,5 +1,4 @@
 // Show correct tab when a tab is clicked. Tabs are hidden by default.
-
 function toggleHero(id) {
     document.querySelectorAll("button").forEach(function (element) {
         element.classList.remove("active");
