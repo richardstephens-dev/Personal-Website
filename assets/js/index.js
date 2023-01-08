@@ -14,6 +14,10 @@ function toggleHero(id) {
     writeBlinkerText(text, 0, 0, "hero-pre");
 }
 
+function toggleCode() {
+
+}
+
 function resetHero(id) {
     // Reset active button
     document.querySelectorAll("button").forEach(function (element) {
@@ -73,4 +77,3 @@ const contactPre = `Richard Stephens
 richard.stephens.15@ucl.ac.uk
 +44 0 7704 930 825
 London, UK`
-const codePre = `TODO: integrate github repo history.`
