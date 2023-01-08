@@ -3,3 +3,4 @@ assets/images/tmp/*
 playground.html
 assets/js/playground.js
 assets/js/playground.min.js
+.env

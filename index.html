@@ -1,3 +1,12 @@
+<!--
+  ___ _    _                _   ___ _            _                
+ | _ (_)__| |_  __ _ _ _ __| | / __| |_ ___ _ __| |_  ___ _ _  ___
+ |   | / _| ' \/ _` | '_/ _` | \__ |  _/ -_| '_ | ' \/ -_| ' \(_-<
+ |_|_|_\__|_||_\__,_|_| \__,_| |___/\__\___| .__|_||_\___|_||_/__/
+                                           |_|                       
+              Created by Richard James Stephens 2023
+-->
+
 <!DOCTYPE html>
 <html lang="en" theme="dark">
 
@@ -41,13 +50,11 @@
                 </button></a>
         </div>
     </div>
-    <!--<div class="tab about">
-    </div>
-    <div class="tab code">
-    </div>
-    <div class="tab contact">
-    </div>-->
     <!-- Scripts -->
+    <script type="module">
+        import { Octokit } from "https://cdn.skypack.dev/octokit";
+        window.Octokit = Octokit;
+    </script>
     <script src="./assets/js/index.js"></script>
 </body>
 
