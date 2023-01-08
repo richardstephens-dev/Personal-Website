@@ -35,8 +35,6 @@ function resetHero(id) {
 }
 
 // Toggle the code section.
-const Octokit = require("@octokit/rest");
-const octokit = new Octokit();
 function toggleCode() {
 }
 
