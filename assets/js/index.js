@@ -35,7 +35,9 @@ function resetHero(id) {
 }
 
 // Toggle the code section.
-function toggleCode() {
+async function toggleCode() {
+    const { octokit } = new Octokit({});
+    await octokit.request('GET /octocat', {})
 }
 
 function toggleTheme() {
