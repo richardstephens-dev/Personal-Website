@@ -37,7 +37,7 @@ function resetHero(id) {
 // Toggle the code section.
 async function toggleCode() {
     fetch("https://richardstephens-dev.richardstephens-dev.workers.dev/")
-        .then(response => response.json())
+        .then(response => response.text())
         .then(data => {
             console.log(data);
         });
