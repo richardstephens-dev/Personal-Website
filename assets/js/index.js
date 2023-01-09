@@ -36,9 +36,11 @@ function resetHero(id) {
 
 // Toggle the code section.
 async function toggleCode() {
-    const octokit = new Octokit({ auth: process.env.OCTOKIT_AUTH_TOKEN });
-    const cat = await octokit.request('GET /octocat', {})
-    console.log(cat.data)
+    fetch("https://richardstephens-dev.richardstephens-dev.workers.dev/")
+        .then(response => response.json())
+        .then(data => {
+            console.log(data);
+        });
 }
 
 function toggleTheme() {
