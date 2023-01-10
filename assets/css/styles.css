@@ -74,6 +74,7 @@ button.active {
 
 /* Sidebar Buttons */
 .sidebar button {
+    background-color: var(--secondary-color);
     width: 8ch;
     height: 2.5ch;
     font-size: calc(2*var(--font-size));
