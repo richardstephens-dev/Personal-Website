@@ -93,7 +93,6 @@ button.active {
 .settingsbar button {
     width: 5ch;
     height: 5ch;
-    background-color: transparent;
     filter: var(--secondary-filter);
 }
 
@@ -131,7 +130,6 @@ button.active {
     padding-bottom: 2rem;
     grid-column: 1 / 1;
     grid-row: 1 / -1;
-    z-index: 1;
 }
 
 .hero {
@@ -161,9 +159,9 @@ button.active {
     /* Positioning within grid/viewport */
     display: none;
     position: relative;
-    width: calc(100vw - clamp(10%, calc((100vw - 55ch)/2), 30%) * 2);
+    width: calc(100vw - clamp(16ch, calc((100vw - 55ch)/2), 30%) * 2);
     height: auto;
-    margin: var(--hero-margin);
+    margin: auto clamp(16ch, calc((100vw - 55ch)/2), 30%);
     z-index: 0;
     overflow-y: auto;
     /* Child positioning */

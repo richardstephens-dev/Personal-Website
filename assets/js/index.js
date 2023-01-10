@@ -83,9 +83,8 @@ async function writeheroCodeFlex() {
     for (let i = 0; i < commitMessages.length; i++) {
         let commit = commitMessages[i];
         let commitDiv = document.createElement("div");
-        commitDiv.classList.add("hero-code-flex-item");
         commitDiv.innerHTML = `
-            <a class="commit-link" href="https://github.com/richardstephens-dev/${commit[1]}/commit/${commit[3]}">
+            <a href="https://github.com/richardstephens-dev/${commit[1]}/commit/${commit[3]}">
             <h1>${commit[0]}: ${commit[1]}</h1></a>
             <pre>${commit[2]}\n\n</pre>
         `;
