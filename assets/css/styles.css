@@ -1,6 +1,7 @@
 /* Themes & Vars  */
 :root {
     --font-size: calc(80% + 0.5vmin);
+    --hero-margin-x: clamp(10%, calc((100vw - 55ch)/2), 30%);
 }
 
 /*
@@ -38,13 +39,19 @@ body {
     background-color: var(--primary-color);
 }
 
-pre {
+pre,
+h1 {
     color: var(--secondary-color);
     transition: none;
     white-space: pre-wrap;
     overflow: hidden;
     text-align: justify;
     text-justify: inter-word;
+}
+
+h1 {
+    font-weight: bold;
+    font-size: calc(1.5*var(--font-size));
 }
 
 img {
@@ -134,7 +141,7 @@ button.active {
     grid-column: 1 / -1;
     grid-row: 1 / -1;
     z-index: 0;
-    margin: auto clamp(10%, calc((100vw - 55ch)/2), 30%);
+    margin: auto var(--hero-margin-x);
 }
 
 .settingsbar {
@@ -147,4 +154,26 @@ button.active {
     grid-column: -5 / -5;
     grid-row: 1 / 5;
     z-index: 1;
+}
+
+/* Github Commit Hero Grid Layout */
+#hero-code-grid {
+    display: grid;
+    visibility: hidden;
+    position: absolute;
+    width: calc(100% - var(--hero-margin-x) * 2);
+    height: 95%;
+    margin: 0 var(--hero-margin-x);
+    margin-bottom: 5%;
+    grid-template-columns: repeat(3, minmax(min(100%, 1rem), 1fr));
+    grid-template-rows: repeat(auto-fit, minmax(min(100%, 1rem), 1fr));
+    grid-column: 1 / -1;
+    grid-row: 1 / -1;
+}
+
+#hero-code-grid>h1 {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    border: 1px solid var(--secondary-color);
 }

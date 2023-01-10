@@ -40,6 +40,12 @@ function resetHero(id) {
     });
     document.getElementById(id).classList.add("active");
 
+    // Hide the commit table:
+    document.getElementById("hero-code-grid").style.visibility = "hidden";
+    if (id == "code-button") {
+        document.getElementById("hero-code-grid").style.visibility = "visible";
+    }
+
     // Reset the text.
     document.getElementById("hero-pre").innerHTML = "";
     clearTimeout(writeBlinkerTextTimeout);
@@ -61,6 +67,7 @@ async function getCodeHeroText() {
     const result = await getGithubCommitsJson();
     let message = JSON.parse(result).commits[0].payload.commits[0].message;
     let repo = JSON.parse(result).commits[0].repo.name;
+    repo = repo.substring(repo.indexOf("/") + 1);
     let date = new Date(JSON.parse(result).commits[0].created_at)
         .toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" });
     let text = `Latest commit was on ${date} to repo ${repo}:\n${message}`;
