@@ -134,7 +134,7 @@ button.active {
     grid-column: 1 / -1;
     grid-row: 1 / -1;
     z-index: 0;
-    margin: auto calc((100vw - 55ch)/2);
+    margin: auto clamp(10%, calc((100vw - 55ch)/2), 30%);
 }
 
 .settingsbar {

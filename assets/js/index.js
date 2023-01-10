@@ -1,3 +1,10 @@
+// Onload listener
+window.addEventListener("load", function () {
+    // write the welcome text to the hero section.
+    writeBlinkerText("Welcome!", 0, 0, "hero-pre");
+});
+
+
 // Toggle the text in the hero section by what button is clicked.
 function toggleHero(id) {
     // Reset the hero text.
@@ -84,7 +91,7 @@ function writeBlinkerText(message, index, speed, textId) {
     }
 }
 
-const aboutPre = `Hi there. You can find my personal learning projects here. Most are about languages or retro games. A heads up for you: none of the code is perfect. But that's OK, because I learn by experimenting. Experiments only work when you know you can improve. So if you spot a way to improve a project here, please get in touch with me through the Contact tab.`
+const aboutPre = `You'll find projects here about languages and retro games. Keep in mind that the code isn't perfect – that's okay! I learn by experimenting, and experiments only work when you know you can improve. If you see a way to improve a project here, please let me know through the Contact tab.`
 const contactPre = `Richard Stephens
 richard.stephens.15@ucl.ac.uk
 +44 0 7704 930 825
