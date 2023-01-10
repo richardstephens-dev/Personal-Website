@@ -90,6 +90,7 @@ button.active {
 
 /* Settingsbar Buttons */
 .settingsbar button {
+    background-color: transparent;
     width: 5ch;
     height: 5ch;
     filter: var(--secondary-filter);
