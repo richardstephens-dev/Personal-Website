@@ -1,7 +1,7 @@
 // Constants
 // Hero text
 const WELCOME_PRE = `Welcome!`
-const ABOUT_PRE = `You'll find projects here about languages and retro games. Keep in mind that the code isn't perfect! I learn by experimenting, and experiments only work when you know you can improve. If you see a way to improve a project here, please let me know through the Contact tab.`
+const ABOUT_PRE = `You'll find projects here about languages and retro games. Keep in mind that the code isn't perfect! I learn by experimenting, and experiments only work when you know you can improve. If you see a way to improve a project here or on my Github, please let me know through the Contact tab.`
 const CONTACT_PRE = `Richard Stephens
 richard.stephens.15@ucl.ac.uk
 +44 0 7704 930 825
