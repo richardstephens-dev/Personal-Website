@@ -43,8 +43,8 @@ pre,
 h1 {
     color: var(--secondary-color);
     transition: none;
-    white-space: pre-wrap;
     overflow: hidden;
+    white-space: pre-wrap;
     text-align: justify;
     text-justify: inter-word;
 }

@@ -1,5 +1,8 @@
 // Constants
 // Hero text
+const WELCOME_PRE = `
+| | _ | _ _ __  _ | 
+|^|(/_|(_(_)|||(/_o `
 const ABOUT_PRE = `You'll find projects here about languages and retro games. Keep in mind that the code isn't perfect! I learn by experimenting, and experiments only work when you know you can improve. If you see a way to improve a project here, please let me know through the Contact tab.`
 const CONTACT_PRE = `Richard Stephens
 richard.stephens.15@ucl.ac.uk
@@ -9,7 +12,7 @@ London, UK`
 // Onload listener
 window.addEventListener("load", function () {
     // write the welcome text to the hero section.
-    writeBlinkerText("Welcome!", 0, 0, "hero-pre");
+    writeBlinkerText(WELCOME_PRE, 0, 0, "hero-pre");
 });
 
 
