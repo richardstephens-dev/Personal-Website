@@ -1,7 +1,7 @@
 /* Themes & Vars  */
 :root {
     --font-size: calc(80% + 0.5vmin);
-    --hero-margin-x: clamp(10%, calc((100vw - 55ch)/2), 30%);
+    --hero-margin: auto clamp(10%, calc((100vw - 55ch)/2), 30%);
 }
 
 /*
@@ -51,7 +51,7 @@ h1 {
 
 h1 {
     font-weight: bold;
-    font-size: calc(1.5*var(--font-size));
+    font-size: calc(1.2*var(--font-size));
 }
 
 img {
@@ -141,7 +141,7 @@ button.active {
     grid-column: 1 / -1;
     grid-row: 1 / -1;
     z-index: 0;
-    margin: auto var(--hero-margin-x);
+    margin: var(--hero-margin);
 }
 
 .settingsbar {
@@ -157,25 +157,37 @@ button.active {
 }
 
 /* Github Commit Hero Grid Layout */
-#hero-code-grid {
+.hero-code-flex {
+    /* Positioning within grid/viewport */
     display: flex;
-    visibility: visible;
-    border: 1px solid red;
+    visibility: hidden;
     position: absolute;
-    width: calc(100vw - var(--hero-margin-x) * 2);
+    width: calc(100vw - clamp(10%, calc((100vw - 55ch)/2), 30%) * 2);
     height: 95%;
-    margin: 0 var(--hero-margin-x);
+    margin: var(--hero-margin);
     margin-bottom: 5vw;
-    grid-template-columns: repeat(3, minmax(min(100%, 1rem), 1fr));
-    grid-template-rows: repeat(auto-fit, minmax(min(100%, 1rem), 1fr));
+    margin-top: 0;
     grid-column: 1 / -1;
     grid-row: 1 / -1;
-}
-
-#hero-code-grid>h1 {
-    display: flex;
-    position: fixed;
+    z-index: 0;
+    /* Child positioning */
+    flex-direction: column;
     justify-content: flex-end;
     align-items: flex-end;
-    border: 1px solid var(--secondary-color);
+    /* Fade effect */
+    background: linear-gradient(to top, rgba(255, 255, 255, 0.8), transparent);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+}
+
+.hero-code-flex>* {
+    width: 95%;
+    height: auto;
+}
+
+.hero-code-flex>*:hover {
+    cursor: pointer;
+    width: 100%;
 }

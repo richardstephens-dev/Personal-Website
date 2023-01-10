@@ -1,8 +1,6 @@
 // Constants
 // Hero text
-const WELCOME_PRE = `
-| | _ | _ _ __  _ | 
-|^|(/_|(_(_)|||(/_o `
+const WELCOME_PRE = `Welcome!`
 const ABOUT_PRE = `You'll find projects here about languages and retro games. Keep in mind that the code isn't perfect! I learn by experimenting, and experiments only work when you know you can improve. If you see a way to improve a project here, please let me know through the Contact tab.`
 const CONTACT_PRE = `Richard Stephens
 richard.stephens.15@ucl.ac.uk
@@ -30,7 +28,8 @@ async function toggleHero(id) {
         text = CONTACT_PRE;
     }
     if (id == "code-button") {
-        text = await getCodeHeroText();
+        await writeheroCodeFlex();
+        return;
     }
     writeBlinkerText(text, 0, 0, "hero-pre");
 }
@@ -44,9 +43,9 @@ function resetHero(id) {
     document.getElementById(id).classList.add("active");
 
     // Hide the commit table:
-    document.getElementById("hero-code-grid").style.visibility = "hidden";
+    document.getElementById("hero-code-flex").style.visibility = "hidden";
     if (id == "code-button") {
-        document.getElementById("hero-code-grid").style.visibility = "visible";
+        document.getElementById("hero-code-flex").style.visibility = "visible";
     }
 
     // Reset the text.
@@ -54,39 +53,43 @@ function resetHero(id) {
     clearTimeout(writeBlinkerTextTimeout);
 }
 
-// Get the latest commits from github using a cloudflare worker.
-async function getGithubCommitsJson() {
-    let result = null;
-    await fetch("https://github-oauth.richardstephens-dev.workers.dev/")
+// Set up the code hero text.
+async function writeheroCodeFlex() {
+    // Get the commits from the github api using a cloudflare worker.
+    const result = await fetch("https://github-oauth.richardstephens-dev.workers.dev/")
         .then(response => response.json())
         .then(data => {
-            result = JSON.stringify(data, null, 2);
+            return JSON.stringify(data, null, 2);
         });
-    return result;
-}
-
-// Set up the code hero text.
-async function getCodeHeroText() {
-    const result = await getGithubCommitsJson();
 
     // Get all the commits repo date, name, and message.
     let commits = JSON.parse(result).commits;
     let commitMessages = [];
-    for (let i = 0; i < commits.length; i++) {
-        j = commits.length - i - 1;
-        let message = commits[j].payload.commits[0].message;
-        if (message.length > 40) {
-            message = message.substring(0, 40) + "...";
-        }
-        let repo = commits[j].repo.name;
+    for (let i = commits.length - 1; i > 0; i--) {
+        let message = commits[i].payload.commits[0].message;
+        let repo = commits[i].repo.name;
         repo = repo.substring(repo.indexOf("/") + 1);
-        let date = new Date(commits[j].created_at)
+        let date = new Date(commits[i].created_at)
             .toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" });
-        let text = `${date} ${repo}:\n\t${message}`;
-        commitMessages.push(text);
+        let sha = commits[i].payload.commits[0].sha;
+        commitMessages.push([date, repo, message, sha]);
     }
-    let text = commitMessages.join("\n\n");
-    return text;
+
+    // For each commit, add an element to the hero-code-flex div. 
+    // The element is a flex with the commit date, repo, and message.
+    let heroCodeFlex = document.getElementById("hero-code-flex");
+    heroCodeFlex.innerHTML = "";
+    for (let i = 0; i < commitMessages.length; i++) {
+        let commit = commitMessages[i];
+        let commitDiv = document.createElement("div");
+        commitDiv.classList.add("hero-code-flex-item");
+        commitDiv.innerHTML = `
+            <a class="commit-link" href="https://github.com/richardstephens-dev/${commit[1]}/commit/${commit[3]}">
+            <h1>${commit[0]}: ${commit[1]}</h1></a>
+            <pre>${commit[2]}\n\n</pre>
+        `;
+        heroCodeFlex.appendChild(commitDiv);
+    }
 }
 
 function toggleTheme() {
