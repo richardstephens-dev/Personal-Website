@@ -162,7 +162,7 @@ button.active {
     display: none;
     position: absolute;
     width: calc(100vw - clamp(10%, calc((100vw - 55ch)/2), 30%) * 2);
-    height: 95vh;
+    height: 90vh;
     margin: var(--hero-margin);
     margin-bottom: 10vw;
     margin-top: 0;
