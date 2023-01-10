@@ -91,6 +91,9 @@ async function writeheroCodeFlex() {
         `;
         heroCodeFlex.appendChild(commitDiv);
     }
+
+    // Scroll to bottom.
+    window.scrollTo(0, document.body.scrollHeight);
 }
 
 function toggleTheme() {
