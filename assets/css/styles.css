@@ -158,13 +158,14 @@ button.active {
 
 /* Github Commit Hero Grid Layout */
 #hero-code-grid {
-    display: grid;
-    visibility: hidden;
+    display: flex;
+    visibility: visible;
+    border: 1px solid red;
     position: absolute;
-    width: calc(100% - var(--hero-margin-x) * 2);
+    width: calc(100vw - var(--hero-margin-x) * 2);
     height: 95%;
     margin: 0 var(--hero-margin-x);
-    margin-bottom: 5%;
+    margin-bottom: 5vw;
     grid-template-columns: repeat(3, minmax(min(100%, 1rem), 1fr));
     grid-template-rows: repeat(auto-fit, minmax(min(100%, 1rem), 1fr));
     grid-column: 1 / -1;
@@ -173,7 +174,8 @@ button.active {
 
 #hero-code-grid>h1 {
     display: flex;
-    justify-content: center;
+    position: fixed;
+    justify-content: flex-end;
     align-items: flex-end;
     border: 1px solid var(--secondary-color);
 }

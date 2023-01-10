@@ -68,12 +68,24 @@ async function getGithubCommitsJson() {
 // Set up the code hero text.
 async function getCodeHeroText() {
     const result = await getGithubCommitsJson();
-    let message = JSON.parse(result).commits[0].payload.commits[0].message;
-    let repo = JSON.parse(result).commits[0].repo.name;
-    repo = repo.substring(repo.indexOf("/") + 1);
-    let date = new Date(JSON.parse(result).commits[0].created_at)
-        .toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" });
-    let text = `Latest commit was on ${date} to repo ${repo}:\n${message}`;
+
+    // Get all the commits repo date, name, and message.
+    let commits = JSON.parse(result).commits;
+    let commitMessages = [];
+    for (let i = 0; i < commits.length; i++) {
+        j = commits.length - i - 1;
+        let message = commits[j].payload.commits[0].message;
+        if (message.length > 40) {
+            message = message.substring(0, 40) + "...";
+        }
+        let repo = commits[j].repo.name;
+        repo = repo.substring(repo.indexOf("/") + 1);
+        let date = new Date(commits[j].created_at)
+            .toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" });
+        let text = `${date} ${repo}:\n\t${message}`;
+        commitMessages.push(text);
+    }
+    let text = commitMessages.join("\n\n");
     return text;
 }
 
