@@ -14,15 +14,9 @@ window.addEventListener("load", function () {
 
 
 // Toggle the text in the hero section by what button is clicked.
-function toggleHero(id) {
+async function toggleHero(id) {
     // Reset the hero text.
     resetHero(id);
-
-    // Handle code section separately.
-    if (id == "code-button") {
-        toggleCode();
-        return;
-    }
 
     // Write the correct text to the hero.
     let text = "";
@@ -31,6 +25,9 @@ function toggleHero(id) {
     }
     if (id == "contact-button") {
         text = CONTACT_PRE;
+    }
+    if (id == "code-button") {
+        text = await getCodeHeroText();
     }
     writeBlinkerText(text, 0, 0, "hero-pre");
 }
@@ -48,23 +45,26 @@ function resetHero(id) {
     clearTimeout(writeBlinkerTextTimeout);
 }
 
-// Toggle the code section.
-async function toggleCode() {
+// Get the latest commits from github using a cloudflare worker.
+async function getGithubCommitsJson() {
     let result = null;
     await fetch("https://github-oauth.richardstephens-dev.workers.dev/")
         .then(response => response.json())
         .then(data => {
             result = JSON.stringify(data, null, 2);
         });
+    return result;
+}
 
+// Set up the code hero text.
+async function getCodeHeroText() {
+    const result = await getGithubCommitsJson();
     let message = JSON.parse(result).commits[0].payload.commits[0].message;
     let repo = JSON.parse(result).commits[0].repo.name;
-    let date = JSON.parse(result).commits[0].created_at;
-    // Put the date in format Day Month, Year
-    date = new Date(date).toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" });
-    let text = `Latest commit: ${message} to ${repo} on ${date}`;
-    resetHero("code-button");
-    writeBlinkerText(text, 0, 0, "hero-pre");
+    let date = new Date(JSON.parse(result).commits[0].created_at)
+        .toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" });
+    let text = `Latest commit was on ${date} to repo ${repo}:\n${message}`;
+    return text;
 }
 
 function toggleTheme() {
