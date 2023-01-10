@@ -44,7 +44,6 @@ function resetHero(id) {
     document.getElementById(id).classList.add("active");
 
     // Reset the text.
-    document.getElementById("hero-title").innerHTML = "";
     document.getElementById("hero-pre").innerHTML = "";
     clearTimeout(writeBlinkerTextTimeout);
 }
