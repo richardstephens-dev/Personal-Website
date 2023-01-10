@@ -43,9 +43,9 @@ function resetHero(id) {
     document.getElementById(id).classList.add("active");
 
     // Hide the commit table:
-    document.getElementById("hero-code-flex").style.visibility = "hidden";
+    document.getElementById("hero-code-flex").style.display = "none";
     if (id == "code-button") {
-        document.getElementById("hero-code-flex").style.visibility = "visible";
+        document.getElementById("hero-code-flex").style.display = "flex";
     }
 
     // Reset the text.
@@ -78,6 +78,7 @@ async function writeheroCodeFlex() {
     // For each commit, add an element to the hero-code-flex div. 
     // The element is a flex with the commit date, repo, and message.
     let heroCodeFlex = document.getElementById("hero-code-flex");
+    heroCodeFlex.classList.add("slide-in");
     heroCodeFlex.innerHTML = "";
     for (let i = 0; i < commitMessages.length; i++) {
         let commit = commitMessages[i];
