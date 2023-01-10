@@ -57,56 +57,14 @@ async function toggleCode() {
         .then(data => {
             result = JSON.stringify(data, null, 2);
         });
-    console.log(result)
-    /* The json is structured like this:
-    {
-        "commits": [
-        {
-        "id": "26330200968",
-        "type": "PushEvent",
-        "actor": {
-            "id": 28757194,
-            "login": "richardstephens-dev",
-            "display_login": "richardstephens-dev",
-            "gravatar_id": "",
-            "url": "https://api.github.com/users/richardstephens-dev",
-            "avatar_url": "https://avatars.githubusercontent.com/u/28757194?"
-        },
-        "repo": {
-            "id": 578486578,
-            "name": "richardstephens-dev/richardstephens-dev",
-            "url": "https://api.github.com/repos/richardstephens-dev/richardstephens-dev"
-        },
-        "payload": {
-            "push_id": 12234585081,
-            "size": 1,
-            "distinct_size": 1,
-            "ref": "refs/heads/main",
-            "head": "cbd9a42faac7e92996c79a7aa6c37b418840feda",
-            "before": "dd3b5f590fa7d3b739bb417eaeaae47dfa575d8e",
-            "commits": [
-            {
-                "sha": "cbd9a42faac7e92996c79a7aa6c37b418840feda",
-                "author": {
-                "email": "richard.stephens.15@ucl.ac.uk",
-                "name": "elencus"
-                },
-                "message": "cleaned up constants & cloudflare worker link",
-                "distinct": true,
-                "url": "https://api.github.com/repos/richardstephens-dev/richardstephens-dev/commits/cbd9a42faac7e92996c79a7aa6c37b418840feda"
-            }
-            ]
-        },
-        "public": true,
-        "created_at": "2023-01-10T10:12:55Z"
-        },
-    }
-    */
-    // From this, we can get the latest commit message, repo title, and date.
+
     let message = JSON.parse(result).commits[0].payload.commits[0].message;
     let repo = JSON.parse(result).commits[0].repo.name;
     let date = JSON.parse(result).commits[0].created_at;
+    // Put the date in format Day Month, Year
+    date = new Date(date).toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" });
     let text = `Latest commit: ${message} to ${repo} on ${date}`;
+    resetHero("code-button");
     writeBlinkerText(text, 0, 0, "hero-pre");
 }
 
