@@ -10,7 +10,7 @@ const PROJECTS_TITLE_EN = `Projects:`
 
 const PROJECTS_TITLE_RU = `Проекты:`
 const WELCOME_PRE_RU = `Добро пожаловать! Здесь вы найдете проекты о языках и ретро-играх. Чтобы вы знали—код здесь не является идеальным! Я учусь на экспериментах, и это возможно только тогда, когда знаете, можете улучшить. Если увидите способ улучшить проект здесь или на моем GitHub, пожалуйста, свяжитесь со мной.`
-const CONTACT_PRE_RU = `Ричард Стивенс
+const CONTACT_P_RU = `Ричард Стивенс
 richard.stephens.15@ucl.ac.uk
 +44 0 7704 930 825
 Лондон, Великобритания`
@@ -28,11 +28,11 @@ const texts = {
         "welcome-pre": WELCOME_PRE_RU,
         "projects-header": PROJECTS_TITLE_RU,
         "contact-h1": CONTACT_H1_RU,
-        "contact-p": CONTACT_PRE_RU
+        "contact-p": CONTACT_P_RU
     }
 }
 
-let localizedTexts = texts["en"];
+var localizedTexts = texts["en"];
 
 // Onload listener
 window.addEventListener("load", function () {
@@ -114,11 +114,10 @@ function toggleLang() {
     // Get the current language from html. check if english or russian
     let lang = document.documentElement.getAttribute("lang");
     if (lang == "en") {
+        localizedTexts = texts["ru"];
         document.documentElement.setAttribute("lang", "ru");
         document.getElementById("lang-img").src = "assets/images/en.svg";
         document.cookie = "lang=ru";
-        // update the url to include /ru
-        window.history.pushState({}, "", "/ru");
         // stop the writeBlinkerText function.
         clearTimeout(writeBlinkerTextTimeout);
         // clear the welcome-pre element.
@@ -127,16 +126,12 @@ function toggleLang() {
         initPage();
         return;
     }
+    localizedTexts = texts["en"];
     document.documentElement.setAttribute("lang", "en");
     document.getElementById("lang-img").src = "assets/images/ru.svg";
     document.cookie = "lang=en";
-    // update the url to not include /ru
-    window.history.pushState({}, "", "/");
-    // stop the writeBlinkerText function.
     clearTimeout(writeBlinkerTextTimeout);
-    // clear the welcome-pre element.
     document.getElementById("welcome-pre").innerHTML = "";
-    // reinitialize the page.
     initPage();
 }
 
