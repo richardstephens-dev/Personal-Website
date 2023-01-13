@@ -1,98 +1,67 @@
 // Constants
 // Hero text
-const WELCOME_PRE = `Welcome!`
-const ABOUT_PRE = `You'll find projects here about languages and retro games. Keep in mind that the code isn't perfect! I learn by experimenting, and experiments only work when you know you can improve. If you see a way to improve a project here or on my GitHub, please let me know through the Contact tab.`
-const CONTACT_PRE = `Richard Stephens
+const WELCOME_PRE_EN = `Welcome! You'll find projects here about languages and retro games. Keep in mind that the code isn't perfect! I learn by experimenting, and experiments only work when you know you can improve. If you see a way to improve a project here or on my GitHub, please contact me below.`
+const CONTACT_PRE_EN = `Richard Stephens
 richard.stephens.15@ucl.ac.uk
 +44 0 7704 930 825
 London, UK`
+const PROJECTS_TITLE_EN = `Projects:`
+const PROJECTS_TITLE_RU = `Проекты:`
+const WELCOME_PRE_RU = `Добро пожаловать! Здесь вы найдете проекты о языках и ретро-играх. Чтобы вы знали—код здесь не является идеальным! Я учусь на экспериментах, и это возможно только тогда, когда знаете, можете улучшить. Если увидите способ улучшить проект здесь или на моем GitHub, пожалуйста, свяжитесь со мной.`
+const CONTACT_PRE_RU = `Ричард Стивенс
+richard.stephens.15@ucl.ac.uk
++44 0 7704 930 825
+Лондон, Великобритания`
 
 // Onload listener
 window.addEventListener("load", function () {
-    // write the welcome text to the hero section.
-    writeBlinkerText(WELCOME_PRE, 0, 0, "hero-pre");
+    writeBlinkerText(WELCOME_PRE_EN, 0, 0, "welcome-pre");
+    // Make element with projects-header id have the projects title.
+    document.getElementById("projects-header").innerHTML = PROJECTS_TITLE_EN;
+    writeProjectCards();
 });
 
-
-// Toggle the text in the hero section by what button is clicked.
-async function toggleHero(id) {
-    // Reset the hero text.
-    resetHero(id);
-
-    // Write the correct text to the hero.
-    let text = "";
-    if (id == "about-button") {
-        text = ABOUT_PRE;
-    }
-    if (id == "contact-button") {
-        text = CONTACT_PRE;
-    }
-    if (id == "code-button") {
-        await writeheroCodeFlex();
-        return;
-    }
-    writeBlinkerText(text, 0, 0, "hero-pre");
-}
-
-// Reset the hero section.
-function resetHero(id) {
-    // Reset active button
-    document.querySelectorAll("button").forEach(function (element) {
-        element.classList.remove("active");
-    });
-    document.getElementById(id).classList.add("active");
-
-    // Hide the commit table:
-    document.getElementById("hero-code-flex").style.display = "none";
-    if (id == "code-button") {
-        document.getElementById("hero-code-flex").style.display = "flex";
-    }
-
-    // Reset the text.
-    document.getElementById("hero-pre").innerHTML = "";
-    clearTimeout(writeBlinkerTextTimeout);
-}
-
 // Set up the code hero text.
-async function writeheroCodeFlex() {
+async function writeProjectCards() {
     // Get the commits from the github api using a cloudflare worker.
-    const result = await fetch("https://github-oauth.richardstephens-dev.workers.dev/")
+    const result = await fetch("https://api.github.com/users/richardstephens-dev/repos")
         .then(response => response.json())
         .then(data => {
             return JSON.stringify(data, null, 2);
         });
 
-    // Get all the commits repo date, name, and message.
-    let commits = JSON.parse(result).commits;
-    let commitMessages = [];
-    for (let i = commits.length - 1; i > 0; i--) {
-        let message = commits[i].payload.commits[0].message;
-        let repo = commits[i].repo.name;
-        repo = repo.substring(repo.indexOf("/") + 1);
-        let date = new Date(commits[i].created_at)
-            .toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" });
-        let sha = commits[i].payload.commits[0].sha;
-        commitMessages.push([date, repo, message, sha]);
-    }
+    let repos = JSON.parse(result).sort((a, b) => {
+        return new Date(a.updated_at) - new Date(b.updated_at);
+    });
 
-    // For each commit, add an element to the hero-code-flex div. 
-    // The element is a flex with the commit date, repo, and message.
-    let heroCodeFlex = document.getElementById("hero-code-flex");
-    heroCodeFlex.classList.add("slide-in");
-    heroCodeFlex.innerHTML = "";
-    for (let i = 0; i < commitMessages.length; i++) {
-        let commit = commitMessages[i];
-        let commitDiv = document.createElement("div");
-        commitDiv.innerHTML = `
-            <a href="https://github.com/richardstephens-dev/${commit[1]}/commit/${commit[3]}">
-            <h1>${commit[0]}: ${commit[1]}</h1></a>
-            <pre>${commit[2]}\n\n</pre>
+    // For each repo, add an element to the project-cards div.
+    // The element is a flex with the repo name, description, and link.
+    // The element needs the card class to be styled correctly.
+    let projectCards = document.getElementById("project-cards");
+    projectCards.innerHTML = "";
+    for (let i = 0; i < Math.min(5, repos.length); i++) {
+        let repo = repos[i];
+        let repoDiv = document.createElement("div");
+        repoDiv.classList.add("card");
+        repoDiv.innerHTML = `
+            <a href="${repo.html_url}">
+            <h1>${repo.name}</h1></a>
+            <p>${repo.description}</p>
         `;
-        heroCodeFlex.appendChild(commitDiv);
+        // Make repodiv have these scss properties, but convert them to regular css.
+        repoDiv.style.top = `${i * 10}px`;
+        repoDiv.style.transform = `rotate(${(Math.random() * 3 - 2) * 4}deg)`;
+        projectCards.appendChild(repoDiv);
     }
 
-    // Scroll to bottom.
-    window.scrollTo(0, document.body.scrollHeight);
+    // Add the last card to have contact info.
+    let contactDiv = document.createElement("div");
+    contactDiv.classList.add("card");
+    contactDiv.innerHTML = `
+        <h1>Contact</h1>
+        <p>${CONTACT_PRE_EN}</p>
+    `;
+    projectCards.appendChild(contactDiv);
 }
 
 function toggleTheme() {

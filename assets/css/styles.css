@@ -1,198 +1,165 @@
-/* Themes & Vars  */
-:root {
-    --font-size: calc(80% + 0.5vmin);
-    --hero-margin: auto clamp(10%, calc((100vw - 55ch)/2), 30%);
-}
-
 /*
 * SVG Filters made using https://codepen.io/sosuke/pen/Pjoqqp
 * The filters approximate #222323 and #f0f6f0 when applied to 
 * #000000.
 */
+
+:root {
+  --font-size: calc(80% + 0.5vmin);
+  --hero-margin: auto clamp(10%, calc((100vw - 55ch)/2), 30%);
+  --card-wrapper-height: 60vh;
+  --card-wrapper-width: 100%;
+}
+
 [theme="dark"] {
-    --primary-color: #222323;
-    --secondary-color: #f0f6f0;
-    --primary-filter: invert(8%) sepia(7%) saturate(198%) hue-rotate(131deg) brightness(107%) contrast(87%);
-    --secondary-filter: invert(93%) sepia(4%) saturate(378%) hue-rotate(71deg) brightness(107%) contrast(93%);
+  --primary-color: #222323;
+  --secondary-color: #f0f6f0;
+  --primary-filter: invert(8%) sepia(7%) saturate(198%) hue-rotate(131deg) brightness(107%) contrast(87%);
+  --secondary-filter: invert(93%) sepia(4%) saturate(378%) hue-rotate(71deg) brightness(107%) contrast(93%);
 }
 
 [theme="light"] {
-    --primary-color: #f0f6f0;
-    --secondary-color: #222323;
-    --primary-filter: invert(93%) sepia(4%) saturate(378%) hue-rotate(71deg) brightness(107%) contrast(93%);
-    --secondary-filter: invert(8%) sepia(7%) saturate(198%) hue-rotate(131deg) brightness(107%) contrast(87%);
+  --primary-color: #f0f6f0;
+  --secondary-color: #222323;
+  --primary-filter: invert(93%) sepia(4%) saturate(378%) hue-rotate(71deg) brightness(107%) contrast(93%);
+  --secondary-filter: invert(8%) sepia(7%) saturate(198%) hue-rotate(131deg) brightness(107%) contrast(87%);
 }
 
 /* Global Setup */
-* {
-    outline: none;
-    border: none;
-    margin: 0;
-    padding: 0;
-    font-family: 'Ubuntu Mono', monospace;
-    font-size: var(--font-size);
-    user-select: none;
-    transition: background-color 0.25s ease-in-out;
-}
-
 body {
-    background-color: var(--primary-color);
+  background-color: var(--primary-color);
+  margin: 0;
+  transition: background-color 0.25s ease-in-out;
 }
 
 pre,
-h1 {
-    color: var(--secondary-color);
-    transition: none;
-    overflow: hidden;
-    white-space: pre-wrap;
-    text-align: justify;
-    text-justify: inter-word;
+h1,
+p {
+  user-select: none;
+  font-family: 'Ubuntu Mono', monospace;
+  font-size: var(--font-size);
+  color: var(--secondary-color);
+  transition: none;
+  overflow: hidden;
+  white-space: pre-wrap;
+  text-align: justify;
+  text-justify: inter-word;
 }
 
 h1 {
-    font-weight: bold;
-    font-size: calc(1.2*var(--font-size));
+  font-weight: bold;
+  font-size: calc(2*var(--font-size));
 }
 
 img {
-    width: 100%;
-    height: 100%;
+  width: 100%;
+  height: 100%;
 }
 
 button {
-    transition: width 0.25s ease-in-out;
-    color: var(--primary-color);
-    margin-top: 0.25rem;
-    margin-bottom: 0.25rem;
+  user-select: none;
+  border: none;
+  transition: width 0.25s ease-in-out;
+  margin-top: 0.25rem;
+  margin-bottom: 0.25rem;
+  background-color: transparent;
+  width: 10ch;
+  height: 10ch;
+  filter: var(--secondary-filter);
 }
 
 button:hover,
 button.active {
-    cursor: pointer;
-    font-weight: bold;
+  cursor: pointer;
 }
 
-/* Sidebar Buttons */
-.sidebar button {
-    background-color: var(--secondary-color);
-    width: 8ch;
-    height: 2.5ch;
-    font-size: calc(2*var(--font-size));
-    border-radius: 0 0.5rem 0.5rem 0;
-}
-
-.sidebar button:hover {
-    width: 10ch;
-}
-
-.sidebar button.active {
-    width: 9ch
-}
-
-/* Settingsbar Buttons */
-.settingsbar button {
-    background-color: transparent;
-    width: 5ch;
-    height: 5ch;
-    filter: var(--secondary-filter);
+::-webkit-scrollbar {
+  display: none;
 }
 
 /* Blinker */
 .blinker {
-    display: inline-block;
-    height: 2ch;
-    position: absolute;
-    border-left: 1ch solid var(--secondary-color);
-    animation: blinker 0.9s steps(2, start) infinite;
+  display: inline-block;
+  height: 2ch;
+  position: absolute;
+  border-left: 1ch solid var(--secondary-color);
+  animation: blinker 0.9s steps(2, start) infinite;
 }
 
 @keyframes blinker {
-    to {
-        visibility: hidden;
-    }
+  to {
+    visibility: hidden;
+  }
 }
 
-/* Grid Layout */
-.grid {
-    display: grid;
-    position: fixed;
-    width: 100vw;
-    height: 100vh;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 1rem), 1fr));
-    grid-template-rows: repeat(auto-fit, minmax(min(100%, 1rem), 1fr));
+.welcome {
+  min-width: 100%;
+  min-height: 30vh;
+  max-height: 50vh;
+  overflow: hidden;
+  display: flex;
+  position: sticky;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
-.sidebar {
-    display: flex;
-    flex-direction: column;
-    align-content: space-between;
-    justify-content: flex-start;
-    padding-top: 2rem;
-    padding-bottom: 2rem;
-    grid-column: 1 / 1;
-    grid-row: 1 / -1;
+.settings {
+  display: flex;
+  position: absolute;
+  justify-content: center;
+  align-items: center;
+  top: 50vh;
+  width: 100vw;
+  z-index: 1;
 }
 
-.hero {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    grid-column: 1 / -1;
-    grid-row: 1 / -1;
-    z-index: 0;
-    margin: var(--hero-margin);
+.projects-header {
+  display: flex;
+  position: absolute;
+  justify-content: center;
+  top: 80vh;
+  width: 100vw;
+  z-index: 0;
 }
 
-.settingsbar {
-    padding-top: 2rem;
-    display: flex;
-    flex-direction: column;
-    align-content: space-between;
-    justify-content: flex-start;
-    align-items: center;
-    grid-column: -5 / -5;
-    grid-row: 1 / 5;
-    z-index: 1;
+.hero-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: var(--hero-margin);
 }
 
 /* Github Commit Hero Grid Layout */
-.hero-code-flex {
-    /* Positioning within grid/viewport */
-    display: none;
-    position: relative;
-    width: calc(100vw - clamp(16ch, calc((100vw - 55ch)/2), 30%) * 2);
-    height: auto;
-    margin: auto clamp(16ch, calc((100vw - 55ch)/2), 30%);
-    z-index: 0;
-    overflow-y: auto;
-    /* Child positioning */
-    flex-direction: column;
-    justify-content: flex-end;
-    align-items: flex-end;
-    /* Fade effect */
-    background: linear-gradient(to top, var(--secondary-color), transparent);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    color: transparent;
+
+.project-cards {
+  height: var(--card-wrapper-height);
+  width: var(--card-wrapper-width);
+  flex-direction: column;
+  position: relative;
+  overflow-y: scroll;
+  padding: 5vh calc(50vw - var(--card-wrapper-width) / 2);
 }
 
-/* When visible */
-.slide-in {
-    animation: slide-in 1.5s ease-in-out forwards;
+.card {
+  position: sticky;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: var(--card-wrapper-height);
+  min-width: calc(var(--card-wrapper-width) * 0.8);
+  background-color: var(--secondary-color);
+  border: 0.2rem solid var(--primary-color);
+  border-radius: 0.5rem;
+  margin-top: calc(var(--card-wrapper-height) - 5px);
+  z-index: 1;
 }
 
-@keyframes slide-in {
-    0% {
-        transform: translateY(-100%);
-    }
-
-    100% {
-        transform: translateY(0%);
-    }
-}
-
-.hero-code-flex>* {
-    width: 100%;
-    height: auto;
+/* h1 in card */
+.card h1,
+.card p {
+  margin: 10%;
+  color: var(--primary-color);
 }

@@ -14,7 +14,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="./assets/css/styles.min.css" />
+    <link rel="stylesheet" href="./assets/css/styles.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Ubuntu+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap"
@@ -24,35 +24,27 @@
 </head>
 
 <body>
-    <!-- Main grid layout -->
-    <div class="grid">
-        <div class="sidebar">
-            <button id="about-button" onclick="toggleHero(this.id)">
-                <div>About</div>
-            </button>
-            <button id="code-button" onclick="toggleHero(this.id)">
-                <div>Commits</div>
-            </button>
-            <button id="contact-button" onclick="toggleHero(this.id)">
-                <div>Contact</div>
-            </button>
-        </div>
-        <div class="hero">
-            <pre id="hero-pre"></pre>
-        </div>
-        <div class="settingsbar">
-            <button id="theme-button" onclick="toggleTheme()">
-                <img id="theme-img" src="assets/images/light.svg" />
-            </button>
-            <a href="https://github.com/richardstephens-dev"><button id="theme-button">
-                    <img id="github-img" src="assets/images/github.svg" />
-                </button></a>
-        </div>
+    <div class="settings">
+        <button id="theme-button" onclick="toggleTheme()">
+            <img id="theme-img" src="assets/images/light.svg" />
+        </button>
+        <a href="https://github.com/richardstephens-dev"><button id="theme-button">
+                <img id="github-img" src="assets/images/github.svg" />
+            </button></a>
+        <!--<button id="lang-button" onclick="toggleLang(id)">
+            <h1>RU</h1>
+        </button>-->
     </div>
-    <div id="hero-code-flex" class="hero-code-flex">
+    <h1 class="projects-header" id="projects-header"></h1>
+    <div class="hero-wrapper">
+        <div class="welcome">
+            <pre id="welcome-pre"></pre>
+        </div>
+        <div id="project-cards" class="project-cards">
+        </div>
     </div>
     <!-- Scripts -->
-    <script src="./assets/js/index.min.js"></script>
+    <script src="./assets/js/index.js"></script>
 </body>
 
 </html>
