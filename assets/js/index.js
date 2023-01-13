@@ -1,25 +1,70 @@
 // Constants
 // Hero text
 const WELCOME_PRE_EN = `Welcome! You'll find projects here about languages and retro games. Keep in mind that the code isn't perfect! I learn by experimenting, and experiments only work when you know you can improve. If you see a way to improve a project here or on my GitHub, please contact me below.`
-const CONTACT_PRE_EN = `Richard Stephens
+const CONTACT_P_EN = `Richard Stephens
 richard.stephens.15@ucl.ac.uk
 +44 0 7704 930 825
 London, UK`
+const CONTACT_H1_EN = `Let's talk!`
 const PROJECTS_TITLE_EN = `Projects:`
+
 const PROJECTS_TITLE_RU = `Проекты:`
 const WELCOME_PRE_RU = `Добро пожаловать! Здесь вы найдете проекты о языках и ретро-играх. Чтобы вы знали—код здесь не является идеальным! Я учусь на экспериментах, и это возможно только тогда, когда знаете, можете улучшить. Если увидите способ улучшить проект здесь или на моем GitHub, пожалуйста, свяжитесь со мной.`
 const CONTACT_PRE_RU = `Ричард Стивенс
 richard.stephens.15@ucl.ac.uk
 +44 0 7704 930 825
 Лондон, Великобритания`
+const CONTACT_H1_RU = `Давайте поговорим!`
+
+// store the texts in a logical way.
+const texts = {
+    "en": {
+        "welcome-pre": WELCOME_PRE_EN,
+        "projects-header": PROJECTS_TITLE_EN,
+        "contact-h1": CONTACT_H1_EN,
+        "contact-p": CONTACT_P_EN
+    },
+    "ru": {
+        "welcome-pre": WELCOME_PRE_RU,
+        "projects-header": PROJECTS_TITLE_RU,
+        "contact-h1": CONTACT_H1_RU,
+        "contact-p": CONTACT_PRE_RU
+    }
+}
+
+let localizedTexts = texts["en"];
 
 // Onload listener
 window.addEventListener("load", function () {
-    writeBlinkerText(WELCOME_PRE_EN, 0, 0, "welcome-pre");
-    // Make element with projects-header id have the projects title.
-    document.getElementById("projects-header").innerHTML = PROJECTS_TITLE_EN;
-    writeProjectCards();
+    initPage();
 });
+
+function initPage() {
+    initLang();
+    let localizedTexts = texts[document.cookie.split("=")[1]];
+    writeBlinkerText(localizedTexts["welcome-pre"], 0, 0, "welcome-pre");
+    // Make element with projects-header id have the projects title.
+    document.getElementById("projects-header").innerHTML = localizedTexts["projects-header"];
+    writeProjectCards();
+}
+
+function initLang() {
+    // Get the language from the cookie.
+    let lang = document.cookie.split("=")[1];
+    // If the cookie is not set, set it to english.
+    if (lang == undefined) {
+        lang = "en";
+        document.cookie = "lang=en";
+    }
+    // Set the language to the cookie value.
+    document.documentElement.setAttribute("lang", lang);
+    // Set the language image to the correct one.
+    if (lang == "en") {
+        document.getElementById("lang-img").src = "assets/images/ru.svg";
+    } else {
+        document.getElementById("lang-img").src = "assets/images/en.svg";
+    }
+}
 
 // Set up the code hero text.
 async function writeProjectCards() {
@@ -58,10 +103,41 @@ async function writeProjectCards() {
     let contactDiv = document.createElement("div");
     contactDiv.classList.add("card");
     contactDiv.innerHTML = `
-        <h1>Contact</h1>
-        <p>${CONTACT_PRE_EN}</p>
+        <h1>${localizedTexts["contact-h1"]}</h1>
+        <p>${localizedTexts["contact-p"]}</p>
     `;
     projectCards.appendChild(contactDiv);
+}
+
+function toggleLang() {
+    // clear the timeout for the writeBlinkerText function.
+    // Get the current language from html. check if english or russian
+    let lang = document.documentElement.getAttribute("lang");
+    if (lang == "en") {
+        document.documentElement.setAttribute("lang", "ru");
+        document.getElementById("lang-img").src = "assets/images/en.svg";
+        document.cookie = "lang=ru";
+        // update the url to include /ru
+        window.history.pushState({}, "", "/ru");
+        // stop the writeBlinkerText function.
+        clearTimeout(writeBlinkerTextTimeout);
+        // clear the welcome-pre element.
+        document.getElementById("welcome-pre").innerHTML = "";
+        // reinitialize the page.
+        initPage();
+        return;
+    }
+    document.documentElement.setAttribute("lang", "en");
+    document.getElementById("lang-img").src = "assets/images/ru.svg";
+    document.cookie = "lang=en";
+    // update the url to not include /ru
+    window.history.pushState({}, "", "/");
+    // stop the writeBlinkerText function.
+    clearTimeout(writeBlinkerTextTimeout);
+    // clear the welcome-pre element.
+    document.getElementById("welcome-pre").innerHTML = "";
+    // reinitialize the page.
+    initPage();
 }
 
 function toggleTheme() {
