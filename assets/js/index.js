@@ -69,37 +69,59 @@ function initLang() {
 // Set up the code hero text.
 async function writeProjectCards() {
     // Get the commits from the github api using a cloudflare worker.
-    const result = await fetch("https://api.github.com/users/richardstephens-dev/repos")
-        .then(response => response.json())
+    const repo_result = await fetch("https://api.github.com/users/richardstephens-dev/repos")
+        .then(repo_response => repo_response.json())
         .then(data => {
             return JSON.stringify(data, null, 2);
         });
 
-    let repos = JSON.parse(result).sort((a, b) => {
+    let repos = JSON.parse(repo_result).sort((a, b) => {
         return new Date(a.updated_at) - new Date(b.updated_at);
     });
 
-    // For each repo, add an element to the project-cards div.
-    // The element is a flex with the repo name, description, and link.
-    // The element needs the card class to be styled correctly.
+    let repo_names = [];
+    for (let i = 0; i < repos.length; i++) {
+        repo_names.push(repos[i].name);
+    }
+
+    let repo_commits = {};
+    for (let i = 0; i < repo_names.length; i++) {
+        const commits_result = await fetch(`https://api.github.com/repos/richardstephens-dev/${repo_names[i]}/commits?per_page=3`)
+            .then(commits_response => commits_response.json())
+            .then(data => {
+                return JSON.stringify(data, null, 2);
+            });
+
+        let commits = JSON.parse(commits_result);
+        repo_commits[repo_names[i]] = commits;
+    }
+
     let projectCards = document.getElementById("project-cards");
     projectCards.innerHTML = "";
     for (let i = 0; i < Math.min(5, repos.length); i++) {
+        let commit_0 = repo_commits[repos[i].name][0];
+        let commit_1 = repo_commits[repos[i].name][1];
+        let commit_2 = repo_commits[repos[i].name][2];
+        if (commit_0 == undefined || commit_1 == undefined || commit_2 == undefined) {
+            continue;
+        }
         let repo = repos[i];
         let repoDiv = document.createElement("div");
         repoDiv.classList.add("card");
         repoDiv.innerHTML = `
             <a href="${repo.html_url}">
             <h1>${repo.name}</h1></a>
-            <p>${repo.description}</p>
+            <p>${repo.description}
+            \n(${commit_0.commit.author.date.split("T")[0]}): ${commit_0.commit.message}
+            \n(${commit_1.commit.author.date.split("T")[0]}): ${commit_1.commit.message}
+            \n(${commit_2.commit.author.date.split("T")[0]}): ${commit_2.commit.message}
+            </p>
         `;
-        // Make repodiv have these scss properties, but convert them to regular css.
         repoDiv.style.top = `${i * 10}px`;
         repoDiv.style.transform = `rotate(${(Math.random() * 3 - 2) * 4}deg)`;
         projectCards.appendChild(repoDiv);
     }
 
-    // Add the last card to have contact info.
     let contactDiv = document.createElement("div");
     contactDiv.classList.add("card");
     contactDiv.innerHTML = `
