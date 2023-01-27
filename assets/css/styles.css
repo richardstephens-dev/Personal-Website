@@ -36,7 +36,7 @@ pre,
 h1,
 p {
   user-select: none;
-  font-family: 'Ubuntu Mono', monospace;
+  font-family: 'Source Code Pro', monospace;
   font-size: var(--font-size);
   color: var(--secondary-color);
   transition: none;
