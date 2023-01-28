@@ -5,7 +5,7 @@
 */
 
 :root {
-  --font-size: calc(80% + 0.5vmin);
+  --font-size: calc(70% + 0.5vmin);
   --hero-margin: auto clamp(10%, calc((100vw - 55ch)/2), 30%);
   --card-wrapper-height: 60vh;
   --card-wrapper-width: 100%;
@@ -165,7 +165,6 @@ button.active {
   align-items: center;
 }
 
-/* h1 in card */
 .card h1,
 .card p {
   margin: 10%;
