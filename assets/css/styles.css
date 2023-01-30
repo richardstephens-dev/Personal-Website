@@ -16,6 +16,8 @@
   --secondary-color: #f0f6f0;
   --primary-filter: invert(8%) sepia(7%) saturate(198%) hue-rotate(131deg) brightness(107%) contrast(87%);
   --secondary-filter: invert(93%) sepia(4%) saturate(378%) hue-rotate(71deg) brightness(107%) contrast(93%);
+  --dark: #222323;
+  --light: #f0f6f0;
 }
 
 [theme="light"] {
@@ -23,6 +25,8 @@
   --secondary-color: #222323;
   --primary-filter: invert(93%) sepia(4%) saturate(378%) hue-rotate(71deg) brightness(107%) contrast(93%);
   --secondary-filter: invert(8%) sepia(7%) saturate(198%) hue-rotate(131deg) brightness(107%) contrast(87%);
+  --dark: #222323;
+  --light: #f0f6f0;
 }
 
 /* Global Setup */
@@ -154,8 +158,8 @@ button.active {
   justify-content: center;
   min-height: var(--card-wrapper-height);
   min-width: calc(var(--card-wrapper-width) * 0.8);
-  background-color: var(--secondary-color);
-  border: 0.2rem solid var(--primary-color);
+  background-color: var(--light);
+  border: 0.2rem solid var(--dark);
   border-radius: 0.5rem;
   margin-top: calc(var(--card-wrapper-height) - 5px);
   z-index: 1;
@@ -172,9 +176,13 @@ button.active {
 
 .card h1,
 .card p {
-  color: var(--primary-color);
+  color: var(--dark);
   max-height: calc(0.7 * var(--card-wrapper-height));
   max-width: calc(0.95 * var(--card-wrapper-width));
+}
+
+.card h1 {
+  font-size: calc(1.5 * var(--font-size));
 }
 
 .card p {
