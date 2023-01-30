@@ -105,7 +105,7 @@ async function writeProjectCards() {
         repoDiv.classList.add("card");
         repoDiv.innerHTML = `
             <a href="${repo.html_url}">
-            <h1>${repo.name}</h1></a>
+            <h1>${repo.name.split("-").join(" ")}</h1></a>
             <p>${repo.description}
             \n(${commit_0.commit.author.date.split("T")[0]}): ${commit_0.commit.message}
             \n(${commit_1.commit.author.date.split("T")[0]}): ${commit_1.commit.message}
