@@ -173,5 +173,10 @@ button.active {
 .card h1,
 .card p {
   color: var(--primary-color);
-  max-height: calc(0.5 * var(--card-wrapper-height));
+  max-height: calc(0.7 * var(--card-wrapper-height));
+  max-width: calc(0.95 * var(--card-wrapper-width));
+}
+
+.card p {
+  font-size: calc(0.9 * var(--font-size));
 }
