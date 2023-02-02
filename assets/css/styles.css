@@ -18,6 +18,8 @@
   --secondary-filter: invert(93%) sepia(4%) saturate(378%) hue-rotate(71deg) brightness(107%) contrast(93%);
   --dark: #222323;
   --light: #f0f6f0;
+  --dark-filter: invert(8%) sepia(7%) saturate(198%) hue-rotate(131deg) brightness(107%) contrast(87%);
+  --light-filter: invert(93%) sepia(4%) saturate(378%) hue-rotate(71deg) brightness(107%) contrast(93%);
 }
 
 [theme="light"] {
@@ -27,6 +29,8 @@
   --secondary-filter: invert(8%) sepia(7%) saturate(198%) hue-rotate(131deg) brightness(107%) contrast(87%);
   --dark: #222323;
   --light: #f0f6f0;
+  --dark-filter: invert(8%) sepia(7%) saturate(198%) hue-rotate(131deg) brightness(107%) contrast(87%);
+  --light-filter: invert(93%) sepia(4%) saturate(378%) hue-rotate(71deg) brightness(107%) contrast(93%);
 }
 
 /* Global Setup */
@@ -64,16 +68,27 @@ img {
   height: 100%;
 }
 
-button {
+.logo, button {
   user-select: none;
   border: none;
   transition: width 0.25s ease-in-out;
   margin-top: 0.25rem;
   margin-bottom: 0.25rem;
   background-color: transparent;
+}
+
+button {
+  filter: var(--secondary-filter);
   width: 10ch;
   height: 10ch;
-  filter: var(--secondary-filter);
+}
+
+.logo {
+  filter: var(--dark-filter);
+  width: 8ch;
+  height: 8ch;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
 }
 
 button:hover,
@@ -187,4 +202,13 @@ button.active {
 
 .card p {
   font-size: calc(0.9 * var(--font-size));
+}
+
+.langs-wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
 }
