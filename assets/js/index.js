@@ -107,7 +107,7 @@ async function writeProjectCards() {
             if (commit == undefined) {
                 continue;
             }
-            commit_html += `(\n${commit.commit.author.date.split("T")[0]}): ${commit.commit.message}<br>`;
+            commit_html += `\n(${commit.commit.author.date.split("T")[0]}): ${commit.commit.message}<br>`;
         }
         for (let lang in repo_langs[repos[i].name]) {
             // If the src file doesn't exist, don't add it. check using xmlhttprequest.
