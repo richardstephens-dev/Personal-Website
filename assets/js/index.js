@@ -34,29 +34,47 @@ window.addEventListener("load", function () {
 });
 
 function initPage() {
+    initTheme();
     initLang();
-    let localizedTexts = texts[document.cookie.split("=")[1]];
     writeBlinkerText(localizedTexts["welcome-pre"], 0, 0, "welcome-pre");
     document.getElementById("projects-header").innerHTML = localizedTexts["projects-header"];
     writeProjectCards();
 }
 
+function getCookie(name) {
+    let cookies = document.cookie.split("; ");
+    for (let i = 0; i < cookies.length; i++) {
+        let cookie = cookies[i].split("=");
+        if (cookie[0] == name) {
+            return cookie[1];
+        }
+    }
+}
+
 function initLang() {
-    // Get the language from the cookie.
-    let lang = document.cookie.split("=")[1];
-    // If the cookie is not set, set it to english.
-    if (lang == undefined) {
-        lang = "en";
+    if (getCookie("lang") == undefined) {
         document.cookie = "lang=en";
     }
-    // Set the language to the cookie value.
-    document.documentElement.setAttribute("lang", lang);
-    // Set the language image to the correct one.
-    if (lang == "en") {
+    document.documentElement.setAttribute("lang", getCookie("lang"));
+    localizedTexts = texts[getCookie("lang")];
+    if (getCookie("lang") == "en") {
         document.getElementById("lang-img").src = "assets/images/ru.svg";
-    } else {
-        document.getElementById("lang-img").src = "assets/images/en.svg";
+        return
     }
+    document.getElementById("lang-img").src = "assets/images/en.svg";
+}
+
+function initTheme() {
+    if (getCookie("theme") == undefined) {
+        document.cookie = "theme=light";
+    }
+    if (getCookie("theme") == "dark") {
+        document.documentElement.setAttribute("theme", "dark");
+        document.getElementById("theme-img").src = "assets/images/light.svg";
+        return
+    }
+    document.documentElement.setAttribute("theme", "light");
+    document.getElementById("theme-img").src = "assets/images/dark.svg";
 }
 
 // Set up the code hero text.
@@ -149,20 +167,14 @@ async function writeProjectCards() {
 }
 
 function toggleLang() {
-    let lang = document.documentElement.getAttribute("lang");
     clearTimeout(writeBlinkerTextTimeout);
-    if (lang == "en") {
-        localizedTexts = texts["ru"];
-        document.documentElement.setAttribute("lang", "ru");
-        document.getElementById("lang-img").src = "assets/images/en.svg";
+    if (getCookie("lang") == "en") {
         document.cookie = "lang=ru";
     }
-    if (lang == "ru") {
-        localizedTexts = texts["en"];
-        document.documentElement.setAttribute("lang", "en");
-        document.getElementById("lang-img").src = "assets/images/ru.svg";
+    else if (getCookie("lang") == "ru") {
         document.cookie = "lang=en";
     }
+    initLang();
     document.getElementById("contact-card").innerHTML = `
         <h1>${localizedTexts["contact-h1"]}</h1>
         <p>${localizedTexts["contact-p"]}</p>
@@ -175,12 +187,12 @@ function toggleLang() {
 function toggleTheme() {
     let theme = document.documentElement.getAttribute("theme");
     if (theme == "dark") {
-        document.documentElement.setAttribute("theme", "light");
-        document.getElementById("theme-img").src = "assets/images/dark.svg";
-        return;
+        document.cookie = "theme=light";
     }
-    document.documentElement.setAttribute("theme", "dark");
-    document.getElementById("theme-img").src = "assets/images/light.svg";
+    else if (theme == "light") {
+        document.cookie = "theme=dark";
+    }
+    initTheme();
 }
 
 let writeBlinkerTextTimeout;
