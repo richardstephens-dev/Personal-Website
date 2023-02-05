@@ -52,29 +52,47 @@ function getCookie(name) {
 }
 
 function initLang() {
-    if (getCookie("lang") == undefined) {
-        document.cookie = "lang=en";
+    switch (getCookie("lang")) {
+        case "en":
+            document.documentElement.setAttribute("lang", "en");
+            document.getElementById("lang-img").src = "assets/images/ru.svg";
+            localizedTexts = texts["en"];
+            break;
+        case "ru":
+            document.documentElement.setAttribute("lang", "ru");
+            document.getElementById("lang-img").src = "assets/images/en.svg";
+            localizedTexts = texts["ru"];
+            break;
+        default:
+            const lang = navigator.language || navigator.userLanguage;
+            if (lang == "ru") {
+                document.cookie = "lang=ru";
+            } else {
+                document.cookie = "lang=en";
+            }
+            initLang();
     }
-    document.documentElement.setAttribute("lang", getCookie("lang"));
-    localizedTexts = texts[getCookie("lang")];
-    if (getCookie("lang") == "en") {
-        document.getElementById("lang-img").src = "assets/images/ru.svg";
-        return
-    }
-    document.getElementById("lang-img").src = "assets/images/en.svg";
 }
 
 function initTheme() {
-    if (getCookie("theme") == undefined) {
-        document.cookie = "theme=light";
+    switch (getCookie("theme")) {
+        case "dark":
+            document.documentElement.setAttribute("theme", "dark");
+            document.getElementById("theme-img").src = "assets/images/light.svg";
+            break;
+        case "light":
+            document.documentElement.setAttribute("theme", "light");
+            document.getElementById("theme-img").src = "assets/images/dark.svg";
+            break;
+        default:
+            const darkThemeMq = window.matchMedia("(prefers-color-scheme: dark)");
+            if (darkThemeMq.matches) {
+                document.cookie = "theme=dark";
+            } else {
+                document.cookie = "theme=light";
+            }
+            initTheme();
     }
-    if (getCookie("theme") == "dark") {
-        document.documentElement.setAttribute("theme", "dark");
-        document.getElementById("theme-img").src = "assets/images/light.svg";
-        return
-    }
-    document.documentElement.setAttribute("theme", "light");
-    document.getElementById("theme-img").src = "assets/images/dark.svg";
 }
 
 // Set up the code hero text.
@@ -128,15 +146,7 @@ async function writeProjectCards() {
             commit_html += `\n(${commit.commit.author.date.split("T")[0]}): ${commit.commit.message}<br>`;
         }
         for (let lang in repo_langs[repos[i].name]) {
-            // If the src file doesn't exist, don't add it. check using xmlhttprequest.
-            src = `assets/images/${lang}.svg`;
-            let req = new XMLHttpRequest();
-            req.open("GET", src, false);
-            req.send();
-            if (req.status == 404) {
-                continue;
-            }
-            langs_html += `<img class="logo" src="${src}"/>`;
+            langs_html += `<img class="logo" src="assets/images/${lang}.svg"/>`;
         }
         langs_html += `</div>`;
 
