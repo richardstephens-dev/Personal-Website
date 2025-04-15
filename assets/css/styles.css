@@ -3,6 +3,8 @@
 * The filters approximate #222323 and #f0f6f0 when applied to 
 * #000000.
 */
+@import url("colors.css");
+@import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&display=swap');
 
 :root {
   --font-size: calc(70% + 0.5vmin);
